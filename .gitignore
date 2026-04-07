@@ -1,0 +1,9 @@
+# Local Claude Code settings (may contain personal permissions/tokens)
+.claude/settings.local.json
+
+# OS
+.DS_Store
+
+# Editor
+.vscode/
+*.swp
