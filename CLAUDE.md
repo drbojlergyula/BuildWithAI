@@ -4,7 +4,9 @@ This file is read by Claude Code at the start of every session. It provides cont
 
 ## Overview
 
-This is a business-focused project template for building with Claude Code. It includes documentation templates and pre-built Claude tools. All files are pre-filled with a generic working example. Run `/start` to replace all example content with the user's real project.
+This is a business-focused project template for building with AI coding assistants. It includes shared documentation templates plus assistant-specific adapters for Claude Code, Codex, and GitHub Copilot. All files are pre-filled with a generic working example. Run `/start` to replace all example content with the user's real project.
+
+The shared workflow source of truth is `docs/assistant_workflows.md`. Claude-native commands in `.claude/` are the Claude packaging of those shared workflows and should stay aligned with that file.
 
 ## Documentation
 
@@ -15,6 +17,7 @@ This is a business-focused project template for building with Claude Code. It in
 | [docs/brainstorm.md](docs/brainstorm.md) | Scratchpad for ideas before they are ready for the spec |
 | [docs/project_status.md](docs/project_status.md) | Current progress, active phase, upcoming milestones |
 | [docs/changelog.md](docs/changelog.md) | Version history and notable changes |
+| [docs/assistant_workflows.md](docs/assistant_workflows.md) | Shared workflow definitions across Claude, Codex, and Copilot |
 
 **Update docs after every major milestone or addition.** The spec and architecture are the primary source of truth — keep them accurate so context does not need to be re-explained each session.
 
@@ -46,6 +49,16 @@ Tools live in `.claude/` as plain-English text files. To create a new tool, add 
 | Skill | When to use | Description |
 |---|---|---|
 | `doc-sync-check` | Any time docs feel out of date | Checks all project docs are consistent with each other and free of placeholder text |
+
+## Cross-Tool Compatibility
+
+This repository is designed to support three assistants:
+
+- Claude Code via `CLAUDE.md` and `.claude/`
+- Codex via `AGENTS.md`
+- GitHub Copilot via `.github/copilot-instructions.md` and `.github/prompts/`
+
+If you update a reusable workflow here, update `docs/assistant_workflows.md` first and then keep the assistant-specific adapters aligned.
 
 ## Working conventions
 

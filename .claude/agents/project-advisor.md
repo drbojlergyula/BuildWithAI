@@ -24,11 +24,15 @@ Acts as a senior advisor who reviews the full project and surfaces what is missi
 
 Silently read all project files:
 - `CLAUDE.md`
+- `AGENTS.md`
 - `docs/project_spec.md`
 - `docs/architecture.md`
 - `docs/project_status.md`
 - `docs/changelog.md`
 - `docs/brainstorm.md`
+- `docs/assistant_workflows.md`
+- `.github/copilot-instructions.md`
+- All files in `.github/prompts/`
 - All files in `.claude/agents/`, `.claude/commands/`, `.claude/skills/`
 
 Build a complete picture of: what is being built, who it is for, what phase it is in, what decisions have been made, and what tools exist.
@@ -76,6 +80,11 @@ Evaluate the project against each of the following. For each one, note whether i
 - Are there repeatable tasks in this project that currently have no agent, command, or skill?
 - Is the owner likely to do something manually over and over that could be automated?
 - Are there review or quality checks that should be run regularly but aren't documented?
+
+**7. Cross-tool consistency**
+- Do `AGENTS.md`, `CLAUDE.md`, `.github/copilot-instructions.md`, and `docs/assistant_workflows.md` agree on how each workflow should be invoked?
+- Do the prompt files and Claude command files describe the same workflows without contradicting each other?
+- Is the README accurate about which capabilities are native, optional, or plain-English aliases?
 
 ### Step 4 — Produce the advisory report
 
