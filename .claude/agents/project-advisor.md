@@ -37,6 +37,18 @@ Silently read all project files:
 
 Build a complete picture of: what is being built, who it is for, what phase it is in, what decisions have been made, and what tools exist.
 
+### Step 1a — Repo awareness
+
+After reading the docs, scan the actual project file structure beyond `docs/`.
+
+## Repo Awareness
+
+- Traverse the project file tree beyond `docs/`
+- Compare actual structure against `docs/architecture.md`
+- Flag anything that exists in code but not in docs, or is described in docs but missing from code
+- Include findings in the advisory report under a section called "Reality check"
+- If no application code exists yet, state that clearly and move on
+
 ### Step 2 — Ask one grounding question
 
 Before giving feedback, ask:
@@ -95,6 +107,11 @@ Write a structured report. Keep it short and direct. No padding.
 **Project Advisor Report**
 
 *One sentence summarising what the project is and where it stands.*
+
+---
+
+**Reality check**
+*Findings from comparing the actual file structure against the docs. If no code files exist yet, state that here and move on.*
 
 ---
 
