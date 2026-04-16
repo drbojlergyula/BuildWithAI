@@ -1,6 +1,20 @@
+<!-- repo-description: A starter template for building software with AI — keeps every decision in AI-readable format so anyone can get up to speed with one prompt. -->
+
 # BuildWithAI
 
 A starter template for building software with AI coding assistants. It works with Claude Code, Codex, and GitHub Copilot while keeping one shared project structure and one shared project setup flow.
+
+---
+
+## Why this exists
+
+Most project knowledge lives in one place: someone's head. When they are sick, you call them. When they leave, it is gone. Documentation is a snapshot — accurate the day it was written, stale the day after.
+
+This template gives every project a brain. Every decision, idea, and change lives in AI-readable Markdown, structured from day one. The result is one prompt that answers everything: "put me in context."
+
+Built for teams using Claude Code, GitHub Copilot, or Codex. Works the same across all three.
+
+Clone it. Run `/start`. See what happens.
 
 ---
 
@@ -68,6 +82,7 @@ Once your project is set up, the rhythm is simple:
 
 | When | What to do |
 |---|---|
+| Need a full project summary | Ask the assistant to run `put-me-in-context` — in Claude this is `/put-me-in-context`; in Codex or Copilot say "put me in context" |
 | Adding a new feature | Ask the assistant to run `new-feature` — in Claude this is `/new-feature`; in Codex or Copilot ask in plain English |
 | After finishing something | Ask the assistant to run `update-docs-and-commit` — it updates docs and saves progress |
 | Feeling stuck or unsure | Ask it to run `project-advisor` — it reviews the whole project and recommends what to focus on |
@@ -76,6 +91,7 @@ Once your project is set up, the rhythm is simple:
 
 In Codex and GitHub Copilot, plain-English requests are the safest option:
 
+- "Put me in context."
 - "Start project setup."
 - "Add a new feature to the spec."
 - "Run the project advisor."
@@ -104,7 +120,8 @@ BuildWithAI/
     ├── commands/
     │   ├── start.md                   ← /start — sets up a new project from scratch
     │   ├── new-feature.md             ← /new-feature — adds a feature to the spec
-    │   └── update-docs-and-commit.md  ← /update-docs-and-commit — saves progress
+    │   ├── update-docs-and-commit.md  ← /update-docs-and-commit — saves progress
+    │   └── put-me-in-context.md       ← /put-me-in-context — full project context brief
     └── skills/
         └── doc-sync-check/            ← Checks all docs are consistent
 └── .github/
@@ -115,7 +132,8 @@ BuildWithAI/
         ├── update-docs-and-commit.prompt.md
         ├── project-advisor.prompt.md  ← Optional advisory-review helper
         ├── spec-reviewer.prompt.md    ← Optional spec-review helper
-        └── doc-sync-check.prompt.md   ← Optional doc-consistency helper
+        ├── doc-sync-check.prompt.md   ← Optional doc-consistency helper
+        └── put-me-in-context.prompt.md ← Optional context-brief helper
 ```
 
 All files are pre-filled with a working example. The setup workflow replaces everything with your actual project.
@@ -143,3 +161,6 @@ The practical rule is simple:
 ## Questions or issues?
 
 Describe what you expected to happen and what happened instead. Any of the supported assistants should be able to diagnose and fix most problems directly.
+
+---
+*Built to solve the bus factor problem. One prompt: "put me in context."*
