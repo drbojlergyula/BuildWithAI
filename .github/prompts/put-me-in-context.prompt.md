@@ -11,3 +11,5 @@ Read all files in `docs/` — `project_spec.md`, `architecture.md`, `project_sta
 - **Known risks or blockers**
 
 Close with: "Ask me anything about this project."
+
+Then ask the user whether the brief matches their understanding of the project and what is missing or wrong. Offer to update the docs based on their answer.

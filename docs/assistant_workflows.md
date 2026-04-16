@@ -100,6 +100,11 @@ Purpose: review the overall project and identify blind spots, risk, and next pri
 Behavior:
 
 1. Read the key project docs.
+1a. If the project contains files outside of `docs/`, scan the actual file structure. Look for:
+    - Inconsistencies between what the spec describes and what files actually exist
+    - Folders or files that are not documented anywhere
+    - Architecture claims that do not match the real structure
+    Include findings in the advisory report under a section called "Reality check". If the project contains no code files yet, note that and skip this step.
 2. Ask one grounding question if needed.
 3. Produce a short prioritized advisory report.
 4. Offer to update the docs or create a new reusable workflow immediately.
@@ -156,3 +161,4 @@ Behavior:
    - **Open decisions or unresolved questions**
    - **Known risks or blockers**
 3. Close with: "Ask me anything about this project."
+4. After delivering the context brief, ask the user whether the brief matches their understanding of the project, and what is missing or wrong. Offer to update the docs based on their answer. Use natural phrasing appropriate to the tool — the intent matters more than the exact wording.
