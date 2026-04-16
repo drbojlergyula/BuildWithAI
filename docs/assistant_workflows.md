@@ -26,6 +26,7 @@ To keep behavior consistent across tools, these plain-English phrases should be 
 | `project-advisor` | "run the project advisor" |
 | `spec-reviewer` | "review the spec" |
 | `doc-sync-check` | "check the docs for consistency" |
+| `put-me-in-context` | "put me in context" |
 
 ## Workflow Mapping
 
@@ -37,6 +38,7 @@ To keep behavior consistent across tools, these plain-English phrases should be 
 | `project-advisor` | agent | advisory review workflow | advisory review workflow |
 | `spec-reviewer` | agent | spec review workflow | spec review workflow |
 | `doc-sync-check` | skill | doc consistency check | doc consistency check |
+| `put-me-in-context` | `/put-me-in-context` | plain-English context brief; if the user says "put me in context", execute the workflow | `put-me-in-context.prompt.md` or plain-English request |
 
 ## Detection Rules
 
@@ -139,3 +141,18 @@ When this repository is being used as a template, also check for drift between:
 - `.github/copilot-instructions.md`
 - `.github/prompts/`
 - `.claude/commands/`, `.claude/agents/`, and `.claude/skills/`
+
+## Shared Workflow: put-me-in-context
+
+Purpose: give any team member, newcomer, or returning contributor instant full context on the project with a single prompt. Replaces onboarding conversations, status emails, and manual documentation hunting.
+
+Behavior:
+
+1. Read all files in `docs/`: `project_spec.md`, `architecture.md`, `project_status.md`, `changelog.md`, and `brainstorm.md`.
+2. Produce a structured context brief with these sections:
+   - **What this project is** — one paragraph, plain English
+   - **Current status** — active phase, what is done, what is in progress
+   - **Next steps** — top 3 priorities
+   - **Open decisions or unresolved questions**
+   - **Known risks or blockers**
+3. Close with: "Ask me anything about this project."

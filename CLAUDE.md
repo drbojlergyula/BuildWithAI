@@ -36,6 +36,7 @@ Tools live in `.claude/` as plain-English text files. To create a new tool, add 
 | `/start` | Once, at the very beginning | Interviews the user, populates all project docs, sets up the project from scratch |
 | `/new-feature` | Any time you want to add something new | Guided workflow for adding a feature to the spec with user stories and version assignment |
 | `/update-docs-and-commit` | After finishing any piece of work | Updates changelog and project status to reflect recent work, then commits to git |
+| `/put-me-in-context` | Any time you need a full project summary | Reads all docs and produces a structured brief: what it is, status, next steps, open decisions, risks |
 
 ### Agents (`.claude/agents/`)
 

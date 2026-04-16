@@ -27,6 +27,7 @@ Do not imply that GitHub Copilot supports the same native slash-command mechanis
 - `project-advisor` maps to `.github/prompts/project-advisor.prompt.md`
 - `spec-reviewer` maps to `.github/prompts/spec-reviewer.prompt.md`
 - `doc-sync-check` maps to `.github/prompts/doc-sync-check.prompt.md`
+- `put-me-in-context` maps to `.github/prompts/put-me-in-context.prompt.md`
 
 Prompt files in `.github/prompts/` are optional helpers. Prefer normal chat requests by default.
 
@@ -40,3 +41,4 @@ Preferred plain-English aliases are:
 - "run the project advisor"
 - "review the spec"
 - "check the docs for consistency"
+- "put me in context"

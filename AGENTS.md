@@ -8,7 +8,7 @@ This is a business-focused starter template for building products with AI coding
 
 The shared behavioral source of truth is `docs/assistant_workflows.md`.
 
-If the user asks to run `/start`, `/new-feature`, `/update-docs-and-commit`, `project-advisor`, `spec-reviewer`, or `doc-sync-check`, interpret that as a request to execute the matching workflow in this repository even though those slash commands are Claude-native packaging.
+If the user asks to run `/start`, `/new-feature`, `/update-docs-and-commit`, `/put-me-in-context`, `project-advisor`, `spec-reviewer`, or `doc-sync-check`, interpret that as a request to execute the matching workflow in this repository even though those slash commands are Claude-native packaging.
 
 Preferred plain-English aliases in Codex are:
 
@@ -19,6 +19,7 @@ Preferred plain-English aliases in Codex are:
 - "review the spec"
 - "check the docs for consistency"
 - "review the whole template for drift"
+- "put me in context"
 
 ## Tool Adaptation Rules
 
@@ -54,6 +55,7 @@ Read `docs/assistant_workflows.md` for the canonical behavior of:
 - `project-advisor`
 - `spec-reviewer`
 - `doc-sync-check`
+- `put-me-in-context`
 
 Also treat "review the whole template for drift" as a request to inspect the shared workflow plus all assistant-specific adapters for inconsistencies.
 

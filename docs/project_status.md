@@ -6,44 +6,38 @@
      3. What's next?
 -->
 
-**Last Updated:** <!-- e.g. March 29, 2026 (MVP Complete) -->
-**Project Start:** <!-- e.g. March 2026 -->
+**Last Updated:** April 16, 2026 (put-me-in-context workflow added)
+**Project Start:** April 2026
 
 ---
 
 ## Current Phase
 
-<!-- List your phases with status. Example below — replace with your own phases when you run /start. -->
-
-### ✅ Phase 1: MVP — Core Order Flow (COMPLETE) *(example)*
-**Timeline:** Week 1
+### ✅ Phase 1: Template Foundation (COMPLETE)
 **Status:** Done
 
 **Completed:**
-- ✅ Public order form (name, email, order details)
-- ✅ Form submits to backend and saves to database
-- ✅ Confirmation message shown after submission
+- ✅ Shared workflow layer (`docs/assistant_workflows.md`)
+- ✅ Claude Code adapter (`CLAUDE.md`, `.claude/` commands, agents, skills)
+- ✅ Codex adapter (`AGENTS.md`)
+- ✅ GitHub Copilot adapter (`.github/copilot-instructions.md`, `.github/prompts/`)
+- ✅ Core workflows: `start`, `new-feature`, `update-docs-and-commit`, `project-advisor`, `spec-reviewer`, `doc-sync-check`
+- ✅ Multi-assistant compatibility layer with plain-English alias mapping
 
-### 🚀 Phase 2: Owner Dashboard (IN PROGRESS) *(example)*
-**Timeline:** Weeks 2–3
-**Status:** 50% Complete
+### ✅ Phase 2: Context and Onboarding (COMPLETE)
+**Status:** Done
 
-**Completed so far:**
-- ✅ Password-protected dashboard route
-- ✅ Order list sorted by date
+**Completed:**
+- ✅ `put-me-in-context` shared workflow — structured context brief from all project docs
+- ✅ `/put-me-in-context` Claude Code command
+- ✅ Codex and Copilot adapters for the new workflow
+- ✅ README "Why this exists" section explaining the bus-factor motivation
+- ✅ Repo description metadata and footer tagline
 
-**Next:**
-- Filter orders by status (New / Handled)
-- Mark order as handled button
-
-### ⏳ Phase 3: Version 1.0 — Polish and Deploy *(example)*
-**Timeline:** Week 4
+### ⏳ Phase 3: Polish and Distribution
 **Status:** Not started
 
-- Email notification to owner on new order
-- Mobile-responsive layout
-- Deploy to production hosting
-
----
-
-<!-- Delete the example phases above and replace with your actual phases after running /start. -->
+**Candidates:**
+- GitHub template repository configuration
+- Example filled-in project docs (to show what a real setup looks like)
+- Contribution guide
