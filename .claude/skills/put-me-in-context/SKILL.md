@@ -32,4 +32,4 @@ One prompt replaces onboarding meetings, status emails, and documentation huntin
 
 - Be concrete. "MVP order form is built and committed; dashboard is not started" beats "good progress has been made."
 - If the docs contradict each other or the git history, say so in the brief rather than papering over it.
-- If the template is still untouched (example content everywhere), say that plainly and suggest `/start` instead of inventing a briefing.
+- If the template is still untouched (the `template-state: untouched-example` sentinel comment is present at the top of `docs/project_spec.md`), say that plainly and suggest `/start` instead of inventing a briefing.

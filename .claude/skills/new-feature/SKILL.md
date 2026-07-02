@@ -29,7 +29,7 @@ If the user provided a description as an argument, treat it as the answer to "wh
    - Add the feature and its user stories to the right section of `docs/project_spec.md`.
    - Update `docs/architecture.md` if the feature changes the system design (new components, routes, data).
    - Add the feature to the right milestone in `docs/project_status.md`, marked Not Started.
-   - Append the decision to `docs/decisions.md` (one line: date, "added [feature] to [version]", why).
+   - Add one line at the top of `docs/decisions.md` (`date — added [feature] to [version] — why`).
    - If related undecided ideas exist in `docs/brainstorm.md`, resolve or link them.
 
 6. **Confirm and offer next steps.** Tell the user what changed, then offer:

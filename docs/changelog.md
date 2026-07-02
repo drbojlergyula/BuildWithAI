@@ -10,7 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
-## 2026-07-02 — v2.1.0: Competitive round (best-on-market push)
+## v2.1.0 — 2026-07-02: Competitive round (best-on-market push)
 
 Based on a competitive teardown of BMAD-method, GitHub Spec Kit, Task Master, Agent OS, Superpowers, and the Lovable/Bolt founder market. Everything added passes three tests: founder-readable, agent-maintained, zero ceremony.
 
@@ -23,6 +23,9 @@ Based on a competitive teardown of BMAD-method, GitHub Spec Kit, Task Master, Ag
 - **Founder output style** (`.claude/output-styles/founder.md`) — plain-English, business-first communication with 💡 business insights; auto-applies for plugin installs (`force-for-plugin`), opt-in in the template
 - **Founder statusline** (`.claude/statusline.sh`) — shows current phase · last save age · model; wired via `settings.json`
 - **"What to say next"** — the SessionStart hook now has Claude offer 2–3 concrete next actions based on the project status
+- **MIT LICENSE file** — declared in `plugin.json` since v2.0.0 and required for marketplace review; now actually present
+- **Template sentinel** — untouched-template detection now uses one machine-readable marker (`template-state: untouched-example` in `docs/project_spec.md`) shared by the hook and skills, instead of fragile prose matching
+- **Canonical house-rules enforcement rule** — `.claude/rules/house-rules.md` is the single normative statement; skills carry only their workflow-specific consequence
 
 ### Changed
 - **`/start`** — interviews for house rules, writes the two new docs, ends with an offered first advisor review ("your advisor already found three things") and hands off to `/build-next`
@@ -34,7 +37,7 @@ Based on a competitive teardown of BMAD-method, GitHub Spec Kit, Task Master, Ag
 
 ---
 
-## 2026-07-02 (later the same day)
+## v2.0.0 — 2026-07-02: Plugin packaging & consolidation
 
 ### Added
 - **Plugin packaging** — `.claude-plugin/plugin.json` + `marketplace.json` make this repo an installable Claude Code plugin marketplace: `/plugin marketplace add drbojlergyula/BuildWithAI` then `/plugin install buildwithai-team@buildwithai` adds the AI team (7 skills, 4 agents, welcome hook) to *any* existing project, with versioned updates. Verified end-to-end with a local install: all components resolve
@@ -48,7 +51,7 @@ Based on a competitive teardown of BMAD-method, GitHub Spec Kit, Task Master, Ag
 
 ---
 
-## 2026-07-02
+## 2026-07-02: Modernization on open standards
 
 ### Added
 - **AI team expansion** — Two new agents: `build-verifier` (independent QA that actually runs what was built) and `research-analyst` (cited web research briefs via live search)

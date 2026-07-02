@@ -48,10 +48,9 @@ Create or fill the docs to match **reality, not aspiration**:
 
 ### 5 — Hand over
 
-Close with the same experience a fresh `/start` gives:
-- Introduce the AI team (project-advisor, spec-reviewer, build-verifier, research-analyst)
-- Strongly recommend an immediate first advisor review — adopted prototypes almost always have blind spots (error handling, secrets in code, no data backup), and "your advisor already found three things" is the moment this system proves itself
-- Point at the rhythm: `/build-next` to continue building, `/save-point` to save, `/put-me-in-context` any time
+Close by following `/start`'s Phase 6 ("Meet your AI team"), Phase 7 (first advisor review offer), and Phase 8 (wrap-up) — read that skill and reuse its reveal and next-steps script rather than improvising a thinner version here. Two adoption-specific adjustments:
+- Pitch the advisor review harder: adopted prototypes almost always have blind spots (error handling, secrets in code, no data backup), and "your advisor already found three things" is the moment this system proves itself.
+- In the wrap-up, replace "read through the spec" with "check that the spec matches what your code actually does — correct me where I guessed wrong."
 
 ## Rules
 

@@ -23,11 +23,7 @@ The bridge between the spec and reality. One command takes the next planned stor
 
 4. **Verify it — independently.** Run the build-verifier agent on the feature. It will exercise the real flow and return PASS / FAIL with evidence. If it fails, fix and re-verify — do not declare done on a failed verification. If verification is impossible in this environment, tell the user exactly what to click or run to confirm it themselves.
 
-5. **Record the progress.**
-   - Mark the story done in `docs/project_status.md`
-   - Add the changelog entry in `docs/changelog.md`
-   - Append any decisions made to `docs/decisions.md`
-   - Offer `/save-point` (or `/update-docs-and-commit` if docs need more care) to commit
+5. **Record the progress.** Mark the story done in `docs/project_status.md`, then run the `/update-docs-and-commit` workflow to handle the changelog, decision log, and commit — do not re-derive those steps here; that skill owns them.
 
 6. **Point forward.** Close with what is next in the plan, in one line: "Next in the plan: *[story]* — say `/build-next` when ready."
 
@@ -36,4 +32,4 @@ The bridge between the spec and reality. One command takes the next planned stor
 - One story per invocation. If the story is too big to build in one go, say so and propose splitting it in the spec first.
 - The verification step is not optional. A feature that was never run is not done.
 - Respect `docs/house_rules.md` as hard constraints — if a story conflicts with a house rule, stop and ask rather than quietly violating it.
-- If no plan exists yet (empty or example status doc), suggest `/start` (new project) or `/adopt-project` (existing code) instead.
+- If the template is untouched (the `template-state: untouched-example` sentinel comment is present in `docs/project_spec.md`) or no plan exists in the status doc, suggest `/start` (new project) or `/adopt-project` (existing code) instead.

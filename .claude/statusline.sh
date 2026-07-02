@@ -1,35 +1,39 @@
 #!/usr/bin/env bash
 # Founder statusline: current phase · last save · model.
 # Reads Claude Code's statusline JSON on stdin; degrades gracefully if anything is missing.
+# Contract: the active phase is the docs/project_status.md heading marked "(IN PROGRESS)".
+# Portability: LC_ALL=C + byte-safe parsing (BSD sed on macOS chokes on emoji classes).
+export LC_ALL=C
 
 INPUT=$(cat)
 
-# Project dir from the statusline JSON (fall back to cwd)
-DIR=$(printf '%s' "$INPUT" | sed -n 's/.*"project_dir"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p')
-[ -z "$DIR" ] && DIR=$(printf '%s' "$INPUT" | sed -n 's/.*"current_dir"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p')
+json_field() { # first occurrence wins; good enough for Claude Code's flat payload
+  printf '%s' "$INPUT" | grep -o "\"$1\"[[:space:]]*:[[:space:]]*\"[^\"]*\"" | head -1 | sed 's/.*:[[:space:]]*"//; s/"$//'
+}
+
+DIR=$(json_field "project_dir")
+[ -z "$DIR" ] && DIR=$(json_field "current_dir")
 [ -z "$DIR" ] && DIR="."
+MODEL=$(json_field "display_name")
 
-# Model display name
-MODEL=$(printf '%s' "$INPUT" | sed -n 's/.*"display_name"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p')
-
-# Current phase: first heading marked IN PROGRESS in project_status.md, else first phase heading
-STATUS_FILE="$DIR/docs/project_status.md"
+# Current phase: the heading marked IN PROGRESS. If none, show no phase —
+# a missing segment beats a wrong one.
 PHASE=""
+STATUS_FILE="$DIR/docs/project_status.md"
 if [ -f "$STATUS_FILE" ]; then
-  PHASE=$(grep -m1 -E '^### .*(IN PROGRESS|In Progress)' "$STATUS_FILE" | sed -E 's/^### *//; s/\((IN PROGRESS|In Progress)\)//; s/[✅🚀⏳🔧]//g; s/\*\(example\)\*//; s/^ *//; s/ *$//')
-  [ -z "$PHASE" ] && PHASE=$(grep -m1 -E '^### ' "$STATUS_FILE" | sed -E 's/^### *//; s/[✅🚀⏳🔧]//g; s/^ *//; s/ *$//' | cut -c1-40)
+  PHASE=$(grep -m1 '^### .*(IN PROGRESS' "$STATUS_FILE" \
+    | sed -e 's/^### *//' -e 's/ *(IN PROGRESS.*//' -e 's/^[^A-Za-z0-9]*//' \
+    | cut -c1-40)
 fi
 
-# Last save point age
+# Last save point age (single git call; silent when not a repo yet)
 SAVE=""
-if git -C "$DIR" rev-parse --git-dir >/dev/null 2>&1; then
-  LAST=$(git -C "$DIR" log -1 --format=%ct 2>/dev/null)
-  if [ -n "$LAST" ]; then
-    NOW=$(date +%s); AGE=$(( (NOW - LAST) / 60 ))
-    if [ "$AGE" -lt 60 ]; then SAVE="saved ${AGE}m ago"
-    elif [ "$AGE" -lt 1440 ]; then SAVE="saved $((AGE / 60))h ago"
-    else SAVE="saved $((AGE / 1440))d ago"; fi
-  fi
+LAST=$(git -C "$DIR" log -1 --format=%ct 2>/dev/null)
+if [ -n "$LAST" ]; then
+  AGE=$(( ($(date +%s) - LAST) / 60 ))
+  if [ "$AGE" -lt 60 ]; then SAVE="saved ${AGE}m ago"
+  elif [ "$AGE" -lt 1440 ]; then SAVE="saved $((AGE / 60))h ago"
+  else SAVE="saved $((AGE / 1440))d ago"; fi
 fi
 
 OUT=""

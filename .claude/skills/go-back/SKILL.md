@@ -2,7 +2,7 @@
 name: go-back
 description: Return the project to an earlier save point — safely. Shows recent save points in plain English, keeps a rescue copy of the current state, then restores the chosen one. Use when something went wrong and the user wants to rewind.
 disable-model-invocation: true
-allowed-tools: Bash(git log:*), Bash(git status:*), Bash(git branch:*), Bash(git stash:*)
+allowed-tools: Bash(git log:*), Bash(git status:*), Bash(git branch:*), Bash(git add:*), Bash(git commit:*), Bash(git reset:*), Bash(echo:*)
 ---
 
 # /go-back — Rewind to a Save Point

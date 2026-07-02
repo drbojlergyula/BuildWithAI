@@ -70,13 +70,30 @@ for script in (ROOT / ".claude" / "hooks").glob("*.sh"):
     if not script.stat().st_mode & 0o111:
         errors.append(f"{script.relative_to(ROOT)}: not executable (chmod +x)")
 
-# --- Plugin default agents location (root symlink) must resolve
-agents_link = ROOT / "agents"
-if agents_link.exists() and not (agents_link / "project-advisor.md").is_file():
-    errors.append("agents/ symlink does not resolve to .claude/agents/")
+# --- Plugin default locations (root symlinks) must resolve
+for link, probe in (("agents", "project-advisor.md"), ("output-styles", "founder.md")):
+    link_path = ROOT / link
+    if link_path.exists() and not (link_path / probe).is_file():
+        errors.append(f"{link}/ symlink does not resolve into .claude/")
 
-# --- Every skill and agent must be mentioned in README and AGENTS.md
-for doc_name in ("README.md", "AGENTS.md"):
+# --- Output styles need name + description frontmatter
+styles_dir = ROOT / ".claude" / "output-styles"
+for style in sorted(styles_dir.glob("*.md")) if styles_dir.is_dir() else []:
+    fm = frontmatter(style)
+    for field in ("name", "description"):
+        if not fm.get(field):
+            errors.append(f"{style.relative_to(ROOT)}: missing '{field}' in frontmatter")
+
+# --- The untouched-template sentinel must exist exactly where the hook greps for it
+spec = ROOT / "docs" / "project_spec.md"
+hook = ROOT / ".claude" / "hooks" / "session-start.sh"
+if spec.is_file() and hook.is_file():
+    sentinel = "template-state: untouched-example"
+    if sentinel in hook.read_text(encoding="utf-8") and sentinel not in spec.read_text(encoding="utf-8"):
+        errors.append("docs/project_spec.md: missing the 'template-state: untouched-example' sentinel the SessionStart hook greps for")
+
+# --- Every skill and agent must be mentioned in README, AGENTS.md, and CLAUDE.md
+for doc_name in ("README.md", "AGENTS.md", "CLAUDE.md"):
     doc = (ROOT / doc_name).read_text(encoding="utf-8")
     for skill in skills:
         if skill.name not in doc:

@@ -141,7 +141,7 @@ Adjust based on feedback. Keep iterating until the user says the plan looks good
 
 ### Phase 5 — Write all project files
 
-Once the user approves the iteration plan, update all project files to reflect the real product. Replace all example content.
+Once the user approves the iteration plan, update all project files to reflect the real product. Replace all example content, **including deleting the `template-state: untouched-example` sentinel comment at the top of `docs/project_spec.md`** — that marker is how the welcome hook and skills know the template is untouched.
 
 Update these files in order:
 
@@ -213,8 +213,11 @@ Confirm everything is done. Give the user a clear next step:
 > 1. Read through `docs/project_spec.md` — does it capture what you want to build?
 > 2. Check `docs/house_rules.md` — those are the rules I will hold us both to.
 >
+> **Before the first build:**
+> 3. Ask me to "run the spec-reviewer agent" — it checks the spec for gaps while they are still cheap to fix on paper. (If you took the advisor review above, this is the quick second opinion on the spec itself.)
+>
 > **When you are ready to build:**
-> 3. Type `/build-next` — I'll build the first feature in the plan and have your QA engineer verify it works.
+> 4. Type `/build-next` — I'll build the first feature in the plan and have your QA engineer verify it works.
 >
 > **As you go:**
 > - `/build-next` to keep shipping the plan, one verified feature at a time

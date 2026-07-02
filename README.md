@@ -46,9 +46,9 @@ Most templates give you empty folders. This one gives you **staff**:
 | ✅ **build-verifier** | QA engineer. After a feature is built, independently runs it and proves it works. |
 | 🌐 **research-analyst** | Market researcher. Investigates competitors, pricing, and technology choices on the live web and files a cited brief. |
 
-Plus guided workflows for the whole life of the project:
+Plus guided workflows for the whole life of the project — including `build-next`, the daily rhythm that builds the next planned feature and has QA verify it, and `save-point`/`go-back`, git wrapped in video-game language:
 
-`start` → `new-feature` → `fix-bug` → `update-docs-and-commit` → `put-me-in-context` → `doc-sync-check` → `go-live`
+`start` (or `adopt-project`) → `build-next` → `save-point` → `new-feature` → `fix-bug` → `put-me-in-context` → `doc-sync-check` → `go-live`
 
 ---
 
