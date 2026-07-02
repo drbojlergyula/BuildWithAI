@@ -1,8 +1,19 @@
-<!-- repo-description: A starter template for building software with AI — keeps every decision in AI-readable format so anyone can get up to speed with one prompt. -->
+<!-- repo-description: A starter template that gives your project an AI team and keeps every decision in AI-readable format — works with Claude Code, Codex, and GitHub Copilot from one set of files. -->
 
 # BuildWithAI
 
-A starter template for building software with AI coding assistants. It works with Claude Code, Codex, and GitHub Copilot while keeping one shared project structure and one shared project setup flow.
+**One project brain. One AI team. Every assistant.**
+
+A starter template for building software with AI coding assistants. It gives your project a documentation "brain" that any assistant can read, plus a pre-built team of AI specialists — and thanks to the open standards the industry converged on ([AGENTS.md](https://agents.md), [Agent Skills](https://agentskills.io), both under the Linux Foundation), the *same files* work in **Claude Code, OpenAI Codex, and GitHub Copilot**. No adapters, no duplication, no drift.
+
+> **New to all of this?** Read the [gentle start-here guide](docs/start_here_with_claude.md) — zero to a set-up project in 15 minutes, no experience needed. (It replaces the former BuildWithClaude repo, which has merged into this one.)
+>
+> **Already have a project?** You don't need the template — install the AI team as a plugin:
+>
+> ```
+> /plugin marketplace add drbojlergyula/BuildWithAI
+> /plugin install buildwithai-team@buildwithai
+> ```
 
 ---
 
@@ -10,11 +21,34 @@ A starter template for building software with AI coding assistants. It works wit
 
 Most project knowledge lives in one place: someone's head. When they are sick, you call them. When they leave, it is gone. Documentation is a snapshot — accurate the day it was written, stale the day after.
 
-This template gives every project a brain. Every decision, idea, and change lives in AI-readable Markdown, structured from day one. The result is one prompt that answers everything: "put me in context."
+This template gives every project a brain. Every decision, idea, and change lives in AI-readable Markdown, structured from day one. The result is one prompt that answers everything: **"put me in context."**
 
-Built for teams using Claude Code, GitHub Copilot, or Codex. Works the same across all three.
+And because your team may not all use the same AI tool, everything here is built on the open standards all major assistants now share:
 
-Clone it. Run `/start`. See what happens.
+| Standard | What it does here | Who reads it |
+|---|---|---|
+| **AGENTS.md** | The project's canonical instructions | Codex, Copilot, Cursor, Zed, Jules, … (Claude Code via `CLAUDE.md` import) |
+| **Agent Skills** (`.claude/skills/`) | The guided workflows — one definition, every tool | Claude Code, Copilot, Codex natively |
+| **Subagents** (`.claude/agents/`) | The AI team — native in Claude Code, role instructions everywhere else | All, per AGENTS.md |
+
+Clone it. Say hello. See what happens.
+
+---
+
+## What makes it different
+
+Most templates give you empty folders. This one gives you **staff**:
+
+| Your team member | What they do |
+|---|---|
+| 🧭 **project-advisor** | Senior advisor. Reviews everything, surfaces blind spots, tells you what to focus on next — and remembers its advice between sessions. |
+| 🔍 **spec-reviewer** | Requirements analyst. Catches gaps in your plan on paper, where they are cheap to fix. |
+| ✅ **build-verifier** | QA engineer. After a feature is built, independently runs it and proves it works. |
+| 🌐 **research-analyst** | Market researcher. Investigates competitors, pricing, and technology choices on the live web and files a cited brief. |
+
+Plus guided workflows for the whole life of the project:
+
+`start` → `new-feature` → `fix-bug` → `update-docs-and-commit` → `put-me-in-context` → `doc-sync-check` → `go-live`
 
 ---
 
@@ -22,145 +56,109 @@ Clone it. Run `/start`. See what happens.
 
 **1. Get the tools**
 
-- [Git](https://git-scm.com) — saves and versions your project
-- [VS Code](https://code.visualstudio.com) — free code editor
-- One AI coding assistant:
-  - Claude Code
-  - Codex
-  - GitHub Copilot
+- [Git](https://git-scm.com) and [VS Code](https://code.visualstudio.com)
+- One (or more) AI coding assistants: [Claude Code](https://claude.com/claude-code), [Codex](https://developers.openai.com/codex), or [GitHub Copilot](https://github.com/features/copilot)
 - A free account at [github.com](https://github.com)
 
 **2. Copy this template**
 
-On the GitHub page, click **"Use this template" → "Create a new repository"**, give it a name, and click Create.
+On the GitHub page, click **"Use this template" → "Create a new repository"**, name it, and click Create.
 
-**3. Download to your computer**
-
-Open VS Code, open the Terminal (**View → Terminal**), and run:
+**3. Download it**
 
 ```
 git clone https://github.com/YOUR-USERNAME/YOUR-PROJECT-NAME.git
 ```
 
-Then open the downloaded folder in VS Code (**File → Open Folder**).
+Open the folder in VS Code (**File → Open Folder**).
 
-**4. Start the project setup**
+**4. Start the setup interview**
 
-Use the setup entrypoint that matches your tool:
+| Tool | Do this |
+|---|---|
+| Claude Code | Just open it — the template greets you and offers `/start` |
+| Codex | Run the `start` skill, or say "start project setup" |
+| GitHub Copilot | Run the `start` skill, or say "start project setup" |
 
-```
-Claude Code: /start
-Codex: ask it in plain English to "start project setup"
-GitHub Copilot: ask it in plain English to "start project setup"
-```
+Your assistant interviews you about your idea (5–10 minutes), fills in every project document, proposes a stack and an MVP plan, then introduces your AI team.
 
-Your assistant should interview you about what you want to build and fill in the project documents automatically. The whole thing should take about 5–10 minutes.
-
-Important: only Claude Code has a native `/start` slash command in this template. Codex and GitHub Copilot use equivalent workflows, but not the same slash-command mechanism.
-
-If you are using Codex or GitHub Copilot, these are good example prompts:
-
-```text
-Start project setup.
-Help me add a new feature to the spec.
-Review the spec for gaps before we build.
-Check whether the project docs are out of sync.
-```
-
-**5. Start building**
-
-Once setup is done, give your assistant plain-English instructions to start building:
+**5. Build**
 
 > "Build the order form described in the project spec."
-> "Add a login page for the owner dashboard."
 
 ---
 
-## How to work day to day
+## Day to day
 
-Once your project is set up, the rhythm is simple:
+Skills answer to slash commands, their names, or plain English — whichever your tool supports:
 
-| When | What to do |
-|---|---|
-| Need a full project summary | Ask the assistant to run `put-me-in-context` — in Claude this is `/put-me-in-context`; in Codex or Copilot say "put me in context" |
-| Adding a new feature | Ask the assistant to run `new-feature` — in Claude this is `/new-feature`; in Codex or Copilot ask in plain English |
-| After finishing something | Ask the assistant to run `update-docs-and-commit` — it updates docs and saves progress |
-| Feeling stuck or unsure | Ask it to run `project-advisor` — it reviews the whole project and recommends what to focus on |
-| Spec feels incomplete | Ask it to run `spec-reviewer` — it checks for gaps before you build |
-| Docs feel out of sync | Ask it to run `doc-sync-check` — it finds inconsistencies and placeholders |
-
-In Codex and GitHub Copilot, plain-English requests are the safest option:
-
-- "Put me in context."
-- "Start project setup."
-- "Add a new feature to the spec."
-- "Run the project advisor."
-- "Review the spec."
-- "Check the docs for consistency."
+| When | Workflow | Plain English |
+|---|---|---|
+| Need a full project summary | `put-me-in-context` | "put me in context" |
+| Adding something new | `new-feature` | "add a feature to the spec" |
+| Something is broken | `fix-bug` | "fix this bug" |
+| Finished a piece of work | `update-docs-and-commit` | "update docs and commit" |
+| Feeling stuck or unsure | agent: `project-advisor` | "run the project advisor" |
+| About to build from the spec | agent: `spec-reviewer` | "review the spec" |
+| Just built a feature | agent: `build-verifier` | "verify the build" |
+| Need outside facts | agent: `research-analyst` | "research what competitors charge" |
+| Docs feel stale | `doc-sync-check` | "check the docs for consistency" |
+| Ready to launch | `go-live` | "are we ready to go live?" |
 
 ---
 
-## What's in this template?
+## What's in the box
 
 ```
 BuildWithAI/
-├── AGENTS.md                          ← Instructions Codex reads every session
-├── CLAUDE.md                         ← Instructions Claude Code reads every session
-├── docs/
-│   ├── project_spec.md                ← What you are building and why
-│   ├── architecture.md                ← How the project is structured
-│   ├── brainstorm.md                  ← Scratchpad for ideas
-│   ├── project_status.md              ← Progress and milestones
-│   ├── changelog.md                   ← History of changes
-│   └── assistant_workflows.md         ← Shared behavior across assistants
+├── AGENTS.md                    ← Canonical instructions (open standard — Codex, Copilot, Cursor, …)
+├── CLAUDE.md                    ← Claude Code entry point; imports AGENTS.md
+├── docs/                        ← Your project's long-term memory
+│   ├── start_here_with_claude.md ← Gentle 15-minute guide for beginners
+│   ├── project_spec.md          ← What you are building and why
+│   ├── architecture.md          ← How it is structured
+│   ├── brainstorm.md            ← Ideas before they are decisions
+│   ├── project_status.md        ← Progress and milestones
+│   └── changelog.md             ← History of changes
 ├── .claude/
-    ├── agents/
-    │   ├── project-advisor.md         ← Reviews the whole project for blind spots
-    │   └── spec-reviewer.md           ← Checks the spec is complete before building
-    ├── commands/
-    │   ├── start.md                   ← /start — sets up a new project from scratch
-    │   ├── new-feature.md             ← /new-feature — adds a feature to the spec
-    │   ├── update-docs-and-commit.md  ← /update-docs-and-commit — saves progress
-    │   └── put-me-in-context.md       ← /put-me-in-context — full project context brief
-    └── skills/
-        └── doc-sync-check/            ← Checks all docs are consistent
+│   ├── skills/                  ← Guided workflows (Agent Skills standard — read by all three tools)
+│   ├── agents/                  ← Your AI team (native subagents in Claude Code)
+│   ├── rules/                   ← Modular conventions
+│   ├── hooks/                   ← Welcome-on-open magic (Claude Code)
+│   └── settings.json            ← Safe permission defaults + hook wiring
+├── .claude-plugin/              ← Makes this repo installable as a Claude Code plugin
+├── agents → .claude/agents      ← Symlink so the plugin finds the team in its standard location
 └── .github/
-    ├── copilot-instructions.md        ← Instructions GitHub Copilot reads in this repo
-    └── prompts/
-        ├── start.prompt.md            ← Optional setup helper for supported Copilot editors
-        ├── new-feature.prompt.md      ← Optional feature-planning helper
-        ├── update-docs-and-commit.prompt.md
-        ├── project-advisor.prompt.md  ← Optional advisory-review helper
-        ├── spec-reviewer.prompt.md    ← Optional spec-review helper
-        ├── doc-sync-check.prompt.md   ← Optional doc-consistency helper
-        └── put-me-in-context.prompt.md ← Optional context-brief helper
+    ├── copilot-instructions.md  ← Copilot-specific notes (points to AGENTS.md)
+    └── workflows/               ← CI that validates every skill/agent on each push
 ```
 
-All files are pre-filled with a working example. The setup workflow replaces everything with your actual project.
+### Two ways to use it
 
-## How compatibility works
+| You have | Do this |
+|---|---|
+| **A new project** | Use this repo as a template (button above) — you get the docs brain *and* the AI team |
+| **An existing project** | Install the plugin (commands at the top) — you get the AI team and can run `start` to add the docs brain |
 
-This repo now uses a shared workflow layer plus tool-specific adapters:
+The plugin is versioned (currently `2.0.0`); when you update this repo and bump the version, everyone who installed it gets the update via `/plugin update`.
 
-- `docs/assistant_workflows.md` is the source of truth for setup, feature planning, and project maintenance behavior
-- `CLAUDE.md` points Claude Code to the shared workflows and Claude-native commands
-- `AGENTS.md` tells Codex how to interpret the same workflows in Codex terms
-- `.github/copilot-instructions.md` does the same for GitHub Copilot
-- `.github/prompts/` contains optional helper prompts for Copilot environments that support prompt files
+All files are pre-filled with a working example. The `start` workflow replaces the example with your actual project.
 
-The goal is consistent behavior, not identical command syntax. Each assistant has different capabilities and conventions, so the template teaches each one how to behave in its own native format.
+## How compatibility works now
 
-The practical rule is simple:
+Earlier versions of this template kept a hand-written workflow document plus per-tool adapter files. The industry has since standardized, so this template now has **one definition of everything**:
 
-- Claude Code: use the built-in slash commands and Claude tool files
-- Codex: use normal chat requests and `AGENTS.md`
-- GitHub Copilot: use normal chat requests by default; prompt files are optional helpers in supported editors
+- `AGENTS.md` is the single source of project instructions — most assistants read it natively; Claude Code imports it via `CLAUDE.md`.
+- Workflows are **skills** in `.claude/skills/` — Claude Code, Copilot, and Codex all discover that folder natively.
+- The AI team lives in `.claude/agents/` — Claude Code runs them as true subagents (own context, scoped tools, persistent memory); other assistants adopt them as role instructions, as directed by `AGENTS.md`.
+
+Same behavior, a fraction of the files, and nothing to keep in sync by hand.
 
 ---
 
 ## Questions or issues?
 
-Describe what you expected to happen and what happened instead. Any of the supported assistants should be able to diagnose and fix most problems directly.
+Describe what you expected and what happened instead — any supported assistant can diagnose and fix most problems directly. If the docs ever drift from reality, run `doc-sync-check`.
 
 ---
-*Built to solve the bus factor problem. One prompt: "put me in context."*
+*Built to solve the bus-factor problem. One prompt: "put me in context."*

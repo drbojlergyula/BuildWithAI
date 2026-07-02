@@ -7,3 +7,7 @@
 # Editor
 .vscode/
 *.swp
+
+# Claude Code local state (personal, not shared)
+.claude/agent-memory-local/
+CLAUDE.local.md

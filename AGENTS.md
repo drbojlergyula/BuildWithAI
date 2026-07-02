@@ -1,71 +1,63 @@
 # AGENTS.md
 
-This file is read by Codex at the start of every session. It explains how to operate inside this repository and how to stay compatible with the Claude Code and GitHub Copilot versions of the template.
+Project instructions for AI coding assistants, following the open [AGENTS.md standard](https://agents.md). Codex, GitHub Copilot, Cursor, and other agents read this file natively; Claude Code loads it through `CLAUDE.md`.
 
-## Overview
+## What this repository is
 
-This is a business-focused starter template for building products with AI coding assistants. The same project structure should work with Claude Code, Codex, and GitHub Copilot.
+A business-focused starter template for building products with AI coding assistants. It ships with documentation templates and a pre-built AI team of skills and agents. All files are pre-filled with a generic working example; the `start` skill replaces the example with the user's real project.
 
-The shared behavioral source of truth is `docs/assistant_workflows.md`.
+If `docs/project_spec.md` still describes the example order-management product, this template is untouched — welcome the user and offer to run the `start` workflow before anything else.
 
-If the user asks to run `/start`, `/new-feature`, `/update-docs-and-commit`, `/put-me-in-context`, `project-advisor`, `spec-reviewer`, or `doc-sync-check`, interpret that as a request to execute the matching workflow in this repository even though those slash commands are Claude-native packaging.
+## Project documentation
 
-Preferred plain-English aliases in Codex are:
+These documents are the project's long-term memory. Prefer updating them over leaving important decisions only in chat.
 
-- "start project setup"
-- "add a new feature to the spec"
-- "update docs and commit"
-- "run the project advisor"
-- "review the spec"
-- "check the docs for consistency"
-- "review the whole template for drift"
-- "put me in context"
+| File | Purpose |
+|---|---|
+| `docs/project_spec.md` | What is being built, who it is for, features, tech stack, API design |
+| `docs/architecture.md` | System design, data flow, component breakdown, file structure |
+| `docs/brainstorm.md` | Scratchpad for ideas before they are ready for the spec |
+| `docs/project_status.md` | Current progress, active phase, upcoming milestones |
+| `docs/changelog.md` | Version history and notable changes |
 
-## Tool Adaptation Rules
+The spec and architecture are the source of truth. After meaningful work: update the changelog and status. After a decision: promote it from brainstorm to spec. Documentation conventions: `.claude/rules/documentation.md`.
 
-When working in this repository, first determine which assistant conventions are being referenced:
+## Skills — shared workflows (all assistants)
 
-- If the user refers to Claude commands, agents, or skills, map them to the matching shared workflow.
-- If the user refers to Codex behavior, use this `AGENTS.md` plus the shared workflows as the operating contract.
-- If the user refers to GitHub Copilot prompts or instructions, use `.github/copilot-instructions.md` and `.github/prompts/` as the Copilot-facing equivalents.
+Reusable workflows live in `.claude/skills/<name>/SKILL.md` in the [Agent Skills](https://agentskills.io) open standard. Claude Code, GitHub Copilot, and Codex all discover skills from `.claude/skills/` natively — one definition works everywhere.
 
-Do not say a workflow is unavailable just because it was originally written as a Claude command. Execute the shared workflow directly.
+| Skill | Use it when |
+|---|---|
+| `start` | Once, at the beginning — interview that populates all project docs |
+| `new-feature` | Adding anything new — user stories, version placement, spec update |
+| `update-docs-and-commit` | After finishing work — refresh docs, commit with a clear message |
+| `put-me-in-context` | Anyone needs an instant, structured project briefing |
+| `doc-sync-check` | Docs feel out of date — find drift, contradictions, placeholders |
+| `fix-bug` | Something is broken — reproduce, fix, verify, record |
+| `go-live` | Before launch — readiness check with a Go / No-Go report |
 
-Do not imply that Codex has a native slash-command system matching Claude's. Translate the user's intent into the shared workflow and continue in normal Codex chat.
+If the user invokes a skill by slash command (`/start`), by name, or by plain English ("start project setup", "put me in context", "add a feature to the spec"), execute the matching skill. If your environment does not surface skills automatically, read the skill's `SKILL.md` and follow it as instructions.
 
-## Shared Project Files
+## Agent personas — the AI team
 
-Keep these files accurate:
+Specialist personas live in `.claude/agents/*.md`. Claude Code runs them as native subagents; **every other assistant should treat them as role instructions**: when the user asks to "run the project-advisor" (or the request clearly matches an agent's description below), read that agent's file and adopt it for the task.
 
-- `docs/project_spec.md`
-- `docs/architecture.md`
-- `docs/brainstorm.md`
-- `docs/project_status.md`
-- `docs/changelog.md`
+| Agent | Job |
+|---|---|
+| `project-advisor` | Senior advisor — reviews the whole project, surfaces blind spots, prioritises next steps |
+| `spec-reviewer` | Requirements analyst — checks the spec for gaps and vagueness before building |
+| `build-verifier` | Independent QA — runs what was built and verifies it against the spec |
+| `research-analyst` | Web researcher — investigates competitors, pricing, tech choices; cites sources |
 
-These documents are the project's long-term memory. Prefer updating them rather than leaving important decisions only in chat.
+## Working conventions
 
-## Available Workflows
+- Ask one or two questions at a time during interview-style workflows.
+- Use plain English; the user may be non-technical. Explain technical trade-offs simply.
+- Reflect back your understanding before acting on ambiguous requirements; make assumptions explicit.
+- Verify work by running it whenever possible — do not declare something done on the strength of having written it.
+- Never commit secrets or `.env` files.
+- One task at a time; keep changes reviewable.
 
-Read `docs/assistant_workflows.md` for the canonical behavior of:
+## Adding new tools
 
-- `start`
-- `new-feature`
-- `update-docs-and-commit`
-- `project-advisor`
-- `spec-reviewer`
-- `doc-sync-check`
-- `put-me-in-context`
-
-Also treat "review the whole template for drift" as a request to inspect the shared workflow plus all assistant-specific adapters for inconsistencies.
-
-When the user uses one of the preferred plain-English aliases above, treat it as an exact match for the corresponding workflow.
-
-## Working Conventions
-
-- Ask one or two questions at a time during setup workflows.
-- Use plain English unless the user prefers technical language.
-- Reflect back your understanding before moving on when requirements are ambiguous.
-- Make assumptions explicit.
-- Keep the docs in sync after meaningful product or architecture changes.
-- Treat `docs/project_spec.md` and `docs/architecture.md` as the primary source of truth.
+To add a workflow, create `.claude/skills/<name>/SKILL.md` with `name` and `description` frontmatter — it becomes available to every supported assistant at once. To add a specialist persona, create `.claude/agents/<name>.md` with YAML frontmatter (`name`, `description`, optionally `tools`, `model`). Plain-English instructions are the norm in this repo.
