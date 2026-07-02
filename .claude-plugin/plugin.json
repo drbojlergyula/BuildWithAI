@@ -1,7 +1,7 @@
 {
   "name": "buildwithai-team",
   "displayName": "BuildWithAI — AI Team in a Box",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "An AI team for any project: project advisor with memory, spec reviewer, independent build verifier, and web research analyst — plus guided workflows from project setup to go-live.",
   "author": {
     "name": "drbojlergyula",
@@ -10,7 +10,15 @@
   "homepage": "https://github.com/drbojlergyula/BuildWithAI",
   "repository": "https://github.com/drbojlergyula/BuildWithAI",
   "license": "MIT",
-  "keywords": ["project-management", "documentation", "qa", "research", "business", "workflow"],
+  "keywords": [
+    "project-management",
+    "documentation",
+    "qa",
+    "research",
+    "business",
+    "workflow"
+  ],
   "skills": "./.claude/skills/",
-  "hooks": "./.claude/hooks/hooks.json"
+  "hooks": "./.claude/hooks/hooks.json",
+  "outputStyles": "./.claude/output-styles/"
 }

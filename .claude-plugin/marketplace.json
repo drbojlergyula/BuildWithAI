@@ -11,9 +11,15 @@
     {
       "name": "buildwithai-team",
       "source": "./",
-      "description": "An AI team for any project: project advisor with memory, spec reviewer, independent build verifier, and web research analyst — plus guided workflows from project setup to go-live.",
+      "description": "An AI team for any project: project advisor with memory, spec reviewer, independent build verifier, and web research analyst — plus guided workflows from setup (or adopting existing code) through verified feature builds to go-live, with founder-friendly save points.",
       "category": "productivity",
-      "tags": ["project-management", "documentation", "qa", "research", "business"]
+      "tags": [
+        "project-management",
+        "documentation",
+        "qa",
+        "research",
+        "business"
+      ]
     }
   ]
 }

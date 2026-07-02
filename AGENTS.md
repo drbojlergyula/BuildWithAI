@@ -16,11 +16,13 @@ These documents are the project's long-term memory. Prefer updating them over le
 |---|---|
 | `docs/project_spec.md` | What is being built, who it is for, features, tech stack, API design |
 | `docs/architecture.md` | System design, data flow, component breakdown, file structure |
+| `docs/house_rules.md` | The owner's non-negotiables — re-read before adding costs, dependencies, or touching anything sensitive |
+| `docs/decisions.md` | One-line decision log — appended automatically by the workflows whenever a decision is made |
 | `docs/brainstorm.md` | Scratchpad for ideas before they are ready for the spec |
 | `docs/project_status.md` | Current progress, active phase, upcoming milestones |
 | `docs/changelog.md` | Version history and notable changes |
 
-The spec and architecture are the source of truth. After meaningful work: update the changelog and status. After a decision: promote it from brainstorm to spec. Documentation conventions: `.claude/rules/documentation.md`.
+The spec and architecture are the source of truth. After meaningful work: update the changelog and status. After a decision: promote it from brainstorm to spec and append one line to the decision log. `docs/house_rules.md` is binding: if a task conflicts with a house rule, stop and ask. Documentation conventions: `.claude/rules/documentation.md`.
 
 ## Skills — shared workflows (all assistants)
 
@@ -29,10 +31,14 @@ Reusable workflows live in `.claude/skills/<name>/SKILL.md` in the [Agent Skills
 | Skill | Use it when |
 |---|---|
 | `start` | Once, at the beginning — interview that populates all project docs |
-| `new-feature` | Adding anything new — user stories, version placement, spec update |
-| `update-docs-and-commit` | After finishing work — refresh docs, commit with a clear message |
+| `adopt-project` | There is already code but no docs — reverse-engineers the project brain from an existing codebase (incl. Lovable/Bolt/v0 exports) |
+| `build-next` | Building the plan — picks the next story, builds it, has QA verify it, records progress |
+| `new-feature` | Adding anything new — clarify ambiguities, user stories, version placement, spec update |
+| `save-point` | Quick save — commits everything with a plain-English label |
+| `go-back` | Something went wrong — safely rewind to an earlier save point (user-invoked only) |
+| `update-docs-and-commit` | After finishing work — refresh docs and decision log, commit with a clear message |
 | `put-me-in-context` | Anyone needs an instant, structured project briefing |
-| `doc-sync-check` | Docs feel out of date — find drift, contradictions, placeholders |
+| `doc-sync-check` | Docs feel out of date — find drift, contradictions, placeholders, code-vs-spec gaps |
 | `fix-bug` | Something is broken — reproduce, fix, verify, record |
 | `go-live` | Before launch — readiness check with a Go / No-Go report |
 

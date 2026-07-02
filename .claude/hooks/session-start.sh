@@ -13,7 +13,7 @@ if [ -f "$SPEC" ] && grep -q "A small business owner needs a simple way to colle
 EOF
 elif [ -f "$SPEC" ]; then
   cat <<'EOF'
-{"hookSpecificOutput":{"hookEventName":"SessionStart","additionalContext":"TEMPLATE STATE: project is set up. docs/project_status.md tracks the current phase. If the user seems to need orientation, suggest /put-me-in-context for an instant briefing."}}
+{"hookSpecificOutput":{"hookEventName":"SessionStart","additionalContext":"TEMPLATE STATE: project is set up. docs/project_status.md tracks the current phase. When greeting the user (or if they seem unsure what to do), glance at docs/project_status.md and offer 2-3 concrete next actions tailored to where they are — e.g. '/build-next to build [the next planned story]', 'run the build-verifier agent on [the just-finished feature]', '/go-live if you are ready to launch', or /put-me-in-context for a full briefing. Suggest, do not push."}}
 EOF
 else
   cat <<'EOF'

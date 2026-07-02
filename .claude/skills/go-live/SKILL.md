@@ -28,9 +28,15 @@ Runs the checks a careful engineer would run before putting a product in front o
    - Is there any way for the owner to know the product is down (uptime monitor, alert)? If not, recommend a free one.
    - Is data backed up, or at least recoverable? Say what would happen if the database were lost today.
 
+   **House rules**
+   - Re-read `docs/house_rules.md` and verify the launch candidate honours every rule (budget of chosen hosting, never-do list, always rules). A house-rule violation is an automatic blocker.
+
    **Docs & housekeeping**
    - `docs/project_status.md` reflects reality; `docs/changelog.md` has an entry for the launch candidate.
    - No placeholder text left anywhere a user or teammate could see.
+
+   **Launch convenience** *(when the product is a deployable web app)*
+   - Offer to add a one-click deploy path to the project's README (e.g. a Vercel/Netlify deploy button) and a short "how to deploy" section, so launching and re-launching never requires remembering steps.
 
 3. **Produce the report:**
 
