@@ -1,44 +1,8 @@
 # GitHub Copilot Repository Instructions
 
-This repository is a multi-assistant project template. Follow the shared workflow definitions in `docs/assistant_workflows.md`.
+The canonical instructions for this repository live in [`AGENTS.md`](../AGENTS.md) — read and follow that file. This file only adds Copilot-specific notes.
 
-## Compatibility Goal
-
-Users may refer to Claude Code conventions such as `/start`, `/new-feature`, `project-advisor`, `spec-reviewer`, or `doc-sync-check`.
-
-When they do, translate those requests into the shared workflow instead of saying the command is unsupported.
-
-Do not imply that GitHub Copilot supports the same native slash-command mechanism as Claude in this repository. Treat those names as workflow aliases.
-
-## How To Behave
-
-- Treat `docs/assistant_workflows.md` as the canonical workflow definition.
-- Keep `docs/project_spec.md`, `docs/architecture.md`, `docs/brainstorm.md`, `docs/project_status.md`, and `docs/changelog.md` up to date.
-- Ask one or two setup questions at a time.
-- Use plain English.
-- Make assumptions explicit.
-- Prefer updating docs over leaving important decisions only in chat.
-
-## Copilot-Specific Mapping
-
-- `start` maps to `.github/prompts/start.prompt.md`
-- `new-feature` maps to `.github/prompts/new-feature.prompt.md`
-- `update-docs-and-commit` maps to `.github/prompts/update-docs-and-commit.prompt.md`
-- `project-advisor` maps to `.github/prompts/project-advisor.prompt.md`
-- `spec-reviewer` maps to `.github/prompts/spec-reviewer.prompt.md`
-- `doc-sync-check` maps to `.github/prompts/doc-sync-check.prompt.md`
-- `put-me-in-context` maps to `.github/prompts/put-me-in-context.prompt.md`
-
-Prompt files in `.github/prompts/` are optional helpers. Prefer normal chat requests by default.
-
-If prompt files are unavailable in the current Copilot environment, execute the equivalent workflow directly from the shared instructions.
-
-Preferred plain-English aliases are:
-
-- "start project setup"
-- "add a new feature to the spec"
-- "update docs and commit"
-- "run the project advisor"
-- "review the spec"
-- "check the docs for consistency"
-- "put me in context"
+- **Skills:** Copilot discovers the shared skills in `.claude/skills/` natively (Agent Skills standard). When the user asks for a workflow by name or in plain English — "start project setup", "put me in context", "add a feature to the spec", "check the docs for consistency", "fix this bug", "are we ready to go live" — run the matching skill. If skills are unavailable in the current Copilot surface, open the skill's `SKILL.md` and follow it as instructions.
+- **The AI team:** the personas in `.claude/agents/` (`project-advisor`, `spec-reviewer`, `build-verifier`, `research-analyst`) are not Copilot-native agents. When the user asks to run one, read its file and adopt the role for that task.
+- **Slash-command names:** users may type Claude-style commands like `/start` or `/new-feature`. Treat them as requests for the matching skill — never reply that the command is unsupported.
+- Keep `docs/` up to date after meaningful work, ask one or two questions at a time in interview workflows, and use plain English — the user may be non-technical.

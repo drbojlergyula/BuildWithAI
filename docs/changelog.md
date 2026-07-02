@@ -10,6 +10,28 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## 2026-07-02
+
+### Added
+- **AI team expansion** — Two new agents: `build-verifier` (independent QA that actually runs what was built) and `research-analyst` (cited web research briefs via live search)
+- **New skills** — `/fix-bug` (reproduce → fix → verify → record) and `/go-live` (launch readiness check with a Go/No-Go report)
+- **Welcome-on-open** — SessionStart hook (`.claude/hooks/session-start.sh`) detects an untouched template and has Claude offer `/start`; on set-up projects it points to current status
+- **Modular rules** — Documentation conventions moved to `.claude/rules/documentation.md`
+- **Safe permission defaults** — `.claude/settings.json` pre-approves read-only git commands and web search, and denies reading `.env` files
+
+### Changed
+- **Compatibility layer rebuilt on open standards** — `AGENTS.md` (Linux Foundation standard, read natively by Codex, Copilot, Cursor and others) is now the canonical instruction file; `CLAUDE.md` imports it via `@AGENTS.md`. Workflows are Agent Skills in `.claude/skills/`, which Claude Code, Copilot, and Codex all discover natively — one definition, every tool
+- **Commands became skills** — All workflows migrated from legacy `.claude/commands/` to the Agent Skills standard (`.claude/skills/<name>/SKILL.md` with YAML frontmatter); skills are now self-contained rather than pointers to a separate workflow document
+- **Agents are real subagents now** — All agent files gained the YAML frontmatter Claude Code requires (tools, model, memory, color); `project-advisor` keeps persistent cross-session memory
+- **README and CLAUDE.md** rewritten around the "AI team in a box" experience and the standards-based compatibility story
+
+### Removed
+- **`docs/assistant_workflows.md`** — replaced by self-contained skills (the skills *are* the shared workflow layer now)
+- **`.github/prompts/`** (7 files) — redundant since Copilot discovers `.claude/skills/` natively
+- **`.claude/commands/`** — migrated to `.claude/skills/`
+
+---
+
 ## 2026-04-16
 
 ### Added

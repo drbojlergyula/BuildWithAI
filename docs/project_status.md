@@ -6,7 +6,7 @@
      3. What's next?
 -->
 
-**Last Updated:** April 16, 2026 (put-me-in-context workflow added)
+**Last Updated:** July 2, 2026 (modernization: open standards, AI team expansion, welcome hook)
 **Project Start:** April 2026
 
 ---
@@ -34,10 +34,24 @@
 - ✅ README "Why this exists" section explaining the bus-factor motivation
 - ✅ Repo description metadata and footer tagline
 
-### ⏳ Phase 3: Polish and Distribution
+### ✅ Phase 3: Modernization — Open Standards & AI Team (COMPLETE)
+**Status:** Done (July 2, 2026)
+
+**Completed:**
+- ✅ Compatibility layer rebuilt on open standards: `AGENTS.md` canonical, `CLAUDE.md` imports it, skills in the Agent Skills format discovered natively by Claude Code, Copilot, and Codex
+- ✅ Legacy `.claude/commands/`, `.github/prompts/`, and `docs/assistant_workflows.md` retired — one definition of every workflow
+- ✅ Agents upgraded to real Claude Code subagents (frontmatter, scoped tools, persistent advisor memory)
+- ✅ AI team expanded: `build-verifier` (independent QA) and `research-analyst` (web research)
+- ✅ New skills: `fix-bug`, `go-live`; `put-me-in-context` now a skill
+- ✅ SessionStart welcome hook, modular rules, safe permission defaults
+- ✅ README rewritten as the standards-based flagship; BuildWithClaude repositioned as the Claude-only on-ramp sharing the identical `.claude/` toolkit
+
+### ⏳ Phase 4: Polish and Distribution
 **Status:** Not started
 
 **Candidates:**
+- Package the `.claude/` toolkit as a Claude Code plugin with a marketplace repo, so existing projects can install and update the AI team without re-cloning the template
 - GitHub template repository configuration
 - Example filled-in project docs (to show what a real setup looks like)
 - Contribution guide
+- Optional MCP server suggestions (`.mcp.json`) for common business needs
