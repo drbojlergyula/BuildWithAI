@@ -10,6 +10,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## 2026-07-02 (later the same day)
+
+### Added
+- **Plugin packaging** — `.claude-plugin/plugin.json` + `marketplace.json` make this repo an installable Claude Code plugin marketplace: `/plugin marketplace add drbojlergyula/BuildWithAI` then `/plugin install buildwithai-team@buildwithai` adds the AI team (7 skills, 4 agents, welcome hook) to *any* existing project, with versioned updates. Verified end-to-end with a local install: all components resolve
+- **`agents` root symlink** → `.claude/agents/` — required because the plugin system only discovers agents in its default location (custom manifest paths for agents fail silently in current Claude Code; found by testing)
+- **Smarter welcome hook** — third state for plugin installs: in a project without `docs/`, it introduces the toolkit and offers `start` to create the docs-as-memory structure
+- **CI validation** — `.github/workflows/validate-template.yml` + `validate_template.py` check every skill/agent has required frontmatter, JSON configs parse, hook scripts are executable, and the README/AGENTS.md rosters match the files on disk
+- **`docs/start_here_with_claude.md`** — gentle 15-minute beginner guide (absorbs the former BuildWithClaude on-ramp)
+
+### Changed
+- **Product consolidation** — BuildWithClaude is deprecated and merged into this repo; its README now points here. One product, one place for improvements
+
+---
+
 ## 2026-07-02
 
 ### Added

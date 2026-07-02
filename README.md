@@ -6,7 +6,14 @@
 
 A starter template for building software with AI coding assistants. It gives your project a documentation "brain" that any assistant can read, plus a pre-built team of AI specialists — and thanks to the open standards the industry converged on ([AGENTS.md](https://agents.md), [Agent Skills](https://agentskills.io), both under the Linux Foundation), the *same files* work in **Claude Code, OpenAI Codex, and GitHub Copilot**. No adapters, no duplication, no drift.
 
-> Want the simplest possible start with Claude Code only? Use **BuildWithClaude** — the gentle on-ramp with the same AI team. This repo is the standards-based flagship for teams that mix tools.
+> **New to all of this?** Read the [gentle start-here guide](docs/start_here_with_claude.md) — zero to a set-up project in 15 minutes, no experience needed. (It replaces the former BuildWithClaude repo, which has merged into this one.)
+>
+> **Already have a project?** You don't need the template — install the AI team as a plugin:
+>
+> ```
+> /plugin marketplace add drbojlergyula/BuildWithAI
+> /plugin install buildwithai-team@buildwithai
+> ```
 
 ---
 
@@ -107,6 +114,7 @@ BuildWithAI/
 ├── AGENTS.md                    ← Canonical instructions (open standard — Codex, Copilot, Cursor, …)
 ├── CLAUDE.md                    ← Claude Code entry point; imports AGENTS.md
 ├── docs/                        ← Your project's long-term memory
+│   ├── start_here_with_claude.md ← Gentle 15-minute guide for beginners
 │   ├── project_spec.md          ← What you are building and why
 │   ├── architecture.md          ← How it is structured
 │   ├── brainstorm.md            ← Ideas before they are decisions
@@ -118,9 +126,21 @@ BuildWithAI/
 │   ├── rules/                   ← Modular conventions
 │   ├── hooks/                   ← Welcome-on-open magic (Claude Code)
 │   └── settings.json            ← Safe permission defaults + hook wiring
+├── .claude-plugin/              ← Makes this repo installable as a Claude Code plugin
+├── agents → .claude/agents      ← Symlink so the plugin finds the team in its standard location
 └── .github/
-    └── copilot-instructions.md  ← Copilot-specific notes (points to AGENTS.md)
+    ├── copilot-instructions.md  ← Copilot-specific notes (points to AGENTS.md)
+    └── workflows/               ← CI that validates every skill/agent on each push
 ```
+
+### Two ways to use it
+
+| You have | Do this |
+|---|---|
+| **A new project** | Use this repo as a template (button above) — you get the docs brain *and* the AI team |
+| **An existing project** | Install the plugin (commands at the top) — you get the AI team and can run `start` to add the docs brain |
+
+The plugin is versioned (currently `2.0.0`); when you update this repo and bump the version, everyone who installed it gets the update via `/plugin update`.
 
 All files are pre-filled with a working example. The `start` workflow replaces the example with your actual project.
 

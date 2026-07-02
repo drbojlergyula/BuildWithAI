@@ -46,12 +46,22 @@
 - ✅ SessionStart welcome hook, modular rules, safe permission defaults
 - ✅ README rewritten as the standards-based flagship; BuildWithClaude repositioned as the Claude-only on-ramp sharing the identical `.claude/` toolkit
 
-### ⏳ Phase 4: Polish and Distribution
-**Status:** Not started
+### 🚀 Phase 4: Distribution (IN PROGRESS)
+**Status:** Plugin shipped; visibility work remains
 
-**Candidates:**
-- Package the `.claude/` toolkit as a Claude Code plugin with a marketplace repo, so existing projects can install and update the AI team without re-cloning the template
-- GitHub template repository configuration
+**Completed:**
+- ✅ Plugin + marketplace packaging (`.claude-plugin/`) — the AI team installs into any project and receives versioned updates
+- ✅ CI validation of skills/agents/configs on every push
+- ✅ Product consolidation: BuildWithClaude deprecated in favour of this repo; beginner on-ramp absorbed as `docs/start_here_with_claude.md`
+
+**Next (manual steps for the owner):**
+- Merge this branch, then tag `v2.0.0` (a GitHub Release makes the version visible)
+- Archive the BuildWithClaude repository on GitHub (Settings → Archive) after merging its deprecation README
+- Mark this repo as a Template repository (Settings → Template repository)
+- Record a short demo GIF for the README (fresh clone → welcome → /start → team reveal)
+- Submit the plugin to `anthropics/claude-plugins-community` for marketplace discovery
+
+**Later candidates:**
 - Example filled-in project docs (to show what a real setup looks like)
 - Contribution guide
 - Optional MCP server suggestions (`.mcp.json`) for common business needs
