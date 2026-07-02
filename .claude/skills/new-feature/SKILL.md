@@ -17,20 +17,23 @@ If the user provided a description as an argument, treat it as the answer to "wh
    - Who is it for, and what problem does it solve?
    - How will you know it is working — what does success look like?
 
-2. **Write the user stories.** Draft one to three user stories in the format
+2. **Clarify before writing.** List any ambiguities that would change how the feature gets built (who can do it, what happens on failure, limits, edge cases) and resolve them with the user now — each is one cheap question today or one expensive rebuild later. Also check `docs/house_rules.md`: if the feature conflicts with a house rule (budget, never-do list), raise it before going further.
+
+3. **Write the user stories.** Draft one to three user stories in the format
    *"A [user] can [do X] so that [goal]."*
    Show them to the user and confirm the wording before writing anything into the spec.
 
-3. **Place it in a version.** Recommend whether this belongs in the MVP, v1.0, or a later version — and say why. If it displaces something else, say that too. Confirm with the user.
+4. **Place it in a version.** Recommend whether this belongs in the MVP, v1.0, or a later version — and say why. If it displaces something else, say that too. Confirm with the user.
 
-4. **Update the docs.**
+5. **Update the docs.**
    - Add the feature and its user stories to the right section of `docs/project_spec.md`.
    - Update `docs/architecture.md` if the feature changes the system design (new components, routes, data).
    - Add the feature to the right milestone in `docs/project_status.md`, marked Not Started.
+   - Add one line at the top of `docs/decisions.md` (`date — added [feature] to [version] — why`).
    - If related undecided ideas exist in `docs/brainstorm.md`, resolve or link them.
 
-5. **Confirm and offer next steps.** Tell the user what changed, then offer:
-   - "Build it now" — start implementing immediately
+6. **Confirm and offer next steps.** Tell the user what changed, then offer:
+   - `/build-next` — build it now, verified by QA
    - "Review first" — run the spec-reviewer agent to sanity-check the addition
 
 ## Rules

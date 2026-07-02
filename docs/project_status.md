@@ -6,7 +6,7 @@
      3. What's next?
 -->
 
-**Last Updated:** July 2, 2026 (modernization: open standards, AI team expansion, welcome hook)
+**Last Updated:** July 2, 2026 (v2.1.0 — competitive round: build-next loop, save points, adopt-project, house rules, founder UX)
 **Project Start:** April 2026
 
 ---
@@ -46,8 +46,24 @@
 - ✅ SessionStart welcome hook, modular rules, safe permission defaults
 - ✅ README rewritten as the standards-based flagship; BuildWithClaude repositioned as the Claude-only on-ramp sharing the identical `.claude/` toolkit
 
-### 🚀 Phase 4: Distribution (IN PROGRESS)
+### ✅ Phase 4: Best-on-Market Round (COMPLETE)
+**Status:** Done (July 2, 2026) — driven by competitive research (BMAD, Spec Kit, Task Master, Agent OS, Superpowers, Lovable/Bolt)
+
+**Completed:**
+- ✅ The daily build loop: `/build-next` (spec → build → independent QA verification → recorded progress)
+- ✅ Founder safety net: `/save-point` + `/go-back` (rescue-branch protected)
+- ✅ Market expansion: `/adopt-project` for existing codebases and Lovable/Bolt/v0 graduates
+- ✅ Guardrails: `docs/house_rules.md` (binding non-negotiables) + `docs/decisions.md` (auto-maintained decision log)
+- ✅ Founder UX: output style (auto-applied via plugin installs), statusline with phase + last save (template installs), next-action hints at session start
+- ✅ Plugin v2.1.0 — 11 skills, 4 agents, output style included
+
+**Deliberately rejected** (category anti-goals, documented in the changelog): persona-army simulation, full spec-driven pipelines, JSON task databases, formal ADRs.
+
+### 🚀 Phase 5: Distribution (IN PROGRESS)
 **Status:** Plugin shipped; visibility work remains
+
+<!-- Statusline contract: keep "(IN PROGRESS)" on the active phase heading —
+     .claude/statusline.sh reads it to display the current phase. -->
 
 **Completed:**
 - ✅ Plugin + marketplace packaging (`.claude-plugin/`) — the AI team installs into any project and receives versioned updates
@@ -55,11 +71,11 @@
 - ✅ Product consolidation: BuildWithClaude deprecated in favour of this repo; beginner on-ramp absorbed as `docs/start_here_with_claude.md`
 
 **Next (manual steps for the owner):**
-- Merge this branch, then tag `v2.0.0` (a GitHub Release makes the version visible)
+- Merge this branch, then tag `v2.1.0` (a GitHub Release makes the version visible — match the version in `.claude-plugin/plugin.json`)
 - Archive the BuildWithClaude repository on GitHub (Settings → Archive) after merging its deprecation README
 - Mark this repo as a Template repository (Settings → Template repository)
 - Record a short demo GIF for the README (fresh clone → welcome → /start → team reveal)
-- Submit the plugin to `anthropics/claude-plugins-community` for marketplace discovery
+- Submit the plugin to `anthropics/claude-plugins-community` for marketplace discovery (see the prepared submission package)
 
 **Later candidates:**
 - Example filled-in project docs (to show what a real setup looks like)

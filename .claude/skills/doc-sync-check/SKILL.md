@@ -9,7 +9,7 @@ Checks that all project documents are consistent with each other and up to date.
 
 ## Steps
 
-1. Read the main project docs: `project_spec.md`, `architecture.md`, `project_status.md`, `changelog.md`, `brainstorm.md`.
+1. Read the main project docs: `project_spec.md`, `architecture.md`, `project_status.md`, `changelog.md`, `brainstorm.md`, `house_rules.md`, `decisions.md`.
 
 2. If this repository is a reusable multi-assistant template (it contains `AGENTS.md` or `.github/copilot-instructions.md`), also read those files plus `CLAUDE.md`, `README.md`, and the files in `.claude/agents/` and `.claude/skills/` — and check them for drift against each other.
 
@@ -31,9 +31,15 @@ Checks that all project documents are consistent with each other and up to date.
    **Unresolved brainstorm items**
    - Any ideas in `brainstorm.md` marked as undecided that should have been decided by now based on what is built?
 
-4. Report findings under four headings:
+   **Code vs. spec drift** *(if application code exists)*
+   - Pick the 3–5 most important user stories in the spec and check the code actually implements them — routes exist, components exist, error states exist where promised.
+   - Look the other way too: significant code (new routes, models, pages) that the spec and architecture never mention.
+   - Check recent work against `docs/house_rules.md` — flag anything that quietly violates a house rule (new paid service, unprotected admin page, missing error state).
+
+4. Report findings under five headings:
    - **Out of date** — docs that need updating to reflect current state
    - **Inconsistent** — things that contradict between files
+   - **Code drift** — where the code and the spec/house rules disagree
    - **Placeholder text remaining** — sections not yet filled in
    - **All good** — if nothing needs attention
 

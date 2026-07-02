@@ -10,7 +10,34 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
-## 2026-07-02 (later the same day)
+## v2.1.0 — 2026-07-02: Competitive round (best-on-market push)
+
+Based on a competitive teardown of BMAD-method, GitHub Spec Kit, Task Master, Agent OS, Superpowers, and the Lovable/Bolt founder market. Everything added passes three tests: founder-readable, agent-maintained, zero ceremony.
+
+### Added
+- **`/build-next`** — the spec→build→verify chain: picks the next planned story, assembles a context packet (stories + architecture constraints + house rules), builds it, has `build-verifier` independently prove it works, records progress, points at what's next
+- **`/save-point` and `/go-back`** — git as a video-game save system for non-technical users; `/go-back` always creates a rescue branch first and is user-invoked only
+- **`/adopt-project`** — brings an existing codebase (incl. Lovable/Bolt/v0 exports) into the docs-as-memory system: reverse-engineers spec/architecture/conventions from code, interviews for intent, documents what IS
+- **`docs/house_rules.md`** — the owner's ~10 non-negotiables (budget ceiling, never-without-asking list); every workflow re-checks it, violations are automatic blockers in `/go-live` and High findings for the advisor
+- **`docs/decisions.md`** — one-line decision log (date — decision — why), appended automatically by the workflows; deliberately not ADRs (those decay)
+- **Founder output style** (`.claude/output-styles/founder.md`) — plain-English, business-first communication with 💡 business insights; auto-applies for plugin installs (`force-for-plugin`), opt-in in the template
+- **Founder statusline** (`.claude/statusline.sh`) — shows current phase · last save age · model; wired via `settings.json`
+- **"What to say next"** — the SessionStart hook now has Claude offer 2–3 concrete next actions based on the project status
+- **MIT LICENSE file** — declared in `plugin.json` since v2.0.0 and required for marketplace review; now actually present
+- **Template sentinel** — untouched-template detection now uses one machine-readable marker (`template-state: untouched-example` in `docs/project_spec.md`) shared by the hook and skills, instead of fragile prose matching
+- **Canonical house-rules enforcement rule** — `.claude/rules/house-rules.md` is the single normative statement; skills carry only their workflow-specific consequence
+
+### Changed
+- **`/start`** — interviews for house rules, writes the two new docs, ends with an offered first advisor review ("your advisor already found three things") and hands off to `/build-next`
+- **`/new-feature`** — explicit clarify-ambiguities step before writing stories; house-rules conflict check; appends to the decision log
+- **`/doc-sync-check`** — new code-vs-spec drift section: verifies top user stories actually exist in code, and recent work honours the house rules
+- **`/go-live`** — house-rules compliance is a blocker-level check; offers a one-click deploy button for the user's app
+- **`/put-me-in-context`** — briefing now includes house rules in force and the key decisions so far
+- **Plugin** bumped to 2.1.0 (ships the output style; 11 skills, 4 agents)
+
+---
+
+## v2.0.0 — 2026-07-02: Plugin packaging & consolidation
 
 ### Added
 - **Plugin packaging** — `.claude-plugin/plugin.json` + `marketplace.json` make this repo an installable Claude Code plugin marketplace: `/plugin marketplace add drbojlergyula/BuildWithAI` then `/plugin install buildwithai-team@buildwithai` adds the AI team (7 skills, 4 agents, welcome hook) to *any* existing project, with versioned updates. Verified end-to-end with a local install: all components resolve
@@ -24,7 +51,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
-## 2026-07-02
+## 2026-07-02: Modernization on open standards
 
 ### Added
 - **AI team expansion** — Two new agents: `build-verifier` (independent QA that actually runs what was built) and `research-analyst` (cited web research briefs via live search)

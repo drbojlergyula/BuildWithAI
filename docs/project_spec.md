@@ -1,3 +1,7 @@
+<!-- template-state: untouched-example — this marker means the spec still contains the template's
+     example project. /start and /adopt-project DELETE this comment when they write the real spec.
+     The SessionStart hook and skills use it to detect an untouched template. Do not edit it by hand. -->
+
 # Project Spec
 
 This document defines **what** you are building and **why**. It covers product requirements and engineering decisions.

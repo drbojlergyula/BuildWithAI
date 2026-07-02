@@ -35,18 +35,26 @@ Open Claude Code (the Claude icon in the sidebar). You don't need to know any co
 
 Claude interviews you about your idea — what it is, who it's for, what matters most — then writes your project documents and introduces your AI team: an advisor, a spec reviewer, a QA engineer, and a researcher.
 
-## 5. Build things by describing them
+## 5. Build — one command at a time
 
-From here on, you work in plain English:
+Your daily rhythm is one command:
 
-> "Build the order form described in the project spec."
+```
+/build-next
+```
+
+Claude picks the next feature from your plan, builds it, has your QA agent independently verify it actually works, and tells you what's next. You can also just describe things in plain English:
+
 > "Make the confirmation message friendlier."
 > "Run the project advisor — what should I focus on next?"
 
-Three habits that keep everything smooth:
+Four habits that keep everything smooth:
 
-- **After finishing something:** type `/update-docs-and-commit` — your progress is documented and saved.
+- **After anything you'd hate to lose:** type `/save-point` — like a save point in a video game.
+- **If something went wrong:** type `/go-back` — safely rewind to an earlier save point.
 - **When something breaks:** type `/fix-bug` and describe what you saw.
 - **When you come back after a break:** type `/put-me-in-context` — instant briefing on where things stand.
+
+(Already have code — for example from Lovable or Bolt? Run `/adopt-project` instead of `/start` in step 4: it reads your code and builds the project docs around what exists.)
 
 That's the whole system. The [README](../README.md) has the full tour when you're curious.

@@ -46,9 +46,9 @@ Most templates give you empty folders. This one gives you **staff**:
 | ✅ **build-verifier** | QA engineer. After a feature is built, independently runs it and proves it works. |
 | 🌐 **research-analyst** | Market researcher. Investigates competitors, pricing, and technology choices on the live web and files a cited brief. |
 
-Plus guided workflows for the whole life of the project:
+Plus guided workflows for the whole life of the project — including `build-next`, the daily rhythm that builds the next planned feature and has QA verify it, and `save-point`/`go-back`, git wrapped in video-game language:
 
-`start` → `new-feature` → `fix-bug` → `update-docs-and-commit` → `put-me-in-context` → `doc-sync-check` → `go-live`
+`start` (or `adopt-project`) → `build-next` → `save-point` → `new-feature` → `fix-bug` → `put-me-in-context` → `doc-sync-check` → `go-live`
 
 ---
 
@@ -82,9 +82,13 @@ Open the folder in VS Code (**File → Open Folder**).
 
 Your assistant interviews you about your idea (5–10 minutes), fills in every project document, proposes a stack and an MVP plan, then introduces your AI team.
 
-**5. Build**
+**5. Build — one verified feature at a time**
 
-> "Build the order form described in the project spec."
+> `/build-next`
+
+Your assistant picks the next story from the plan, builds it, has the QA agent independently verify it works, records the progress, and tells you what's next. That's the daily rhythm.
+
+**Already have code?** (Including a Lovable / Bolt / v0 export that hit the wall.) Run `adopt-project` instead of `start` — it reverse-engineers the docs from your codebase and sets up the memory system around what exists.
 
 ---
 
@@ -94,10 +98,14 @@ Skills answer to slash commands, their names, or plain English — whichever you
 
 | When | Workflow | Plain English |
 |---|---|---|
+| Build the next thing in the plan | `build-next` | "build the next feature" |
+| Save your progress (like a game) | `save-point` | "save my progress" |
+| Something went wrong — rewind | `go-back` | "go back to before X" |
 | Need a full project summary | `put-me-in-context` | "put me in context" |
 | Adding something new | `new-feature` | "add a feature to the spec" |
 | Something is broken | `fix-bug` | "fix this bug" |
 | Finished a piece of work | `update-docs-and-commit` | "update docs and commit" |
+| Bringing existing code in | `adopt-project` | "adopt this project" |
 | Feeling stuck or unsure | agent: `project-advisor` | "run the project advisor" |
 | About to build from the spec | agent: `spec-reviewer` | "review the spec" |
 | Just built a feature | agent: `build-verifier` | "verify the build" |
@@ -117,15 +125,19 @@ BuildWithAI/
 │   ├── start_here_with_claude.md ← Gentle 15-minute guide for beginners
 │   ├── project_spec.md          ← What you are building and why
 │   ├── architecture.md          ← How it is structured
+│   ├── house_rules.md           ← Your non-negotiables — every workflow re-checks them
+│   ├── decisions.md             ← One-line decision log, maintained by the AI automatically
 │   ├── brainstorm.md            ← Ideas before they are decisions
 │   ├── project_status.md        ← Progress and milestones
 │   └── changelog.md             ← History of changes
 ├── .claude/
 │   ├── skills/                  ← Guided workflows (Agent Skills standard — read by all three tools)
 │   ├── agents/                  ← Your AI team (native subagents in Claude Code)
+│   ├── output-styles/           ← "Founder" style — plain-English, business-first communication
 │   ├── rules/                   ← Modular conventions
 │   ├── hooks/                   ← Welcome-on-open magic (Claude Code)
-│   └── settings.json            ← Safe permission defaults + hook wiring
+│   ├── statusline.sh            ← Statusline: current phase · last save · model
+│   └── settings.json            ← Safe permission defaults + statusline + hook wiring
 ├── .claude-plugin/              ← Makes this repo installable as a Claude Code plugin
 ├── agents → .claude/agents      ← Symlink so the plugin finds the team in its standard location
 └── .github/
@@ -140,7 +152,24 @@ BuildWithAI/
 | **A new project** | Use this repo as a template (button above) — you get the docs brain *and* the AI team |
 | **An existing project** | Install the plugin (commands at the top) — you get the AI team and can run `start` to add the docs brain |
 
-The plugin is versioned (currently `2.0.0`); when you update this repo and bump the version, everyone who installed it gets the update via `/plugin update`.
+The plugin is versioned (currently `2.1.0`); when you update this repo and bump the version, everyone who installed it gets the update via `/plugin update`.
+
+---
+
+## How it compares
+
+Honest positioning — these are all good tools; they solve different problems:
+
+| | BuildWithAI | BMAD-method | GitHub Spec Kit | Task Master | Lovable / Bolt |
+|---|---|---|---|---|---|
+| Built for | **Founders & business owners** | Dev teams | Dev teams | Devs with a PRD | Anyone (hosted) |
+| Process weight | Light — 7 docs, no ceremony | Heavy (12+ personas) | Heavy (spec pipeline) | Medium | None |
+| Project memory | **Docs + decision log + agent memory, maintained automatically** | Story files | Specs | tasks.json | Weak — the famous "wall" |
+| Verification | Independent QA agent runs your feature | QA persona | — | — | You click around |
+| Works in | Claude Code, Codex, Copilot, Cursor… | Multiple | 30+ agents | Multiple | Their platform only |
+| Best at | **Week 2 and beyond** — still remembering your project | Big planned builds | Greenfield specs | Task plumbing | Minute 5 — instant demo |
+
+The honest pitch: prototype in Lovable if you like — then `adopt-project` here when it stops remembering what you built. This is the tool for the long haul.
 
 All files are pre-filled with a working example. The `start` workflow replaces the example with your actual project.
 

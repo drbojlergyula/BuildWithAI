@@ -25,6 +25,8 @@ Before asking anything, silently read and understand:
 - `docs/brainstorm.md` — ideation scratchpad template
 - `docs/project_status.md` — milestone tracking template
 - `docs/changelog.md` — version history template
+- `docs/house_rules.md` — the owner's non-negotiables template
+- `docs/decisions.md` — one-line decision log template
 - The skill and agent files in `.claude/skills/` and `.claude/agents/`
 
 You now understand the full shape of what needs to be filled in. Keep this in mind throughout the interview.
@@ -73,6 +75,11 @@ Work through the following areas in roughly this order, but skip or reorder as c
 - Are there any platforms the product must support (web, iOS, Android, desktop)?
 - Any compliance, accessibility, or legal requirements to be aware of?
 - Will this be built by you alone, with a team, or with contractors?
+
+#### 2f. House rules
+- Is there a monthly budget ceiling for hosting and services?
+- Is there anything I should never do without asking you first? (touch payments, delete data, add paid services…)
+- Any hard "always" rules — things that must be true in everything we build?
 
 Keep asking clarifying questions until you can confidently answer all of the following:
 - What is this product in one sentence?
@@ -134,7 +141,7 @@ Adjust based on feedback. Keep iterating until the user says the plan looks good
 
 ### Phase 5 — Write all project files
 
-Once the user approves the iteration plan, update all project files to reflect the real product. Replace all example content.
+Once the user approves the iteration plan, update all project files to reflect the real product. Replace all example content, **including deleting the `template-state: untouched-example` sentinel comment at the top of `docs/project_spec.md`** — that marker is how the welcome hook and skills know the template is untouched.
 
 Update these files in order:
 
@@ -155,7 +162,11 @@ Update these files in order:
 
 5. **`docs/changelog.md`** — add the first entry: project initialized, date, summary of what was decided.
 
-6. **The assistant-facing overview files** — update the Overview section of `CLAUDE.md` (and `AGENTS.md` if this repo has one) to describe the real product. The tools sections do not need changing — the AI team applies to every project.
+6. **`docs/house_rules.md`** — replace the example with the user's real non-negotiables from the interview (budget ceiling, never-without-asking list, always rules, tone). Keep it under ~10 rules.
+
+7. **`docs/decisions.md`** — clear the example rows and seed the log with the real decisions just made (stack choice, MVP cut lines, anything debated) — one line each: date, decision, why.
+
+8. **The assistant-facing overview files** — update the Overview section of `CLAUDE.md` (and `AGENTS.md` if this repo has one) to describe the real product. The tools sections do not need changing — the AI team applies to every project.
 
 After writing all files, tell the user what was updated and what they should review.
 
@@ -172,7 +183,7 @@ This is the reveal. Introduce the team that now works for the user. Present it w
 > ✅ **build-verifier** — your QA engineer. After something is built, it independently tests that the feature actually does what the spec says.
 > 🌐 **research-analyst** — your market researcher. Investigates competitors, pricing, technology choices, or anything else on the live web, and files a cited brief.
 >
-> And your shortcut commands: `/new-feature`, `/update-docs-and-commit`, `/put-me-in-context`, `/doc-sync-check`, `/fix-bug`, and `/go-live` when you're ready to launch.
+> And your shortcut commands: `/build-next` builds the next planned feature (and has QA verify it), `/save-point` and `/go-back` are your save game and rewind, `/new-feature` adds to the plan, `/update-docs-and-commit` saves progress with fresh docs, `/put-me-in-context` briefs anyone instantly, `/doc-sync-check` keeps the docs honest, `/fix-bug` when something breaks, and `/go-live` when you're ready to launch.
 
 Then ask:
 
@@ -182,7 +193,17 @@ If the user identifies something, create a new skill or agent for it in `.claude
 
 ---
 
-### Phase 7 — Wrap up
+### Phase 7 — First advisor review (the payoff)
+
+Offer the immediate wow moment:
+
+> **One last thing — your advisor is ready for a first review.** It will read everything we just wrote and tell you what we might have missed: risks, gaps, blind spots. Takes about a minute. Want the review now? (Recommended.)
+
+If yes, run the project-advisor agent. Its first findings — delivered minutes after setup — are the moment this system proves it is a team, not a template.
+
+---
+
+### Phase 8 — Wrap up
 
 Confirm everything is done. Give the user a clear next step:
 
@@ -190,17 +211,18 @@ Confirm everything is done. Give the user a clear next step:
 >
 > **Right now:**
 > 1. Read through `docs/project_spec.md` — does it capture what you want to build?
-> 2. If anything is wrong or missing, tell me and I will update it.
+> 2. Check `docs/house_rules.md` — those are the rules I will hold us both to.
 >
-> **Before you start building:**
-> 3. Ask me to "run the spec-reviewer agent" — it will check the spec for gaps before any code is written.
+> **Before the first build:**
+> 3. Ask me to "run the spec-reviewer agent" — it checks the spec for gaps while they are still cheap to fix on paper. (If you took the advisor review above, this is the quick second opinion on the spec itself.)
 >
 > **When you are ready to build:**
-> 4. Describe the first feature you want to work on in plain English and I will build it.
+> 4. Type `/build-next` — I'll build the first feature in the plan and have your QA engineer verify it works.
 >
 > **As you go:**
-> - `/new-feature` any time you want to add something new to the spec
-> - `/update-docs-and-commit` after finishing any piece of work
+> - `/build-next` to keep shipping the plan, one verified feature at a time
+> - `/save-point` after anything you'd hate to lose; `/go-back` if something goes wrong
+> - `/new-feature` any time you want to add something new to the plan
 > - `/put-me-in-context` whenever you (or a teammate) need instant full context
 > - "run the project-advisor agent" any time you want a senior review of where things stand
 

@@ -18,6 +18,8 @@ You have persistent memory. Check it for advice you gave in past sessions: if ea
 Silently read all project files:
 - `CLAUDE.md` (and `AGENTS.md` if present)
 - `docs/project_spec.md`, `docs/architecture.md`, `docs/project_status.md`, `docs/changelog.md`, `docs/brainstorm.md`
+- `docs/house_rules.md` — the owner's non-negotiables; treat violations as automatic High-priority findings
+- `docs/decisions.md` — the decision history; flag decisions the project has quietly drifted away from
 - The files in `.claude/agents/` and `.claude/skills/`
 - If this repo has multi-assistant adapters (`.github/copilot-instructions.md` etc.), read those too
 
