@@ -6,7 +6,7 @@
      3. What's next?
 -->
 
-**Last Updated:** July 2, 2026 (v2.1.0 — competitive round: build-next loop, save points, adopt-project, house rules, founder UX)
+**Last Updated:** July 19, 2026 (v2.2.0 — token-efficiency round: cost-tiered AI team, AI budget as a house rule, leaner workflow reading lists)
 **Project Start:** April 2026
 
 ---
@@ -71,7 +71,7 @@
 - ✅ Product consolidation: BuildWithClaude deprecated in favour of this repo; beginner on-ramp absorbed as `docs/start_here_with_claude.md`
 
 **Next (manual steps for the owner):**
-- Merge this branch, then tag `v2.1.0` (a GitHub Release makes the version visible — match the version in `.claude-plugin/plugin.json`)
+- Merge this branch, then tag `v2.2.0` (a GitHub Release makes the version visible — match the version in `.claude-plugin/plugin.json`)
 - Archive the BuildWithClaude repository on GitHub (Settings → Archive) after merging its deprecation README
 - Mark this repo as a Template repository (Settings → Template repository)
 - Record a short demo GIF for the README (fresh clone → welcome → /start → team reveal)
@@ -81,3 +81,13 @@
 - Example filled-in project docs (to show what a real setup looks like)
 - Contribution guide
 - Optional MCP server suggestions (`.mcp.json`) for common business needs
+
+### ✅ Phase 6: Token-Efficiency Round (COMPLETE)
+**Status:** Done (July 19, 2026) — driven by real founder feedback: a company subscription burned $200 in 3 days running everything on frontier models
+
+**Completed:**
+- ✅ Cost-tiered AI team: `spec-reviewer`, `build-verifier`, `research-analyst` pinned to Sonnet; `project-advisor` keeps the session model (judgment is worth frontier rates; QA on Haiku rejected — false-PASS risk)
+- ✅ AI budget added to the `/start` interview, the house-rules example, and the advisor's operations checks
+- ✅ Leaner reading lists: advisor and `/start` use the `AGENTS.md` rosters instead of reading every skill/agent file
+- ✅ Doc-length discipline in the documentation conventions (docs are context — length is a running cost)
+- ✅ README "Keeping your AI costs down" section; plugin bumped to 2.2.0

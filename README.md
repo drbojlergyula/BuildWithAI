@@ -115,6 +115,17 @@ Skills answer to slash commands, their names, or plain English — whichever you
 
 ---
 
+## Keeping your AI costs down
+
+AI assistants bill by the token, and the fastest way to burn a monthly budget is running every small task on a frontier model. This template is built to be cheap to run:
+
+- **The team is cost-tiered.** `spec-reviewer`, `build-verifier`, and `research-analyst` are pinned to Sonnet — checklist reviews, QA runs, and web research don't need frontier rates. Only `project-advisor` inherits your session model, because judgment is the one thing worth paying up for. (We deliberately skipped Haiku for QA: a false "PASS" is the most expensive token in the system.)
+- **The docs brain is itself the token saver.** A tight `project_status.md` read at session start replaces re-explaining your project in chat every day. Keep the docs pruned — the conventions in `.claude/rules/documentation.md` enforce this.
+- **Match the model to the moment.** Run the daily `/build-next` rhythm on a mid-tier model; switch up for the `/start` interview, architecture decisions, and advisor reviews. In Claude Code, `/model` switches models and `/cost` shows what the session has used.
+- **AI spend is a house rule.** The `/start` interview asks for your AI budget alongside hosting, it lands in `docs/house_rules.md`, and the advisor checks it like any other non-negotiable.
+
+---
+
 ## What's in the box
 
 ```
@@ -152,7 +163,7 @@ BuildWithAI/
 | **A new project** | Use this repo as a template (button above) — you get the docs brain *and* the AI team |
 | **An existing project** | Install the plugin (commands at the top) — you get the AI team and can run `start` to add the docs brain |
 
-The plugin is versioned (currently `2.1.0`); when you update this repo and bump the version, everyone who installed it gets the update via `/plugin update`.
+The plugin is versioned (currently `2.2.0`); when you update this repo and bump the version, everyone who installed it gets the update via `/plugin update`.
 
 ---
 

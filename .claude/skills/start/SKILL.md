@@ -27,7 +27,7 @@ Before asking anything, silently read and understand:
 - `docs/changelog.md` — version history template
 - `docs/house_rules.md` — the owner's non-negotiables template
 - `docs/decisions.md` — one-line decision log template
-- The skill and agent files in `.claude/skills/` and `.claude/agents/`
+- The skill and agent rosters in `AGENTS.md` — do **not** read every file in `.claude/skills/` and `.claude/agents/`; the rosters are enough to introduce the team in Phase 6, and reading eleven skill files burns tokens the user is paying for
 
 You now understand the full shape of what needs to be filled in. Keep this in mind throughout the interview.
 
@@ -77,7 +77,7 @@ Work through the following areas in roughly this order, but skip or reorder as c
 - Will this be built by you alone, with a team, or with contractors?
 
 #### 2f. House rules
-- Is there a monthly budget ceiling for hosting and services?
+- Is there a monthly budget ceiling for hosting and services? And for AI usage (assistant subscription or API spend)?
 - Is there anything I should never do without asking you first? (touch payments, delete data, add paid services…)
 - Any hard "always" rules — things that must be true in everything we build?
 

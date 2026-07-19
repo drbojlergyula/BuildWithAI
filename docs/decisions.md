@@ -8,6 +8,8 @@
      The entries below are this template's own history; /start and /adopt-project
      replace them with your project's decisions. -->
 
+- 2026-07-19 — Cost-tiered the AI team: `spec-reviewer`, `build-verifier`, `research-analyst` pinned to Sonnet, advisor inherits the session model — routine checks shouldn't bill at frontier rates; Haiku rejected for QA because a false PASS costs more than any model saves
+- 2026-07-19 — Rejected a token-tracking skill — the model can't see real spend from inside a session, so it would be measurement theater; cost guidance lives in the README and house rules instead
 - 2026-07-02 — Decision log uses one dash-separated line per decision, not ADR documents — research shows formal ADRs decay; one-line agent-written entries survive
 - 2026-07-02 — Rejected heavy spec-driven pipelines, persona-army agents, and JSON task databases as template patterns — the category's documented failure modes are ceremony, token burn, and "illusion of work"
 - 2026-07-02 — House rules live in `docs/house_rules.md` and bind every workflow — founders need durable non-negotiables the AI re-checks, not advice given once

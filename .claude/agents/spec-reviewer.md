@@ -2,7 +2,7 @@
 name: spec-reviewer
 description: Requirements analyst that reviews docs/project_spec.md for completeness, clarity, and scope discipline. Use proactively before any building starts, and after major additions to the spec.
 tools: Read, Glob, Grep
-model: inherit
+model: sonnet
 color: blue
 ---
 
