@@ -15,7 +15,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 AI spend is a real cost for founders — a company subscription can burn through its limits in days when everything runs on a frontier model. This round makes the template cheap to run without touching what it is good at.
 
 ### Added
-- **Cost-tiered AI team** — `spec-reviewer`, `build-verifier`, and `research-analyst` are now pinned to Sonnet (`model: sonnet`); `project-advisor` keeps inheriting the session model because judgment is what is worth paying up for. Haiku was considered for QA and rejected: a false PASS from a too-small model is the most expensive token in the system
+- **Cost-tiered AI team** — `spec-reviewer`, `build-verifier`, and `research-analyst` are now pinned to Sonnet (`model: sonnet`); `project-advisor` keeps inheriting the session model because judgment is what is worth paying up for. Haiku was considered for QA and rejected: a false PASS from a too-small model is the most expensive token in the system. The tiering principle is stated in `AGENTS.md` so it works in every assistant: Claude Code enforces it via the frontmatter automatically; Copilot and Codex users apply it through their tool's model picker (Copilot note added to `.github/copilot-instructions.md`)
 - **AI budget as a house rule** — `/start` now asks about AI spend alongside the hosting budget, the example `docs/house_rules.md` shows what the rule looks like, and the advisor's operations dimension checks it like any other non-negotiable
 - **README "Keeping your AI costs down"** — model-to-moment guidance (mid-tier for the daily rhythm, frontier for interviews, architecture, and advisor reviews), `/cost` and `/model` pointers, and why docs-as-memory is itself token optimization
 
