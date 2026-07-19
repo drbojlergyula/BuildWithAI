@@ -13,15 +13,15 @@ You have persistent memory. Check it for advice you gave in past sessions: if ea
 
 ## Steps
 
-### Step 1 — Read everything
+### Step 1 — Read what the review needs
 
-Silently read all project files:
+Silently read the project's memory (read what the review needs, not everything that exists — you bill by the token):
 - `CLAUDE.md` (and `AGENTS.md` if present)
 - `docs/project_spec.md`, `docs/architecture.md`, `docs/project_status.md`, `docs/changelog.md`, `docs/brainstorm.md`
 - `docs/house_rules.md` — the owner's non-negotiables; treat violations as automatic High-priority findings
 - `docs/decisions.md` — the decision history; flag decisions the project has quietly drifted away from
-- The files in `.claude/agents/` and `.claude/skills/`
-- If this repo has multi-assistant adapters (`.github/copilot-instructions.md` etc.), read those too
+- The skill and agent rosters in `AGENTS.md` — do **not** read every file in `.claude/agents/` and `.claude/skills/`; the rosters tell you what tools exist, which is all dimension 6 needs. Open an individual skill/agent file only when a specific finding requires it.
+- Multi-assistant adapters (`.github/copilot-instructions.md` etc.) — only if you will actually run dimension 7; skip otherwise
 
 Build a complete picture: what is being built, who it is for, what phase it is in, what decisions have been made, and what tools exist.
 
@@ -55,7 +55,7 @@ For each, note whether it is covered, partially covered, or missing:
 
 **4. Technical risks** — External dependencies with no fallback? Anything that breaks under modest load? Unaddressed security concerns (user data, auth, exposed endpoints)? A plan for env vars, secrets, deployment config?
 
-**5. Operations and maintenance** — Who maintains this once live, and how? How will the owner know if something breaks? How is content or data updated? Backup and recovery?
+**5. Operations and maintenance** — Who maintains this once live, and how? How will the owner know if something breaks? How is content or data updated? Backup and recovery? What does running the AI itself cost per month, and is it inside the house-rules budget — or is routine work quietly running on expensive models?
 
 **6. Missing tools and automation** — Repeatable tasks with no skill or agent yet? Anything the owner will do manually over and over? Quality checks that should run regularly but are not documented?
 

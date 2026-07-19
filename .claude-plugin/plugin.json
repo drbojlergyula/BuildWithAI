@@ -1,7 +1,7 @@
 {
   "name": "buildwithai-team",
   "displayName": "BuildWithAI — AI Team in a Box",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "An AI team for any project: project advisor with memory, spec reviewer, independent build verifier, and web research analyst — plus guided workflows from setup (or adopting existing code) through verified feature builds to go-live, with founder-friendly save points.",
   "author": {
     "name": "drbojlergyula",

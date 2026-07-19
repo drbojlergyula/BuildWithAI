@@ -10,6 +10,26 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## v2.2.0 — 2026-07-19: Token-efficiency round
+
+AI spend is a real cost for founders — a company subscription can burn through its limits in days when everything runs on a frontier model. This round makes the template cheap to run without touching what it is good at.
+
+### Added
+- **Cost-tiered AI team** — `spec-reviewer`, `build-verifier`, and `research-analyst` are now pinned to Sonnet (`model: sonnet`); `project-advisor` keeps inheriting the session model because judgment is what is worth paying up for. Haiku was considered for QA and rejected: a false PASS from a too-small model is the most expensive token in the system. The tiering principle is stated in `AGENTS.md` so it works in every assistant: Claude Code enforces it via the frontmatter automatically; Copilot and Codex users apply it through their tool's model picker (Copilot note added to `.github/copilot-instructions.md`)
+- **AI budget as a house rule** — `/start` now asks about AI spend alongside the hosting budget, the example `docs/house_rules.md` shows what the rule looks like, and the advisor's operations dimension checks it like any other non-negotiable
+- **README "Keeping your AI costs down"** — model-to-moment guidance (mid-tier for the daily rhythm, frontier for interviews, architecture, and advisor reviews), `/cost` and `/model` pointers, and why docs-as-memory is itself token optimization
+
+### Changed
+- **`project-advisor` reads less** — the skill/agent rosters in `AGENTS.md` replace reading every file in `.claude/skills/` and `.claude/agents/`; multi-assistant adapters are read only when the template-consistency dimension actually runs
+- **`/start` Phase 0 reads less** — docs only; the team roster comes from `AGENTS.md` instead of eleven skill files
+- **Documentation conventions** — docs are context, so length is a running cost: spec and status stay current-state only, history goes to the changelog
+- **Plugin** bumped to 2.2.0
+
+### Deliberately rejected
+- **A token-tracking/optimizer skill** — the model cannot see actual spend from inside a session; a skill that pretends to measure it would be theater. Cost visibility stays with the harness (`/cost`, usage dashboards); the template's job is structural efficiency
+
+---
+
 ## v2.1.0 — 2026-07-02: Competitive round (best-on-market push)
 
 Based on a competitive teardown of BMAD-method, GitHub Spec Kit, Task Master, Agent OS, Superpowers, and the Lovable/Bolt founder market. Everything added passes three tests: founder-readable, agent-maintained, zero ceremony.

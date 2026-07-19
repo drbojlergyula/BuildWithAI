@@ -55,6 +55,8 @@ Specialist personas live in `.claude/agents/*.md`. Claude Code runs them as nati
 | `build-verifier` | Independent QA — runs what was built and verifies it against the spec |
 | `research-analyst` | Web researcher — investigates competitors, pricing, tech choices; cites sources |
 
+**The team is cost-tiered.** `spec-reviewer`, `build-verifier`, and `research-analyst` do routine work and are meant to run on a mid-tier model; only `project-advisor` deserves your strongest model, because judgment is what is worth paying for. Claude Code applies this automatically (each agent's `model` frontmatter); in Copilot, Codex, or any other assistant, the frontmatter has no effect — honour the tier by picking the cheaper model in your tool's model picker before adopting the role.
+
 ## Working conventions
 
 - Ask one or two questions at a time during interview-style workflows.

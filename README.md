@@ -115,6 +115,17 @@ Skills answer to slash commands, their names, or plain English — whichever you
 
 ---
 
+## Keeping your AI costs down
+
+AI assistants bill by the token, and the fastest way to burn a monthly budget is running every small task on a frontier model. This template is built to be cheap to run:
+
+- **The team is cost-tiered.** `spec-reviewer`, `build-verifier`, and `research-analyst` do routine work — checklist reviews, QA runs, web research — and are meant to run on a mid-tier model; only `project-advisor` deserves your strongest one, because judgment is the thing worth paying up for. Claude Code enforces this automatically (the agents are pinned to Sonnet); in Copilot or Codex, honour the tier with your tool's model picker — the rule is stated in `AGENTS.md`, which every assistant reads. (We deliberately skipped Haiku for QA: a false "PASS" is the most expensive token in the system.)
+- **The docs brain is itself the token saver.** A tight `project_status.md` read at session start replaces re-explaining your project in chat every day. Keep the docs pruned — the conventions in `.claude/rules/documentation.md` enforce this.
+- **Match the model to the moment.** Run the daily `/build-next` rhythm on a mid-tier model; switch up for the `/start` interview, architecture decisions, and advisor reviews. Every tool has a switch: `/model` in Claude Code (`/cost` shows session usage), the model picker in Copilot, `/model` in Codex.
+- **AI spend is a house rule.** The `/start` interview asks for your AI budget alongside hosting, it lands in `docs/house_rules.md`, and the advisor checks it like any other non-negotiable.
+
+---
+
 ## What's in the box
 
 ```
@@ -152,7 +163,7 @@ BuildWithAI/
 | **A new project** | Use this repo as a template (button above) — you get the docs brain *and* the AI team |
 | **An existing project** | Install the plugin (commands at the top) — you get the AI team and can run `start` to add the docs brain |
 
-The plugin is versioned (currently `2.1.0`); when you update this repo and bump the version, everyone who installed it gets the update via `/plugin update`.
+The plugin is versioned (currently `2.2.0`); when you update this repo and bump the version, everyone who installed it gets the update via `/plugin update`.
 
 ---
 

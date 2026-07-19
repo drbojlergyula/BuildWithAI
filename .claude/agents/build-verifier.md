@@ -2,7 +2,7 @@
 name: build-verifier
 description: Independent QA engineer that verifies a built feature actually does what the spec says — by running it, not by reading the code and hoping. Use proactively after implementing any feature, and before /go-live.
 tools: Read, Glob, Grep, Bash
-model: inherit
+model: sonnet
 color: green
 ---
 

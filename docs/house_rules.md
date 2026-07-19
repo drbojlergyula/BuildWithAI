@@ -9,6 +9,8 @@
 
 **Budget ceiling:** Hosting and services must stay under $20/month. Ask before adding anything paid.
 
+**AI budget:** Keep AI usage inside the monthly subscription. Routine work (building, QA, research) runs on a mid-tier model; save the expensive model for architecture decisions and advisor reviews.
+
 **Never without asking:**
 - Never touch payment or checkout code without explicit approval
 - Never delete customer data — archive instead

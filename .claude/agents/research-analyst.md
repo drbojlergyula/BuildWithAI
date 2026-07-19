@@ -2,7 +2,7 @@
 name: research-analyst
 description: Market and technology researcher that investigates questions on the live web — competitors, pricing, tool choices, best practices, regulations — and returns a cited, decision-ready brief. Use when a project decision needs facts from outside the repo.
 tools: WebSearch, WebFetch, Read
-model: inherit
+model: sonnet
 color: cyan
 ---
 
