@@ -1,13 +1,11 @@
 name: Create Release
 
-# Cuts the v2.2.0 tag + GitHub Release. Runs from a push to the release-prep
-# branch because remote coding agents cannot push tags or dispatch workflows
-# directly; the job is idempotent (skips if the release already exists).
-# Also keeps a manual workflow_dispatch trigger for future releases.
+# Manual helper: tags a commit and publishes a GitHub Release with one click
+# (Actions tab -> Create Release -> Run workflow). Idempotent — skips if the
+# release already exists. Kept because releases may be cut from environments
+# that cannot push tags directly (e.g. remote coding agents).
 
 on:
-  push:
-    branches: [claude/review-claude-skills-iDDnb]
   workflow_dispatch:
     inputs:
       tag:
@@ -20,6 +18,10 @@ on:
       title:
         description: "Release title"
         required: true
+      notes:
+        description: "Release notes (markdown; leave empty to auto-generate)"
+        required: false
+        default: ""
 
 permissions:
   contents: write
@@ -31,29 +33,19 @@ jobs:
       - name: Create tag and release (idempotent)
         env:
           GH_TOKEN: ${{ github.token }}
-          TAG: ${{ github.event.inputs.tag || 'v2.2.0' }}
-          TARGET: ${{ github.event.inputs.target || 'ea711ad8ba9beeeb83893a9e4d36d8f2ccc7b066' }}
-          TITLE: ${{ github.event.inputs.title || 'v2.2.0 — Token-efficiency round' }}
+          TAG: ${{ github.event.inputs.tag }}
+          TARGET: ${{ github.event.inputs.target }}
+          TITLE: ${{ github.event.inputs.title }}
         run: |
           if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
             echo "Release $TAG already exists — nothing to do."
             exit 0
           fi
-          cat > /tmp/notes.md <<'NOTES'
-          AI spend is a real cost for founders — a company subscription can burn through its limits in days when everything runs on a frontier model. This release makes the template cheap to run without touching what it is good at.
-
-          ## Added
-          - **Cost-tiered AI team** — `spec-reviewer`, `build-verifier`, and `research-analyst` are pinned to Sonnet; `project-advisor` keeps the session model because judgment is what is worth paying up for. Works across assistants: Claude Code enforces it automatically via agent frontmatter; Copilot and Codex users apply it through their tool's model picker (stated in `AGENTS.md`, which every assistant reads). Haiku was considered for QA and rejected: a false PASS is the most expensive token in the system
-          - **AI budget as a house rule** — `/start` asks about AI spend alongside the hosting budget, the example `docs/house_rules.md` shows the rule, and the advisor's operations dimension checks it
-          - **README "Keeping your AI costs down"** — model-to-moment guidance, per-tool model switches, and why docs-as-memory is itself token optimization
-
-          ## Changed
-          - **`project-advisor` and `/start` read less** — the `AGENTS.md` rosters replace reading every skill/agent file; adapters are read only when the template-consistency dimension runs
-          - **Documentation conventions** — docs are context, so length is a running cost: spec and status stay current-state only, history goes to the changelog
-          - **Plugin** bumped to 2.2.0 — installed users get the update via `/plugin update`
-          NOTES
-          gh release create "$TAG" \
-            --repo "$GITHUB_REPOSITORY" \
-            --target "$TARGET" \
-            --title "$TITLE" \
-            --notes-file /tmp/notes.md
+          if [ -n "${{ github.event.inputs.notes }}" ]; then
+            printf '%s\n' "${{ github.event.inputs.notes }}" > /tmp/notes.md
+            gh release create "$TAG" --repo "$GITHUB_REPOSITORY" \
+              --target "$TARGET" --title "$TITLE" --notes-file /tmp/notes.md
+          else
+            gh release create "$TAG" --repo "$GITHUB_REPOSITORY" \
+              --target "$TARGET" --title "$TITLE" --generate-notes
+          fi
