@@ -1,13 +1,13 @@
 ---
 name: night-shift
-description: Autonomous work session for outside business hours — a strict build lane where the owner-proxy answers judgment questions from documented owner intent, plus a prep lane of research and brainstorming that turns parked questions into decision-ready briefs. Ends with a morning briefing. User-invoked only; never triggers automatically.
+description: Autonomous work session for outside business hours — the owner-proxy decides from documented owner intent, settles cheap reversible questions on research or flagged assumptions, and parks only what truly needs the owner; plus a prep lane of research and brainstorming. Ends with a morning briefing. User-invoked only; never triggers automatically.
 argument-hint: [scope for the night, e.g. "3 stories" or "finish the MVP list"]
 disable-model-invocation: true
 ---
 
 # /night-shift — Your AI Team Works While You Sleep
 
-Runs the normal build rhythm unattended, in two lanes. The **build lane** is strict: every question that would normally wake the owner goes to the **owner-proxy** agent instead, which answers only what the project docs can prove and parks the rest. The **prep lane** is permissive on purpose: research and brainstorming are additive and reversible, so when the build lane can't continue, the night keeps producing — briefs, options, and decision-ready parked questions. Strictness follows irreversibility, not the clock. The owner wakes up to verified features, prepared decisions, and a short briefing — never to surprises.
+Runs the normal build rhythm unattended, in two lanes. The **build lane** is strict where it matters: every question that would normally wake the owner goes to the **owner-proxy** agent instead, which decides what the docs prove, settles cheap reversible questions on evidence or a stated assumption (each flagged for morning review), and parks only the questions that genuinely need the owner. The **prep lane** is permissive on purpose: research and brainstorming are additive and reversible, so when the build lane can't continue, the night keeps producing — briefs, options, and decision-ready parked questions. Strictness follows irreversibility, not the clock. The owner wakes up to verified features, prepared decisions, and a short briefing — never to surprises.
 
 **User-invoked only.** Never start a night shift on your own initiative, and never treat "keep going" during daily work as an invitation to enter this mode.
 
@@ -34,7 +34,7 @@ Run the `/save-point` workflow: the whole night must be one `/go-back` away from
 
 State the night's terms in one short message before starting, so it is on the record:
 
-> Working until: [budget/scope]. Research lane: [on/off]. I will build from the plan in order, verify everything, and consult your deputy (owner-proxy) instead of you. It only decides what your docs prove; everything else gets parked for breakfast — with a decision-ready brief attached if the research lane is on. When the build lane can't continue, I switch to preparation: briefs and brainstorms, all as proposals in `docs/brainstorm.md`. I stop early if: a house rule is touched, [N] stories in a row fail verification, or the budget runs out. Nothing gets deployed, deleted, purchased, or sent anywhere external. Good night.
+> Working until: [budget/scope]. Research lane: [on/off]. I will build from the plan in order, verify everything, and consult your deputy (owner-proxy) instead of you. It decides what your docs prove; cheap, reversible questions it settles with research or a sensible assumption, each flagged for your morning review; anything expensive-if-wrong gets parked for breakfast — with a decision-ready brief attached if the research lane is on. When the build lane can't continue, I switch to preparation: briefs and brainstorms, all as proposals in `docs/brainstorm.md`. I stop early if: a house rule is touched, [N] stories in a row fail verification, or the budget runs out. Nothing gets deployed, deleted, purchased, or sent anywhere external. Good night.
 
 ### 3 — The work loop
 
@@ -43,6 +43,7 @@ Repeat until the scope or budget is done:
 1. Run the `/build-next` workflow for the next Not Started story — it owns picking, building, verifying, and recording; do not re-derive its steps here. Skip its "confirm with the user" gates; the contract above is the confirmation.
 2. **Any question that would go to the user goes to the owner-proxy agent instead.** In Claude Code, run it as a subagent. In Copilot, Codex, or any other assistant, read `.claude/agents/owner-proxy.md`, adopt that role fully for the ruling — verdict and grounds in its format, nothing else — then drop the role and return to building. The ruling binds you exactly as if a separate agent had issued it. Act on the verdict:
    - **DECISION** — proceed as ruled; append the proxy's `Log as:` line to `docs/decisions.md` immediately, not at the end.
+   - **ASSUME** — proceed as ruled; append the proxy's `Log as:` line (tagged `ASSUMPTION … review me`) to `docs/decisions.md` immediately. If the proxy asked for evidence and the research lane is on, run the `research-analyst` first and re-consult with the brief; research lane off means the proxy rules on a stated assumption alone. If an assumption starts growing consequences mid-build — suddenly touching data, money, or other stories — stop building on it, unwind to the last clean point, and re-classify it as PARK.
    - **PARK** — record the parked question under an "Active Ideas — parked by night shift" entry in `docs/brainstorm.md`, abandon that story cleanly (no half-built code left in the working tree), and move to the next story.
    - **STOP** — end the night now; go to the morning briefing.
 3. A story that fails verification twice gets parked with its failure evidence. After [N = 2] consecutive parked-by-failure stories, stop — something is systematically wrong, and burning the rest of the budget on it is not a decision the proxy is allowed to make.
@@ -65,6 +66,7 @@ Always produce this, even for a stopped or empty night. It is the last message o
 >
 > **Built and verified:** [story — one line each, with the verifier's verdict]
 > **Decided on your behalf:** [each proxy DECISION with its grounds — these are pending your review in `docs/decisions.md`]
+> **Assumed on your behalf:** [each ASSUME with its basis — tagged `review me` in `docs/decisions.md`; disagree with one? It is a small, local redo — just say which]
 > **Parked for you:** [each parked question, phrased so it can be answered over coffee — with its decision-ready brief when the research lane was on]
 > **Prepared for you:** [research briefs written and options explored — one line each, all waiting in `docs/brainstorm.md`]
 > **Stopped because:** [budget done / plan done / stop condition — one line]
