@@ -57,7 +57,9 @@ Specialist personas live in `.claude/agents/*.md`. Claude Code runs them as nati
 | `research-analyst` | Web researcher — investigates competitors, pricing, tech choices; cites sources |
 | `owner-proxy` | Deputy owner — during `night-shift` runs, answers judgment questions only when the project docs prove the answer; parks or stops otherwise |
 
-**The team is cost-tiered.** `spec-reviewer`, `build-verifier`, and `research-analyst` do routine work and are meant to run on a mid-tier model; `project-advisor` and `owner-proxy` deserve your strongest model, because judgment is what is worth paying for. Claude Code applies this automatically (each agent's `model` frontmatter); in Copilot, Codex, or any other assistant, the frontmatter has no effect — honour the tier by picking the cheaper model in your tool's model picker before adopting the role.
+**The team is cost-tiered.** `spec-reviewer`, `build-verifier`, and `research-analyst` do routine work and are meant to run on a mid-tier model; `project-advisor` and `owner-proxy` deserve your strongest model, because judgment is what is worth paying for.
+
+**`night-shift` works in every assistant.** Claude Code consults `owner-proxy` as a subagent; every other assistant adopts its file as a role for each ruling — verdict and grounds in its format — then returns to building, bound by the ruling exactly as if a separate agent had issued it. Approval mechanics are per-tool (the skill's preflight covers Claude Code settings, Codex approval modes, and Copilot tool approvals), and where native agent memory is unavailable, the proxy's tagged rulings in `docs/decisions.md` serve as its memory. Claude Code applies this automatically (each agent's `model` frontmatter); in Copilot, Codex, or any other assistant, the frontmatter has no effect — honour the tier by picking the cheaper model in your tool's model picker before adopting the role.
 
 ## Working conventions
 

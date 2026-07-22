@@ -21,6 +21,7 @@ The owner's scarcest resource is attended hours. This round lets the build loop 
 
 ### Changed
 - **Cost tiering** — `owner-proxy` joins `project-advisor` in the strongest-model tier
+- **Cross-assistant** — night shift works in Claude Code, Copilot, and Codex: the proxy runs as a subagent in Claude Code and as an adopted role elsewhere (stated in `AGENTS.md`); the skill's preflight covers each tool's own approval mechanism; without native agent memory, the proxy's tagged rulings in `docs/decisions.md` serve as its memory
 - **Plugin** bumped to 2.3.0 (12 skills, 5 agents)
 
 ---
