@@ -41,7 +41,7 @@ Reusable workflows live in `.claude/skills/<name>/SKILL.md` in the [Agent Skills
 | `doc-sync-check` | Docs feel out of date — find drift, contradictions, placeholders, code-vs-spec gaps |
 | `fix-bug` | Something is broken — reproduce, fix, verify, record |
 | `go-live` | Before launch — readiness check with a Go / No-Go report |
-| `night-shift` | Autonomous work outside business hours — the owner-proxy agent answers judgment questions from documented owner intent; ends with a morning briefing (user-invoked only) |
+| `night-shift` | Autonomous work outside business hours — a strict build lane (owner-proxy answers from documented owner intent) plus a prep lane of research and brainstorming as proposals; ends with a morning briefing (user-invoked only) |
 
 If the user invokes a skill by slash command (`/start`), by name, or by plain English ("start project setup", "put me in context", "add a feature to the spec"), execute the matching skill. If your environment does not surface skills automatically, read the skill's `SKILL.md` and follow it as instructions.
 

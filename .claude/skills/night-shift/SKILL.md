@@ -1,12 +1,12 @@
 ---
 name: night-shift
-description: Autonomous work session for outside business hours — runs the build loop with the owner-proxy agent answering judgment questions from documented owner intent, parks what it cannot prove, and ends with a morning briefing. User-invoked only; never triggers automatically.
+description: Autonomous work session for outside business hours — a strict build lane where the owner-proxy answers judgment questions from documented owner intent, plus a prep lane of research and brainstorming that turns parked questions into decision-ready briefs. Ends with a morning briefing. User-invoked only; never triggers automatically.
 argument-hint: [scope for the night, e.g. "3 stories", "finish the MVP list", or a token/cost budget]
 ---
 
 # /night-shift — Your AI Team Works While You Sleep
 
-Runs the normal build rhythm unattended. Every question that would normally wake the owner goes to the **owner-proxy** agent instead, which answers only what the project docs can prove and parks the rest. The owner wakes up to verified features, a list of decisions made on their behalf, and a short briefing — never to surprises.
+Runs the normal build rhythm unattended, in two lanes. The **build lane** is strict: every question that would normally wake the owner goes to the **owner-proxy** agent instead, which answers only what the project docs can prove and parks the rest. The **prep lane** is permissive on purpose: research and brainstorming are additive and reversible, so when the build lane can't continue, the night keeps producing — briefs, options, and decision-ready parked questions. Strictness follows irreversibility, not the clock. The owner wakes up to verified features, prepared decisions, and a short briefing — never to surprises.
 
 **User-invoked only.** Never start a night shift on your own initiative, and never treat "keep going" during daily work as an invitation to enter this mode.
 
@@ -23,6 +23,7 @@ Do these checks before anything else; refuse to start if one fails:
    - **GitHub Copilot:** ask the owner to enable the surface's tool-approval setting for the session (e.g. the CLI's allow-tools options). Same rule: the deny baseline binds you even where the tool would permit the action.
 3. **The night has a budget.** From the argument if given, else the AI budget line in `docs/house_rules.md`, else ask for one number before starting. A night without a budget does not start.
 4. **The strongest model is loaded.** Recommend the owner switch the session to their strongest model before leaving — the proxy inherits it, and judgment is what it is there for. The build workers stay on their own tiers regardless.
+5. **The research lane is a named choice.** Ask the owner: should tonight include internet research — competitor and pricing briefs, technology comparisons, decision-ready briefs attached to parked questions? If yes, lift the web restrictions as part of the permissions step above (in Claude Code, the `WebFetch` deny in the baseline; elsewhere, the tool's network setting). If no, the prep lane still runs, but offline — brainstorming and analysis from the repo and docs only.
 
 ### 1 — Save point
 
@@ -32,7 +33,7 @@ Run the `/save-point` workflow: the whole night must be one `/go-back` away from
 
 State the night's terms in one short message before starting, so it is on the record:
 
-> Working until: [budget/scope]. I will build from the plan in order, verify everything, and consult your deputy (owner-proxy) instead of you. It only decides what your docs prove; everything else gets parked for breakfast. I stop early if: a house rule is touched, [N] stories in a row fail verification, or the budget runs out. Nothing gets deployed, deleted, purchased, or sent anywhere external. Good night.
+> Working until: [budget/scope]. Research lane: [on/off]. I will build from the plan in order, verify everything, and consult your deputy (owner-proxy) instead of you. It only decides what your docs prove; everything else gets parked for breakfast — with a decision-ready brief attached if the research lane is on. When the build lane can't continue, I switch to preparation: briefs and brainstorms, all as proposals in `docs/brainstorm.md`. I stop early if: a house rule is touched, [N] stories in a row fail verification, or the budget runs out. Nothing gets deployed, deleted, purchased, or sent anywhere external. Good night.
 
 ### 3 — The work loop
 
@@ -45,6 +46,16 @@ Repeat until the scope or budget is done:
    - **STOP** — end the night now; go to the morning briefing.
 3. A story that fails verification twice gets parked with its failure evidence. After [N = 2] consecutive parked-by-failure stories, stop — something is systematically wrong, and burning the rest of the budget on it is not a decision the proxy is allowed to make.
 
+### 3b — The prep lane (when the build lane cannot continue)
+
+When every remaining story is parked, done, or blocked — and the night's budget is not yet spent — switch from committing to preparing. Everything this lane produces is a **proposal**: it lands in `docs/brainstorm.md`, never in the spec, never in code. That is why this lane needs no proxy rulings to proceed — its work is additive and reversible by construction.
+
+- **Enrich every parked question** *(research lane on)*: run the `research-analyst` workflow on it and attach the brief to the parked entry — options, data with sources, and a recommendation — so the owner's morning decision takes thirty seconds instead of an afternoon.
+- **Brainstorm upcoming work:** for the next stories in the plan, explore approaches and trade-offs in the brainstorm format (Options considered / Open questions / Decision: *not decided yet*).
+- **Advance standing questions:** anything already open in `docs/brainstorm.md` that analysis or a cited brief would move forward.
+
+The rule that governs this lane: **data informs, docs authorize.** Research may make a parked question easy to answer; it never answers it. The proxy's PARK verdicts stand — enriched, not overturned.
+
 ### 4 — Morning briefing
 
 Always produce this, even for a stopped or empty night. It is the last message of the session and must stand alone:
@@ -53,7 +64,8 @@ Always produce this, even for a stopped or empty night. It is the last message o
 >
 > **Built and verified:** [story — one line each, with the verifier's verdict]
 > **Decided on your behalf:** [each proxy DECISION with its grounds — these are pending your review in `docs/decisions.md`]
-> **Parked for you:** [each parked question, phrased so it can be answered over coffee]
+> **Parked for you:** [each parked question, phrased so it can be answered over coffee — with its decision-ready brief when the research lane was on]
+> **Prepared for you:** [research briefs written and options explored — one line each, all waiting in `docs/brainstorm.md`]
 > **Stopped because:** [budget done / plan done / stop condition — one line]
 > **Spent:** [rough cost/token figure if the environment exposes one; otherwise stories completed vs. planned]
 >

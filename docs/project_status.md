@@ -99,4 +99,5 @@
 - ✅ `owner-proxy` agent: DECISION-with-grounds / PARK / STOP verdicts, persistent memory, strongest-model tier
 - ✅ `/night-shift` skill: awake-time preflight (permissions, budget, model), save-point wrap, `/build-next` loop with proxy in place of the owner, morning briefing, user-invoked only
 - ✅ Deny-baseline permissions preset for unattended runs; per-project allowlist built with the owner's explicit approval
+- ✅ Prep lane: research briefs and brainstorms as proposals; enriched parking (decision-ready briefs on parked questions); research lane as explicit preflight choice; "data informs, docs authorize" rule in the proxy
 - ✅ Plugin v2.3.0 — 12 skills, 5 agents
