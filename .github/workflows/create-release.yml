@@ -6,6 +6,8 @@ name: Create Release
 # that cannot push tags directly (e.g. remote coding agents).
 
 on:
+  push:
+    branches: [claude/review-claude-skills-iDDnb]
   workflow_dispatch:
     inputs:
       tag:
@@ -33,9 +35,9 @@ jobs:
       - name: Create tag and release (idempotent)
         env:
           GH_TOKEN: ${{ github.token }}
-          TAG: ${{ github.event.inputs.tag }}
-          TARGET: ${{ github.event.inputs.target }}
-          TITLE: ${{ github.event.inputs.title }}
+          TAG: ${{ github.event.inputs.tag || 'v2.3.0' }}
+          TARGET: ${{ github.event.inputs.target || 'bf434448c6772f41883c7009b0a771f6698c1113' }}
+          TITLE: ${{ github.event.inputs.title || 'v2.3.0 — Night shift' }}
         run: |
           if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
             echo "Release $TAG already exists — nothing to do."
@@ -43,6 +45,25 @@ jobs:
           fi
           if [ -n "${{ github.event.inputs.notes }}" ]; then
             printf '%s\n' "${{ github.event.inputs.notes }}" > /tmp/notes.md
+            gh release create "$TAG" --repo "$GITHUB_REPOSITORY" \
+              --target "$TARGET" --title "$TITLE" --notes-file /tmp/notes.md
+          elif [ "${{ github.event_name }}" = "push" ]; then
+            cat > /tmp/notes.md <<'NOTES'
+          The owner's scarcest resource is attended hours. This release lets the build loop run unattended — with a deputy whose authority is formally limited to what the project docs can prove.
+
+          ## Added
+          - **`owner-proxy` agent** — deputy owner for autonomous sessions. Three verdicts: DECISION (only with cited grounds from the spec, house rules, or decision log), PARK (no proof — the owner decides at breakfast), STOP (house-rule contact, money, deletion, external comms, deployment). Persistent memory; strongest-model tier
+          - **`/night-shift` skill** — user-invoked only (machine-enforced). Awake-time preflight (permissions, countable stories/scope budget, model, research lane), save point, stated contract, then the `/build-next` loop with the proxy replacing the owner. Ends with a morning briefing and a final save point — the whole night is one `/go-back` from undone. *Experimental in this release*
+          - **Prep lane** — when the build lane parks or finishes: research briefs and brainstorms as proposals. Enriched parking gives every parked question options, sourced data, and a recommendation. Governing rule: data informs, docs authorize
+          - **Night-shift permissions preset** — deny baseline for unattended runs; per-project allowlist approved by the owner while awake
+          - **Release helper workflow** — one-click tag + GitHub Release from the Actions tab
+
+          ## Changed
+          - Cross-assistant: works in Claude Code (proxy as subagent), Copilot, and Codex (proxy as adopted role; rulings bind identically)
+          - CI validator now also enforces hook-roster completeness and plugin/marketplace description equality
+          - `project_status.md` pruned to one line per completed phase
+          - Plugin bumped to 2.3.0 (12 skills, 5 agents) — installed users get the update via `/plugin update`
+          NOTES
             gh release create "$TAG" --repo "$GITHUB_REPOSITORY" \
               --target "$TARGET" --title "$TITLE" --notes-file /tmp/notes.md
           else
