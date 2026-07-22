@@ -51,7 +51,7 @@ Plus guided workflows for the whole life of the project — including `build-nex
 
 `start` (or `adopt-project`) → `build-next` → `save-point` → `new-feature` → `fix-bug` → `put-me-in-context` → `doc-sync-check` → `go-live`
 
-And when the day runs out: **`night-shift`** runs the same build loop unattended — the owner-proxy makes the calls your docs can prove you'd make, parks the rest, and briefs you at breakfast. When the build lane runs dry, the night switches to preparation: research briefs and brainstorms that turn every parked question into a thirty-second morning decision — data informs, you authorize. Every night starts with a save point, has a budget, and ends one `go-back` from undone.
+And when the day runs out: **`night-shift`** *(experimental in this release — share your first morning briefing!)* runs the same build loop unattended — the owner-proxy makes the calls your docs can prove you'd make, parks the rest, and briefs you at breakfast. When the build lane runs dry, the night switches to preparation: research briefs and brainstorms that turn every parked question into a thirty-second morning decision — data informs, you authorize. Every night starts with a save point, has a budget, and ends one `go-back` from undone.
 
 ---
 

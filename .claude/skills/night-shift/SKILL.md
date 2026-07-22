@@ -1,7 +1,8 @@
 ---
 name: night-shift
 description: Autonomous work session for outside business hours — a strict build lane where the owner-proxy answers judgment questions from documented owner intent, plus a prep lane of research and brainstorming that turns parked questions into decision-ready briefs. Ends with a morning briefing. User-invoked only; never triggers automatically.
-argument-hint: [scope for the night, e.g. "3 stories", "finish the MVP list", or a token/cost budget]
+argument-hint: [scope for the night, e.g. "3 stories" or "finish the MVP list"]
+disable-model-invocation: true
 ---
 
 # /night-shift — Your AI Team Works While You Sleep
@@ -21,7 +22,7 @@ Do these checks before anything else; refuse to start if one fails:
    - **Claude Code:** check `.claude/settings.local.json` for a night-shift allowlist. If there isn't one, propose one: read the project's stack and offer the commands a build loop will need (test runner, dev server, linter, `git commit`), plus the deny baseline from `.claude/presets/night-shift.settings.json`. Write it to `.claude/settings.local.json` (gitignored) only with the owner's yes. The baseline is deliberately strict — it also denies `WebFetch` and external `curl -X POST`, which blocks `research-analyst` web reads and QA of local POST endpoints; if tonight needs either, the owner removes those lines now, knowingly (deny rules always beat allow rules).
    - **Codex:** ask the owner to start the session in an autonomous approval mode with a workspace-limited sandbox (e.g. full-auto) — and treat the deny baseline as behavioral law: even when the sandbox would allow a command on the deny list, do not run it.
    - **GitHub Copilot:** ask the owner to enable the surface's tool-approval setting for the session (e.g. the CLI's allow-tools options). Same rule: the deny baseline binds you even where the tool would permit the action.
-3. **The night has a budget.** From the argument if given, else the AI budget line in `docs/house_rules.md`, else ask for one number before starting. A night without a budget does not start.
+3. **The night has a budget — in units the session can count.** Stories or scope ("3 stories", "the MVP list", "everything in phase 2"), never tokens or money: a session cannot meter its own spend, and a budget it cannot measure is a budget it cannot honour. From the argument if given, else propose one sized to the AI-budget house rule in `docs/house_rules.md`, else ask before starting. A night without a countable budget does not start. Actual cost is what the owner checks in the morning, in their tool's own usage view.
 4. **The strongest model is loaded.** Recommend the owner switch the session to their strongest model before leaving — the proxy inherits it, and judgment is what it is there for. The build workers stay on their own tiers regardless.
 5. **The research lane is a named choice.** Ask the owner: should tonight include internet research — competitor and pricing briefs, technology comparisons, decision-ready briefs attached to parked questions? If yes, lift the web restrictions as part of the permissions step above (in Claude Code, the `WebFetch` deny in the baseline; elsewhere, the tool's network setting). If no, the prep lane still runs, but offline — brainstorming and analysis from the repo and docs only.
 
@@ -67,7 +68,7 @@ Always produce this, even for a stopped or empty night. It is the last message o
 > **Parked for you:** [each parked question, phrased so it can be answered over coffee — with its decision-ready brief when the research lane was on]
 > **Prepared for you:** [research briefs written and options explored — one line each, all waiting in `docs/brainstorm.md`]
 > **Stopped because:** [budget done / plan done / stop condition — one line]
-> **Spent:** [rough cost/token figure if the environment exposes one; otherwise stories completed vs. planned]
+> **Spent:** [stories completed vs. the night's scope — for actual cost, check your tool's usage view, e.g. `/cost` in Claude Code]
 >
 > To undo the whole night: `/go-back` to the save point "[label]". To continue: `/build-next`.
 
@@ -75,7 +76,8 @@ Then run the `/update-docs-and-commit` workflow and end with a final `/save-poin
 
 ## Rules
 
-- **User-invoked only** — same standing as `/go-back`.
+- **User-invoked only** — enforced by `disable-model-invocation` in the frontmatter (Claude Code) and binding as prose everywhere else, same standing as `/go-back`.
+- **If the session loses context mid-night** (compaction, restart), re-anchor before touching anything: re-read `docs/project_status.md`, the tagged proxy rulings in `docs/decisions.md`, and the night's opening save-point label; restate the contract to yourself in one line; then resume the loop. The docs are the night's memory — trust them over recollection, and if they cannot reconstruct where the night stood, stop and write the briefing with what is known.
 - The proxy's verdicts bind this session: no proceeding past a PARK "just a little", no negotiating with a STOP.
 - Never deploy, delete data, add paid services, or contact anything external — these are STOPs even if a permission allowlist would technically let the command run.
 - Proxy decisions are provisional until the owner reviews them; the briefing and the `(pending owner review)` tags exist so nothing becomes permanent by default.
