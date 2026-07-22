@@ -6,8 +6,6 @@ name: Create Release
 # that cannot push tags directly (e.g. remote coding agents).
 
 on:
-  push:
-    branches: [claude/review-claude-skills-iDDnb]
   workflow_dispatch:
     inputs:
       tag:
@@ -35,9 +33,9 @@ jobs:
       - name: Create tag and release (idempotent)
         env:
           GH_TOKEN: ${{ github.token }}
-          TAG: ${{ github.event.inputs.tag || 'v2.4.0' }}
-          TARGET: ${{ github.event.inputs.target || 'e0817ad219457d9590a4dba58a491e56057274f5' }}
-          TITLE: ${{ github.event.inputs.title || 'v2.4.0 — The impact test' }}
+          TAG: ${{ github.event.inputs.tag }}
+          TARGET: ${{ github.event.inputs.target }}
+          TITLE: ${{ github.event.inputs.title }}
         run: |
           if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
             echo "Release $TAG already exists — nothing to do."
@@ -45,21 +43,6 @@ jobs:
           fi
           if [ -n "${{ github.event.inputs.notes }}" ]; then
             printf '%s\n' "${{ github.event.inputs.notes }}" > /tmp/notes.md
-            gh release create "$TAG" --repo "$GITHUB_REPOSITORY" \
-              --target "$TARGET" --title "$TITLE" --notes-file /tmp/notes.md
-          elif [ "${{ github.event_name }}" = "push" ]; then
-            cat > /tmp/notes.md <<'NOTES'
-          First owner feedback on the night shift: parking every unproven question wastes the night. The deputy's boundary moves from *"is it provable from the docs?"* to *"what does a wrong answer cost?"*
-
-          ## Added
-          - **ASSUME verdict** — when the docs are silent but a wrong answer is cheap and reversible (naming, wording, implementation details inside an approved story), the owner-proxy settles it on research or a stated assumption, tags it `ASSUMPTION — review me` in the decision log, and the night continues. The morning briefing gains an "Assumed on your behalf" section — disagreeing with one is a small, local redo
-          - **Evidence on request** — the proxy can ask for a research brief before ruling; with the research lane on, the session runs the research-analyst and re-consults
-
-          ## Changed
-          - PARK is now reserved for owner-level, expensive-if-wrong questions instead of being the default for everything unproven
-          - Guardrails unchanged where they matter: "ASSUME is a loan, not a gift" (must stay cheap to reverse; assumptions that grow consequences are unwound and re-classified as PARK); research and assumptions never carry irreversible or owner-level decisions; STOP untouched
-          - Plugin bumped to 2.4.0 — installed users get the update via `/plugin update`
-          NOTES
             gh release create "$TAG" --repo "$GITHUB_REPOSITORY" \
               --target "$TARGET" --title "$TITLE" --notes-file /tmp/notes.md
           else
