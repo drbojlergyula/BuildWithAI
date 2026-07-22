@@ -5,13 +5,13 @@
     "url": "https://github.com/drbojlergyula"
   },
   "metadata": {
-    "description": "BuildWithAI marketplace — install the AI team (advisor, spec reviewer, build verifier, research analyst) and guided project workflows into any project."
+    "description": "BuildWithAI marketplace — install the AI team (advisor, spec reviewer, build verifier, research analyst, owner-proxy) and guided project workflows into any project."
   },
   "plugins": [
     {
       "name": "buildwithai-team",
       "source": "./",
-      "description": "An AI team for any project: project advisor with memory, spec reviewer, independent build verifier, and web research analyst — plus guided workflows from setup (or adopting existing code) through verified feature builds to go-live, with founder-friendly save points.",
+      "description": "An AI team for any project: project advisor with memory, spec reviewer, independent build verifier, web research analyst, and an owner-proxy deputy for autonomous night-shift runs — plus guided workflows from setup (or adopting existing code) through verified feature builds to go-live, with founder-friendly save points.",
       "category": "productivity",
       "tags": [
         "project-management",

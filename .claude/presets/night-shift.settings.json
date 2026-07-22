@@ -1,0 +1,21 @@
+{
+  "_comment": "Deny baseline for /night-shift autonomous sessions. The night-shift preflight step merges this into .claude/settings.local.json (gitignored) together with a project-specific allowlist the owner approves while still awake. The denies are non-negotiable for unattended runs; the allowlist is per-project.",
+  "permissions": {
+    "allow": [],
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(./**/secrets/**)",
+      "Bash(rm -rf:*)",
+      "Bash(git push --force:*)",
+      "Bash(git push -f:*)",
+      "Bash(git reset --hard:*)",
+      "Bash(git clean:*)",
+      "Bash(npm publish:*)",
+      "Bash(vercel --prod:*)",
+      "Bash(netlify deploy:*)",
+      "Bash(curl -X POST:*)",
+      "WebFetch"
+    ]
+  }
+}

@@ -8,6 +8,12 @@
      The entries below are this template's own history; /start and /adopt-project
      replace them with your project's decisions. -->
 
+- 2026-07-19 — Night budgets are denominated in stories/scope, never tokens or money — a session cannot meter its own spend; consistent with rejecting the token-tracking skill
+- 2026-07-19 — Night shift got a permissive prep lane (research, brainstorming) alongside the strict build lane — strictness follows irreversibility, not activity; proposals in brainstorm.md cannot break anything
+- 2026-07-19 — Data informs, docs authorize: research grounds implementation decisions inside approved stories, but an owner-level PARK can be enriched by data, never converted into a DECISION — prevents internet data laundering into owner authority
+- 2026-07-19 — Night-shift proxy authority is doc-derived only: DECISION requires cited grounds, everything else is PARK or STOP — a deputy that guesses is worse than no deputy
+- 2026-07-19 — Proxy decisions are provisional (`pending owner review` tag) and every night starts with a save point — autonomy must always be one `/go-back` from undone
+- 2026-07-19 — `/night-shift` is user-invoked only, like `/go-back` — the assistant never puts itself in charge overnight on its own initiative
 - 2026-07-19 — Cost-tiered the AI team: `spec-reviewer`, `build-verifier`, `research-analyst` pinned to Sonnet, advisor inherits the session model — routine checks shouldn't bill at frontier rates; Haiku rejected for QA because a false PASS costs more than any model saves
 - 2026-07-19 — Rejected a token-tracking skill — the model can't see real spend from inside a session, so it would be measurement theater; cost guidance lives in the README and house rules instead
 - 2026-07-02 — Decision log uses one dash-separated line per decision, not ADR documents — research shows formal ADRs decay; one-line agent-written entries survive

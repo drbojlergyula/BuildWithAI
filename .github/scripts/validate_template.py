@@ -92,6 +92,26 @@ if spec.is_file() and hook.is_file():
     if sentinel in hook.read_text(encoding="utf-8") and sentinel not in spec.read_text(encoding="utf-8"):
         errors.append("docs/project_spec.md: missing the 'template-state: untouched-example' sentinel the SessionStart hook greps for")
 
+# --- Plugin and marketplace descriptions must not drift apart
+plugin_json = ROOT / ".claude-plugin" / "plugin.json"
+marketplace_json = ROOT / ".claude-plugin" / "marketplace.json"
+if plugin_json.is_file() and marketplace_json.is_file():
+    try:
+        plugin_desc = json.loads(plugin_json.read_text(encoding="utf-8")).get("description", "")
+        market_plugins = json.loads(marketplace_json.read_text(encoding="utf-8")).get("plugins", [])
+        market_desc = market_plugins[0].get("description", "") if market_plugins else ""
+        if plugin_desc and market_desc and plugin_desc != market_desc:
+            errors.append(".claude-plugin/marketplace.json: plugin description differs from plugin.json — keep them identical")
+    except (json.JSONDecodeError, IndexError):
+        pass  # parse errors are reported by the JSON check above
+
+# --- Every agent must be mentioned in the SessionStart hook's welcome text
+if hook.is_file():
+    hook_text = hook.read_text(encoding="utf-8")
+    for agent in agents:
+        if agent.stem not in hook_text and agent.stem.replace("-", " ") not in hook_text:
+            errors.append(f".claude/hooks/session-start.sh: does not mention agent '{agent.stem}'")
+
 # --- Every skill and agent must be mentioned in README, AGENTS.md, and CLAUDE.md
 for doc_name in ("README.md", "AGENTS.md", "CLAUDE.md"):
     doc = (ROOT / doc_name).read_text(encoding="utf-8")

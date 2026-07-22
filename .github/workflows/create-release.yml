@@ -1,0 +1,51 @@
+name: Create Release
+
+# Manual helper: tags a commit and publishes a GitHub Release with one click
+# (Actions tab -> Create Release -> Run workflow). Idempotent — skips if the
+# release already exists. Kept because releases may be cut from environments
+# that cannot push tags directly (e.g. remote coding agents).
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Tag to create (e.g. v2.3.0)"
+        required: true
+      target:
+        description: "Commit SHA or branch the tag should point at"
+        required: true
+        default: "main"
+      title:
+        description: "Release title"
+        required: true
+      notes:
+        description: "Release notes (markdown; leave empty to auto-generate)"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create tag and release (idempotent)
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.event.inputs.tag }}
+          TARGET: ${{ github.event.inputs.target }}
+          TITLE: ${{ github.event.inputs.title }}
+        run: |
+          if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            echo "Release $TAG already exists — nothing to do."
+            exit 0
+          fi
+          if [ -n "${{ github.event.inputs.notes }}" ]; then
+            printf '%s\n' "${{ github.event.inputs.notes }}" > /tmp/notes.md
+            gh release create "$TAG" --repo "$GITHUB_REPOSITORY" \
+              --target "$TARGET" --title "$TITLE" --notes-file /tmp/notes.md
+          else
+            gh release create "$TAG" --repo "$GITHUB_REPOSITORY" \
+              --target "$TARGET" --title "$TITLE" --generate-notes
+          fi

@@ -10,6 +10,31 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## v2.3.0 — 2026-07-19: Night shift (autonomous work with a deputy)
+
+The owner's scarcest resource is attended hours. This round lets the build loop run unattended — with a deputy whose authority is formally limited to what the project docs can prove.
+
+### Added
+- **`owner-proxy` agent** — deputy owner for autonomous sessions. Rules on judgment questions with exactly three verdicts: DECISION (only with cited grounds from the spec, house rules, or decision log), PARK (no proof — the owner decides at breakfast), STOP (house-rule contact, money, deletion, external comms, deployment). Persistent memory keeps rulings consistent night to night. Strongest-model tier, same as the advisor — it is pure judgment
+- **`/night-shift` skill** — user-invoked only. Preflight while the owner is awake (project set up, permission allowlist approved, budget agreed, strongest model loaded), save point first, a stated contract, then the `/build-next` loop with the proxy replacing the owner. Parked stories go to `docs/brainstorm.md`; proxy decisions land in `docs/decisions.md` tagged `pending owner review`; two consecutive verification failures stop the night. Ends with a morning briefing and a final save point — the whole night is one `/go-back` from undone
+- **Night-shift permissions preset** (`.claude/presets/night-shift.settings.json`) — the deny baseline for unattended runs (destructive git, deploys, publishing, secrets, plus strict web limits); the preflight builds the per-project allowlist into gitignored `settings.local.json` with the owner's explicit yes
+- **Prep lane** — when the build lane parks or finishes, the night switches to preparation: `research-analyst` briefs on parked and standing questions, brainstorming for upcoming stories, all landing in `docs/brainstorm.md` as proposals. Enriched parking means every parked question arrives at breakfast with options, sourced data, and a recommendation — a thirty-second decision instead of an afternoon. Governing rule: **data informs, docs authorize** — research grounds implementation decisions inside approved stories, but never converts an owner-level PARK into a DECISION. The research lane is a named on/off choice in preflight
+
+### Fixed (senior PM + architect review round)
+- **`/night-shift` user-invocation is now machine-enforced** — `disable-model-invocation: true` in frontmatter, matching `/go-back`, instead of prose-only
+- **Night budgets are countable** — denominated in stories/scope, never tokens or money: a session cannot meter its own spend (same principle as the rejected token-tracker); actual cost is checked by the owner in their tool's usage view
+- **Mid-night context-loss recovery** — after compaction or restart, the session re-anchors from `project_status.md`, the tagged rulings in `decisions.md`, and the opening save point before resuming
+- **Roster drift** — SessionStart hook welcome text and `marketplace.json` now include `owner-proxy`; the CI validator newly enforces hook-roster completeness and plugin/marketplace description equality
+- **`project_status.md` pruned** to the v2.2.0 doc-length convention: completed phases are one line each, history lives here in the changelog
+- **Night shift labeled experimental** in the README until real-user nights validate it
+
+### Changed
+- **Cost tiering** — `owner-proxy` joins `project-advisor` in the strongest-model tier
+- **Cross-assistant** — night shift works in Claude Code, Copilot, and Codex: the proxy runs as a subagent in Claude Code and as an adopted role elsewhere (stated in `AGENTS.md`); the skill's preflight covers each tool's own approval mechanism; without native agent memory, the proxy's tagged rulings in `docs/decisions.md` serve as its memory
+- **Plugin** bumped to 2.3.0 (12 skills, 5 agents)
+
+---
+
 ## v2.2.0 — 2026-07-19: Token-efficiency round
 
 AI spend is a real cost for founders — a company subscription can burn through its limits in days when everything runs on a frontier model. This round makes the template cheap to run without touching what it is good at.
