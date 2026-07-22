@@ -7,7 +7,7 @@
      Per the documentation conventions: completed phases get ONE summary line —
      full detail lives in docs/changelog.md. -->
 
-**Last Updated:** July 19, 2026 (v2.3.0 — night shift: autonomous work loop with the owner-proxy deputy, prep lane, morning briefings)
+**Last Updated:** July 22, 2026 (v2.4.0 — the impact test: ASSUME verdict for cheap reversible questions; PARK reserved for owner-level decisions)
 **Project Start:** April 2026
 
 ---
@@ -22,6 +22,7 @@ One line each — the full story is in `docs/changelog.md`.
 - ✅ **Phase 4 — Best-on-Market Round** (Jul 2026): `build-next` loop, save points, `adopt-project`, house rules + auto-maintained decision log, founder UX; category anti-goals documented
 - ✅ **Phase 6 — Token-Efficiency Round** (Jul 2026, v2.2.0): cost-tiered AI team, AI budget as a house rule, leaner workflow reads, README cost guidance
 - ✅ **Phase 7 — Night Shift** (Jul 2026, v2.3.0): `owner-proxy` deputy (doc-derived authority), `/night-shift` with strict build lane + permissive prep lane, permissions preset, morning briefings — *experimental pending real-user nights*
+- ✅ **Phase 8 — The Impact Test** (Jul 2026, v2.4.0): ASSUME verdict — cheap reversible questions settled on evidence or flagged assumptions; PARK reserved for owner-level, expensive-if-wrong questions
 
 ---
 
@@ -35,11 +36,11 @@ One line each — the full story is in `docs/changelog.md`.
 
 **Completed:**
 - ✅ Plugin + marketplace packaging (`.claude-plugin/`) with versioned updates; CI validation on every push
-- ✅ v2.2.0 tagged and released (via the create-release Actions helper)
+- ✅ v2.2.0 and v2.3.0 tagged and released (via the create-release Actions helper)
 - ✅ Product consolidation: BuildWithClaude deprecated; beginner on-ramp absorbed as `docs/start_here_with_claude.md`
 
 **Next (manual steps for the owner):**
-- Merge the night-shift branch, then tag `v2.3.0` (match the version in `.claude-plugin/plugin.json`)
+- Merge the current branch, then tag `v2.4.0` (match the version in `.claude-plugin/plugin.json`)
 - Archive the BuildWithClaude repository on GitHub (Settings → Archive) after merging its deprecation README
 - Mark this repo as a Template repository (Settings → Template repository)
 - Record a short demo GIF for the README (fresh clone → welcome → /start → team reveal)

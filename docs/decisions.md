@@ -8,6 +8,7 @@
      The entries below are this template's own history; /start and /adopt-project
      replace them with your project's decisions. -->
 
+- 2026-07-22 — Night-shift boundary moved from "provable from docs" to "cost of being wrong": cheap reversible questions get ASSUME (flagged for review) instead of PARK — parking them wasted nights without adding safety; owner-level and irreversible questions still PARK/STOP
 - 2026-07-19 — Night budgets are denominated in stories/scope, never tokens or money — a session cannot meter its own spend; consistent with rejecting the token-tracking skill
 - 2026-07-19 — Night shift got a permissive prep lane (research, brainstorming) alongside the strict build lane — strictness follows irreversibility, not activity; proposals in brainstorm.md cannot break anything
 - 2026-07-19 — Data informs, docs authorize: research grounds implementation decisions inside approved stories, but an owner-level PARK can be enriched by data, never converted into a DECISION — prevents internet data laundering into owner authority

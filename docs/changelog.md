@@ -10,6 +10,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## v2.4.0 — 2026-07-22: The impact test (ASSUME verdict)
+
+First owner feedback on the night shift's design: parking every unproven question wastes the night. The deputy's boundary moved from *"is it provable from the docs?"* to *"what does a wrong answer cost?"*
+
+### Added
+- **ASSUME verdict** — when the docs are silent but a wrong answer is cheap and reversible (naming, wording, layout, implementation details inside an approved story), the proxy settles it on research or a stated assumption, tags it `ASSUMPTION — review me` in `docs/decisions.md`, and the night continues. The morning briefing gains an "Assumed on your behalf" section — disagreeing with one is a small, local redo
+- **Evidence on request** — the proxy can ask for a research brief before ruling; with the research lane on, the session runs `research-analyst` and re-consults
+
+### Changed
+- **The proxy's first question when docs are silent** is now the impact test, not provability — PARK is reserved for owner-level, expensive-if-wrong questions, so it becomes rare instead of the default
+- **Guardrails unchanged where they matter** — research and assumptions never carry irreversible or owner-level decisions ("ASSUME is a loan, not a gift"); an assumption that grows consequences mid-build is unwound and re-classified as PARK; STOP is untouched
+- **Plugin** bumped to 2.4.0
+
+---
+
 ## v2.3.0 — 2026-07-19: Night shift (autonomous work with a deputy)
 
 The owner's scarcest resource is attended hours. This round lets the build loop run unattended — with a deputy whose authority is formally limited to what the project docs can prove.
