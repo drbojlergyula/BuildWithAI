@@ -6,7 +6,7 @@
      3. What's next?
 -->
 
-**Last Updated:** July 19, 2026 (v2.2.0 — token-efficiency round: cost-tiered AI team, AI budget as a house rule, leaner workflow reading lists)
+**Last Updated:** July 19, 2026 (v2.3.0 — night shift: autonomous work loop with the owner-proxy deputy, morning briefings, permission preset)
 **Project Start:** April 2026
 
 ---
@@ -91,3 +91,12 @@
 - ✅ Leaner reading lists: advisor and `/start` use the `AGENTS.md` rosters instead of reading every skill/agent file
 - ✅ Doc-length discipline in the documentation conventions (docs are context — length is a running cost)
 - ✅ README "Keeping your AI costs down" section; plugin bumped to 2.2.0
+
+### ✅ Phase 7: Night Shift (COMPLETE)
+**Status:** Done (July 19, 2026) — autonomous work outside business hours, with authority formally limited to what the docs prove
+
+**Completed:**
+- ✅ `owner-proxy` agent: DECISION-with-grounds / PARK / STOP verdicts, persistent memory, strongest-model tier
+- ✅ `/night-shift` skill: awake-time preflight (permissions, budget, model), save-point wrap, `/build-next` loop with proxy in place of the owner, morning briefing, user-invoked only
+- ✅ Deny-baseline permissions preset for unattended runs; per-project allowlist built with the owner's explicit approval
+- ✅ Plugin v2.3.0 — 12 skills, 5 agents

@@ -45,10 +45,13 @@ Most templates give you empty folders. This one gives you **staff**:
 | 🔍 **spec-reviewer** | Requirements analyst. Catches gaps in your plan on paper, where they are cheap to fix. |
 | ✅ **build-verifier** | QA engineer. After a feature is built, independently runs it and proves it works. |
 | 🌐 **research-analyst** | Market researcher. Investigates competitors, pricing, and technology choices on the live web and files a cited brief. |
+| 🌙 **owner-proxy** | Your deputy. During a `night-shift` it answers judgment questions the way your docs prove you would — and parks everything it can't prove for breakfast. |
 
 Plus guided workflows for the whole life of the project — including `build-next`, the daily rhythm that builds the next planned feature and has QA verify it, and `save-point`/`go-back`, git wrapped in video-game language:
 
 `start` (or `adopt-project`) → `build-next` → `save-point` → `new-feature` → `fix-bug` → `put-me-in-context` → `doc-sync-check` → `go-live`
+
+And when the day runs out: **`night-shift`** runs the same build loop unattended — the owner-proxy makes the calls your docs can prove you'd make, parks the rest, and briefs you at breakfast. Every night starts with a save point, has a budget, and ends one `go-back` from undone.
 
 ---
 
@@ -112,6 +115,7 @@ Skills answer to slash commands, their names, or plain English — whichever you
 | Need outside facts | agent: `research-analyst` | "research what competitors charge" |
 | Docs feel stale | `doc-sync-check` | "check the docs for consistency" |
 | Ready to launch | `go-live` | "are we ready to go live?" |
+| Leaving for the night | `night-shift` | "do the night shift" / "work autonomously until morning" |
 
 ---
 
@@ -163,7 +167,7 @@ BuildWithAI/
 | **A new project** | Use this repo as a template (button above) — you get the docs brain *and* the AI team |
 | **An existing project** | Install the plugin (commands at the top) — you get the AI team and can run `start` to add the docs brain |
 
-The plugin is versioned (currently `2.2.0`); when you update this repo and bump the version, everyone who installed it gets the update via `/plugin update`.
+The plugin is versioned (currently `2.3.0`); when you update this repo and bump the version, everyone who installed it gets the update via `/plugin update`.
 
 ---
 

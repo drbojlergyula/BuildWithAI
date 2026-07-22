@@ -10,6 +10,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## v2.3.0 — 2026-07-19: Night shift (autonomous work with a deputy)
+
+The owner's scarcest resource is attended hours. This round lets the build loop run unattended — with a deputy whose authority is formally limited to what the project docs can prove.
+
+### Added
+- **`owner-proxy` agent** — deputy owner for autonomous sessions. Rules on judgment questions with exactly three verdicts: DECISION (only with cited grounds from the spec, house rules, or decision log), PARK (no proof — the owner decides at breakfast), STOP (house-rule contact, money, deletion, external comms, deployment). Persistent memory keeps rulings consistent night to night. Strongest-model tier, same as the advisor — it is pure judgment
+- **`/night-shift` skill** — user-invoked only. Preflight while the owner is awake (project set up, permission allowlist approved, budget agreed, strongest model loaded), save point first, a stated contract, then the `/build-next` loop with the proxy replacing the owner. Parked stories go to `docs/brainstorm.md`; proxy decisions land in `docs/decisions.md` tagged `pending owner review`; two consecutive verification failures stop the night. Ends with a morning briefing and a final save point — the whole night is one `/go-back` from undone
+- **Night-shift permissions preset** (`.claude/presets/night-shift.settings.json`) — the deny baseline for unattended runs (destructive git, deploys, publishing, secrets, plus strict web limits); the preflight builds the per-project allowlist into gitignored `settings.local.json` with the owner's explicit yes
+
+### Changed
+- **Cost tiering** — `owner-proxy` joins `project-advisor` in the strongest-model tier
+- **Plugin** bumped to 2.3.0 (12 skills, 5 agents)
+
+---
+
 ## v2.2.0 — 2026-07-19: Token-efficiency round
 
 AI spend is a real cost for founders — a company subscription can burn through its limits in days when everything runs on a frontier model. This round makes the template cheap to run without touching what it is good at.
