@@ -130,6 +130,38 @@ AI assistants bill by the token, and the fastest way to burn a monthly budget is
 
 ---
 
+## The architecture — how the pieces fit together
+
+Everything in this template is a standard agentic-AI building block — memory, orchestration, subagents, guardrails, verification — already wired together. The whole system is one chain, from where your information lives to the decision that stays with you:
+
+```mermaid
+flowchart LR
+    A["Your real data<br/>mail · calendar · docs<br/>code · issues · the web"]
+    B["MCP<br/>one open standard<br/>connects them all"]
+    C["Project memory<br/>the seven docs:<br/>spec · architecture · rules<br/>decisions · status"]
+    D["The AI team<br/>plans · builds<br/>verifies · researches"]
+    E["You decide<br/>you approve the plan,<br/>the AI does the labour"]
+    A --> B --> C --> D --> E
+```
+
+**Grounding, built in:** answers come from your sources, not from guesses. Your data reaches the assistant through [MCP](https://modelcontextprotocol.io) (the Model Context Protocol — no custom integration per source), lands in the seven-document project memory, the AI team works on top of that grounded memory, and judgment stays human at the end of the chain.
+
+Each part of the template maps to one of those agentic concepts:
+
+| Building block | Agentic concept | What it does here |
+|---|---|---|
+| Docs as memory | Memory · context window | Seven living documents are the project's long-term memory. Every session starts fully briefed instead of from zero. |
+| An AI project lead | Orchestrator | The main assistant takes your goal, breaks it into tasks, delegates to the specialists, and coordinates everything to done. It substitutes your labour, never your judgment. |
+| An AI team | Subagents · multi-agent | Five specialists on call: senior advisor, spec reviewer, independent QA verifier, web researcher, and the night-shift deputy. |
+| Guided workflows | Agent loop | One command runs a whole loop: `build-next` picks the next story, builds it, has QA prove it works, and records progress. |
+| House rules | Guardrails | Your non-negotiables, written once and re-read before every action. Breaking one blocks the launch. |
+| You stay in charge | Human-in-the-loop | Decisions are made on paper before code is written, and the AI asks before crossing any line that matters. |
+| Proof, not promises | Verification | Nothing is "done" because it was written. An independent verifier runs what was built and reports pass or fail with evidence. |
+| Save points | Safety net | Progress saves like a video game: `save-point` keeps any moment, `go-back` rewinds safely when something goes wrong. |
+| Works everywhere | Open standards | One template, every assistant: AGENTS.md and Agent Skills mean the same files work in Claude Code, Copilot, and Codex. |
+
+---
+
 ## What's in the box
 
 ```
