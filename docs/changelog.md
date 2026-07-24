@@ -10,6 +10,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## v2.5.0 — 2026-07-22: Earning trust (rehearsal, ratification, and the scorecard)
+
+An autonomous feature must prove it pays for itself — in a number the owner generates, not a claim the AI makes.
+
+### Added
+- **Dress rehearsal** — the first night runs supervised by default: one story, the owner watching, answering nothing, seeing the deputy rule in real time. Unattended nights unlock after one observed session (or an explicit skip)
+- **The morning after (ratification ritual)** — the owner reviews each night's rulings with one word each, keep or redo; tags in `docs/decisions.md` flip to `ratified` or `reversed`; one scorecard line per night lands in `docs/project_status.md` (last ten nights kept, older folded into a summary)
+- **Accept-rate gate** — preflight reads the scorecard; a recent accept rate below ~half means the honest recommendation is "fix the spec, not another night." Unreviewed rulings block the next night entirely — trust doesn't stop being measured by skipping the review
+- **Reversals as precedent** — a reversed ruling becomes binding memory for the owner-proxy; the same assumption is never made twice, so the accept rate is designed to rise night after night
+
+### Deliberately rejected
+- **Scheduled/cron-triggered nights** — per-night consent is the safety model; a standing schedule silently makes autonomy the default instead of a choice
+
+### Changed
+- **Plugin** bumped to 2.5.0
+
+---
+
 ## v2.4.0 — 2026-07-22: The impact test (ASSUME verdict)
 
 First owner feedback on the night shift's design: parking every unproven question wastes the night. The deputy's boundary moved from *"is it provable from the docs?"* to *"what does a wrong answer cost?"*
