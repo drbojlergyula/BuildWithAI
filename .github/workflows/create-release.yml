@@ -6,8 +6,6 @@ name: Create Release
 # that cannot push tags directly (e.g. remote coding agents).
 
 on:
-  push:
-    branches: [claude/review-claude-skills-iDDnb]
   workflow_dispatch:
     inputs:
       tag:
@@ -35,9 +33,9 @@ jobs:
       - name: Create tag and release (idempotent)
         env:
           GH_TOKEN: ${{ github.token }}
-          TAG: ${{ github.event.inputs.tag || 'v2.5.1' }}
-          TARGET: ${{ github.event.inputs.target || '4e1c8f4ed2bd3c2d7b25ad409be4151fec6a4332' }}
-          TITLE: ${{ github.event.inputs.title || 'v2.5.1 — The boring release' }}
+          TAG: ${{ github.event.inputs.tag }}
+          TARGET: ${{ github.event.inputs.target }}
+          TITLE: ${{ github.event.inputs.title }}
         run: |
           if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
             echo "Release $TAG already exists — nothing to do."
@@ -45,24 +43,6 @@ jobs:
           fi
           if [ -n "${{ github.event.inputs.notes }}" ]; then
             printf '%s\n' "${{ github.event.inputs.notes }}" > /tmp/notes.md
-            gh release create "$TAG" --repo "$GITHUB_REPOSITORY" \
-              --target "$TARGET" --title "$TITLE" --notes-file /tmp/notes.md
-          elif [ "${{ github.event_name }}" = "push" ]; then
-            cat > /tmp/notes.md <<'NOTES'
-          An outside AI proposed nine architectural additions; the review inside the template's own governance rejected or merged seven of them, using the documented anti-goals as grounds. What survived is deliberately small — existing primitives made smarter, no new subsystems.
-
-          ## Added
-          - **Lesson lines** — verifier failures and `fix-bug` root causes that reveal a reusable rule now append one `LESSON` line to the decision log. Mistakes become precedent instead of repetition: a failure that teaches nothing will be paid for twice
-          - **Sharper breaker checks** — build-verifier's unhappy paths extended: malformed/oversized input, concurrent and repeated actions, unexpected state, and auth boundaries
-
-          ## Decided
-          - **Design principle recorded:** five agents is the right number — a new agent or skill must earn its seat with user evidence, not architectural appeal
-          - **Rejected without building:** context compiler subsystem, separate breaker agent, assumption-management subsystem, drift-detection capability (exists as `doc-sync-check`), feature-discovery mechanism, seven-stage default pipeline
-          - **`/explore-product` parked** in the brainstorm with a revisit condition: after the first five real users
-
-          ## Changed
-          - Plugin bumped to 2.5.1 — installed users get the update via `/plugin update`
-          NOTES
             gh release create "$TAG" --repo "$GITHUB_REPOSITORY" \
               --target "$TARGET" --title "$TITLE" --notes-file /tmp/notes.md
           else
