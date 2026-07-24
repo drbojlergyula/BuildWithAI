@@ -21,6 +21,25 @@ Use it to think through a feature, weigh options, and settle on an approach. Onc
 <!-- Add ideas here. One H3 heading per idea.
      Example below — delete when you add your own. -->
 
+### `/explore-product` — product-gap questioning *(template's own idea, parked 2026-07-24)*
+
+**The idea:**
+The template is good at asking "how should I build this?" but only the advisor occasionally asks "should we build this at all?" A dedicated capability could walk the user journey and ask: what is leaking that nobody noticed? What does the current system make possible that the spec never mentions?
+
+**Options considered:**
+
+| Option | Pros | Cons |
+|---|---|---|
+| Extend project-advisor (add a product-discovery dimension) | No new seat; advisor already owns "problem clarity" | Advisor reviews are already seven dimensions — risk of dilution |
+| New `/explore-product` skill | Focused, invokable on demand | 13th skill; surface-area creep; partially duplicates the advisor |
+| Do nothing | Zero cost | The "what's missing?" question stays half-covered |
+
+**Open questions:**
+- Do real users ever ask this question, or do founders arrive with too many ideas rather than too few?
+- Outcome of a two-AI design review (2026-07-24): parked by agreement — the healthy core lives in the advisor; a new seat must earn itself with user evidence.
+
+**Decision:** *(not decided — revisit after the first five real users)*
+
 ### User notifications *(example — delete when you start)*
 
 **The idea:**

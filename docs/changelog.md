@@ -10,6 +10,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## v2.5.1 — 2026-07-24: The boring release (outcome of a two-AI design review)
+
+An outside AI proposed nine architectural additions; the review inside the template's own governance rejected or merged seven of them, using the documented anti-goals as grounds. What survived is deliberately small.
+
+### Added
+- **Lesson lines** — verifier failures and bug root causes that reveal a reusable rule now append one `LESSON` line to `docs/decisions.md` (`/fix-bug` step 6, build-verifier report format, `/build-next` step 4) — mistakes become precedent instead of repetition
+- **Sharper breaker checks** in build-verifier's unhappy paths: malformed/oversized input, concurrent and repeated actions, unexpected state (deleted/expired items), and auth boundaries
+- **`/explore-product` parked** in `docs/brainstorm.md` as a properly-formed undecided idea — revisit with user evidence
+
+### Decided
+- **Design principle recorded:** five agents is the right number — a new agent or skill must earn its seat with user evidence, not architectural appeal
+- **Rejected without building:** context compiler subsystem, separate breaker agent, assumption-management subsystem, drift-detection capability (exists as `doc-sync-check`), feature-discovery mechanism, and a seven-stage default pipeline
+
+### Changed
+- **Plugin** bumped to 2.5.1
+
+---
+
 ## v2.5.0 — 2026-07-22: Earning trust (rehearsal, ratification, and the scorecard)
 
 An autonomous feature must prove it pays for itself — in a number the owner generates, not a claim the AI makes.

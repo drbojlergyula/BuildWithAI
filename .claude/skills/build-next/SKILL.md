@@ -21,7 +21,7 @@ The bridge between the spec and reality. One command takes the next planned stor
 
 3. **Build it.** Implement the smallest complete version that satisfies the stories. Match the existing code style. If a real decision comes up mid-build (a trade-off the owner should know about), make the sensible call, flag it, and append it to `docs/decisions.md`.
 
-4. **Verify it — independently.** Run the build-verifier agent on the feature. It will exercise the real flow and return PASS / FAIL with evidence. If it fails, fix and re-verify — do not declare done on a failed verification. If verification is impossible in this environment, tell the user exactly what to click or run to confirm it themselves.
+4. **Verify it — independently.** Run the build-verifier agent on the feature. It will exercise the real flow and return PASS / FAIL with evidence. If it fails, fix and re-verify — do not declare done on a failed verification. If the report includes a lesson line, append it to the top of `docs/decisions.md` — a failure that teaches nothing will be paid for twice. If verification is impossible in this environment, tell the user exactly what to click or run to confirm it themselves.
 
 5. **Record the progress.** Mark the story done in `docs/project_status.md`, then run the `/update-docs-and-commit` workflow to handle the changelog, decision log, and commit — do not re-derive those steps here; that skill owns them.
 

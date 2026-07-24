@@ -8,6 +8,9 @@
      The entries below are this template's own history; /start and /adopt-project
      replace them with your project's decisions. -->
 
+- 2026-07-24 — Design principle: five agents is the right number — a new agent or skill must earn its seat with user evidence, not architectural appeal (outcome of a two-AI design review that rejected 7 of 9 proposed additions)
+- 2026-07-24 — LESSON convention added to this log: verifier failures and bug root causes that reveal reusable rules get one LESSON line, so mistakes become precedent instead of repetition
+- 2026-07-24 — `/explore-product` (product-gap questioning) parked in brainstorm, not built — the healthy core lives in the advisor; revisit with user evidence
 - 2026-07-22 — Adopted cost-per-accepted-change as the night shift's success metric: every ruling gets ratified or reversed in a morning review, scored on a scorecard — an autonomous feature must prove it pays for itself in a number the owner generates
 - 2026-07-22 — First night runs supervised (rehearsal: one story, owner watching) — the scariest moment of autonomy becomes a controlled demo of the safety model
 - 2026-07-22 — REJECTED scheduled/cron-triggered nights — per-night consent is the safety model; a standing schedule silently makes autonomy the default instead of a choice

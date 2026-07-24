@@ -199,7 +199,7 @@ BuildWithAI/
 | **A new project** | Use this repo as a template (button above) — you get the docs brain *and* the AI team |
 | **An existing project** | Install the plugin (commands at the top) — you get the AI team and can run `start` to add the docs brain |
 
-The plugin is versioned (currently `2.5.0`); when you update this repo and bump the version, everyone who installed it gets the update via `/plugin update`.
+The plugin is versioned (currently `2.5.1`); when you update this repo and bump the version, everyone who installed it gets the update via `/plugin update`.
 
 ---
 

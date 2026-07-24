@@ -25,7 +25,7 @@ If the user provided a description as an argument, treat it as the bug report an
 
 5. **Prove it.** Re-run whatever demonstrated the failure in step 2 and show that it now passes. If the project has tests, run them. If the fix cannot be verified automatically, tell the user exactly what to click or run to confirm.
 
-6. **Record it.** Add a `### Fixed` entry to `docs/changelog.md` describing the bug and the fix in user-visible terms. If the fix involved a real decision (a trade-off or approach choice the owner should know about), add one line to `docs/decisions.md`. If the bug revealed a gap in the spec or architecture docs, offer to update them.
+6. **Record it.** Add a `### Fixed` entry to `docs/changelog.md` describing the bug and the fix in user-visible terms. If the fix involved a real decision (a trade-off or approach choice the owner should know about), add one line to `docs/decisions.md`. If the root cause reveals a *reusable rule* — a mistake pattern that could recur — add a lesson line at the top of `docs/decisions.md`: `date — LESSON — [root cause pattern] — [what to do differently]`. Lessons are precedent: future builds check the decision log before repeating the mistake. If the bug revealed a gap in the spec or architecture docs, offer to update them.
 
 7. **Wrap up.** Summarise: what was broken, why, what changed, and how it was verified. Suggest `/update-docs-and-commit` to save the work.
 
