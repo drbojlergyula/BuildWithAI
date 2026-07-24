@@ -8,6 +8,9 @@
      The entries below are this template's own history; /start and /adopt-project
      replace them with your project's decisions. -->
 
+- 2026-07-22 — Adopted cost-per-accepted-change as the night shift's success metric: every ruling gets ratified or reversed in a morning review, scored on a scorecard — an autonomous feature must prove it pays for itself in a number the owner generates
+- 2026-07-22 — First night runs supervised (rehearsal: one story, owner watching) — the scariest moment of autonomy becomes a controlled demo of the safety model
+- 2026-07-22 — REJECTED scheduled/cron-triggered nights — per-night consent is the safety model; a standing schedule silently makes autonomy the default instead of a choice
 - 2026-07-22 — Night-shift boundary moved from "provable from docs" to "cost of being wrong": cheap reversible questions get ASSUME (flagged for review) instead of PARK — parking them wasted nights without adding safety; owner-level and irreversible questions still PARK/STOP
 - 2026-07-19 — Night budgets are denominated in stories/scope, never tokens or money — a session cannot meter its own spend; consistent with rejecting the token-tracking skill
 - 2026-07-19 — Night shift got a permissive prep lane (research, brainstorming) alongside the strict build lane — strictness follows irreversibility, not activity; proposals in brainstorm.md cannot break anything

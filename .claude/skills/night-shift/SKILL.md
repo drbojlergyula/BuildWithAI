@@ -18,13 +18,17 @@ Runs the normal build rhythm unattended, in two lanes. The **build lane** is str
 Do these checks before anything else; refuse to start if one fails:
 
 1. **The project is set up.** If the `template-state: untouched-example` sentinel is present in `docs/project_spec.md` or no plan exists in `docs/project_status.md`, stop and suggest `/start` — there is nothing to work on yet.
-2. **Permissions won't stall the night.** The proxy answers *judgment* questions; it cannot click *approval* dialogs — those come from the tool itself, and an unattended session will hang on the first one. Every assistant has its own mechanism; configure the one you are running in, now, while the owner can approve it:
+2. **Unreviewed nights come first.** If `docs/decisions.md` still holds rulings tagged `review me` or `pending owner review` from a previous night, run "The morning after" ritual (below) before anything else. Night N+1 does not start on top of an unreviewed night N — skipping the review is how trust quietly stops being measured.
+3. **The scorecard gates ambition.** Open `docs/project_status.md`:
+   - **No "Night shift scorecard" section yet?** This is the first night, and it runs as a **rehearsal**: scope capped at one story, the owner stays and watches, answering nothing — they observe the deputy ruling in real time. Close with the mini-briefing and one question: "Comfortable running this unattended next time?" Skippable only if the owner explicitly says so.
+   - **Scorecard exists?** Read the recent accept rate. Below roughly half → recommend *not* running tonight: "You redid most of what I decided last night. Another night wastes money — the real fix is fifteen minutes on the spec and house rules, so your docs capture your intent." Soft gate; the owner can override.
+4. **Permissions won't stall the night.** The proxy answers *judgment* questions; it cannot click *approval* dialogs — those come from the tool itself, and an unattended session will hang on the first one. Every assistant has its own mechanism; configure the one you are running in, now, while the owner can approve it:
    - **Claude Code:** check `.claude/settings.local.json` for a night-shift allowlist. If there isn't one, propose one: read the project's stack and offer the commands a build loop will need (test runner, dev server, linter, `git commit`), plus the deny baseline from `.claude/presets/night-shift.settings.json`. Write it to `.claude/settings.local.json` (gitignored) only with the owner's yes. The baseline is deliberately strict — it also denies `WebFetch` and external `curl -X POST`, which blocks `research-analyst` web reads and QA of local POST endpoints; if tonight needs either, the owner removes those lines now, knowingly (deny rules always beat allow rules).
    - **Codex:** ask the owner to start the session in an autonomous approval mode with a workspace-limited sandbox (e.g. full-auto) — and treat the deny baseline as behavioral law: even when the sandbox would allow a command on the deny list, do not run it.
    - **GitHub Copilot:** ask the owner to enable the surface's tool-approval setting for the session (e.g. the CLI's allow-tools options). Same rule: the deny baseline binds you even where the tool would permit the action.
-3. **The night has a budget — in units the session can count.** Stories or scope ("3 stories", "the MVP list", "everything in phase 2"), never tokens or money: a session cannot meter its own spend, and a budget it cannot measure is a budget it cannot honour. From the argument if given, else propose one sized to the AI-budget house rule in `docs/house_rules.md`, else ask before starting. A night without a countable budget does not start. Actual cost is what the owner checks in the morning, in their tool's own usage view.
-4. **The strongest model is loaded.** Recommend the owner switch the session to their strongest model before leaving — the proxy inherits it, and judgment is what it is there for. The build workers stay on their own tiers regardless.
-5. **The research lane is a named choice.** Ask the owner: should tonight include internet research — competitor and pricing briefs, technology comparisons, decision-ready briefs attached to parked questions? If yes, lift the web restrictions as part of the permissions step above (in Claude Code, the `WebFetch` deny in the baseline; elsewhere, the tool's network setting). If no, the prep lane still runs, but offline — brainstorming and analysis from the repo and docs only.
+5. **The night has a budget — in units the session can count.** Stories or scope ("3 stories", "the MVP list", "everything in phase 2"), never tokens or money: a session cannot meter its own spend, and a budget it cannot measure is a budget it cannot honour. From the argument if given, else propose one sized to the AI-budget house rule in `docs/house_rules.md`, else ask before starting. A night without a countable budget does not start. Actual cost is what the owner checks in the morning, in their tool's own usage view.
+6. **The strongest model is loaded.** Recommend the owner switch the session to their strongest model before leaving — the proxy inherits it, and judgment is what it is there for. The build workers stay on their own tiers regardless.
+7. **The research lane is a named choice.** Ask the owner: should tonight include internet research — competitor and pricing briefs, technology comparisons, decision-ready briefs attached to parked questions? If yes, lift the web restrictions as part of the permissions step above (in Claude Code, the `WebFetch` deny in the baseline; elsewhere, the tool's network setting). If no, the prep lane still runs, but offline — brainstorming and analysis from the repo and docs only.
 
 ### 1 — Save point
 
@@ -75,6 +79,17 @@ Always produce this, even for a stopped or empty night. It is the last message o
 > To undo the whole night: `/go-back` to the save point "[label]". To continue: `/build-next`.
 
 Then run the `/update-docs-and-commit` workflow and end with a final `/save-point` so the morning state is itself a save point.
+
+### 5 — The morning after (ratification)
+
+When the owner reacts to the briefing — in this session or the next — walk them through the night's rulings, one word each: **keep or redo**.
+
+1. For every DECISION and ASSUME from the night, update its tag in `docs/decisions.md` in place: `review me` / `pending owner review` → `ratified`, or `reversed — [what the owner chose instead]`.
+2. Reversals are work, and small work by construction — that is what ASSUME promised. Queue each redo, and hand every reversed ruling to the owner-proxy as precedent so the same assumption is never made twice.
+3. Append one line to the `## Night shift scorecard` section in `docs/project_status.md` (create the section on first use): `date — built [N] stories — rulings [M] — accepted [K]/[M]`. Keep the last ten nights; fold anything older into a single summary line — the scorecard is a gauge, not an archive.
+4. Say the number with its meaning: high acceptance means the docs are doing their job; low acceptance means the next fifteen minutes belong to the spec and house rules, not to another night.
+
+The metric this ritual maintains is the only one that matters for autonomy: **cost per accepted change**. A night that produces work the owner throws away is not autonomy — it is expensive homework review.
 
 ## Rules
 
