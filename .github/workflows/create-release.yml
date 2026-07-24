@@ -6,8 +6,6 @@ name: Create Release
 # that cannot push tags directly (e.g. remote coding agents).
 
 on:
-  push:
-    branches: [claude/review-claude-skills-iDDnb]
   workflow_dispatch:
     inputs:
       tag:
@@ -35,9 +33,9 @@ jobs:
       - name: Create tag and release (idempotent)
         env:
           GH_TOKEN: ${{ github.token }}
-          TAG: ${{ github.event.inputs.tag || 'v2.5.0' }}
-          TARGET: ${{ github.event.inputs.target || '66f3f80c21f1bc0be4509cb26a7931973ab1fc3f' }}
-          TITLE: ${{ github.event.inputs.title || 'v2.5.0 — Earning trust' }}
+          TAG: ${{ github.event.inputs.tag }}
+          TARGET: ${{ github.event.inputs.target }}
+          TITLE: ${{ github.event.inputs.title }}
         run: |
           if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
             echo "Release $TAG already exists — nothing to do."
@@ -45,24 +43,6 @@ jobs:
           fi
           if [ -n "${{ github.event.inputs.notes }}" ]; then
             printf '%s\n' "${{ github.event.inputs.notes }}" > /tmp/notes.md
-            gh release create "$TAG" --repo "$GITHUB_REPOSITORY" \
-              --target "$TARGET" --title "$TITLE" --notes-file /tmp/notes.md
-          elif [ "${{ github.event_name }}" = "push" ]; then
-            cat > /tmp/notes.md <<'NOTES'
-          An autonomous feature must prove it pays for itself — in a number the owner generates, not a claim the AI makes.
-
-          ## Added
-          - **Dress rehearsal** — the first night runs supervised by default: one story, the owner watching, answering nothing, seeing the deputy rule in real time. Unattended nights unlock after one observed session
-          - **The morning after (ratification ritual)** — the owner reviews each night's rulings with one word each, keep or redo; decision-log tags flip to `ratified` or `reversed`; one scorecard line per night lands in the project status (last ten nights kept)
-          - **Accept-rate gate** — preflight reads the scorecard; a recent accept rate below ~half means the honest recommendation is "fix the spec, not another night." Unreviewed rulings block the next night entirely
-          - **Reversals as precedent** — a reversed ruling becomes binding owner-proxy memory, so the same assumption is never made twice and the accept rate is designed to rise
-
-          ## Deliberately rejected
-          - **Scheduled/cron-triggered nights** — per-night consent is the safety model; a standing schedule silently makes autonomy the default instead of a choice
-
-          ## Changed
-          - Plugin bumped to 2.5.0 — installed users get the update via `/plugin update`
-          NOTES
             gh release create "$TAG" --repo "$GITHUB_REPOSITORY" \
               --target "$TARGET" --title "$TITLE" --notes-file /tmp/notes.md
           else
