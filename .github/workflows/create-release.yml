@@ -6,6 +6,8 @@ name: Create Release
 # that cannot push tags directly (e.g. remote coding agents).
 
 on:
+  push:
+    branches: [claude/review-claude-skills-iDDnb]
   workflow_dispatch:
     inputs:
       tag:
@@ -33,9 +35,9 @@ jobs:
       - name: Create tag and release (idempotent)
         env:
           GH_TOKEN: ${{ github.token }}
-          TAG: ${{ github.event.inputs.tag }}
-          TARGET: ${{ github.event.inputs.target }}
-          TITLE: ${{ github.event.inputs.title }}
+          TAG: ${{ github.event.inputs.tag || 'v2.6.0' }}
+          TARGET: ${{ github.event.inputs.target || '6f5799d9615d289754bcf71a5b32381f56808b6f' }}
+          TITLE: ${{ github.event.inputs.title || 'v2.6.0 — Projects that keep up' }}
         run: |
           if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
             echo "Release $TAG already exists — nothing to do."
@@ -43,6 +45,23 @@ jobs:
           fi
           if [ -n "${{ github.event.inputs.notes }}" ]; then
             printf '%s\n' "${{ github.event.inputs.notes }}" > /tmp/notes.md
+            gh release create "$TAG" --repo "$GITHUB_REPOSITORY" \
+              --target "$TARGET" --title "$TITLE" --notes-file /tmp/notes.md
+          elif [ "${{ github.event_name }}" = "push" ]; then
+            cat > /tmp/notes.md <<'NOTES'
+          The template evolves; projects born from it are no longer left behind.
+
+          ## Added
+          - **`/template-update` skill** — pulls toolkit improvements from the public template into a project clone via **three-way comparison** (base version vs. local vs. latest): untouched files update cleanly, customized files become explained plain-English conflicts, user-created files are never touched — and `docs/`, code, and README are absolutely out of bounds. Mandatory dry-run report; save-point first, so the whole update is one `/go-back` from undone. Works in every assistant
+          - **`.claude/template-version` stamp** — every clone carries the version it was born from, making updates deterministic; older clones get one-time archaeology. The CI validator enforces the stamp matches the plugin version
+          - **README "Keeping projects up to date"** — plugin installs use `/plugin update`; template clones use `/template-update`
+
+          ## Deliberately rejected
+          - Plugin-only distribution (Claude Code-only — breaks cross-assistant), git-remote merge (strands non-technical founders), push-based CI sync PRs (per-update consent)
+
+          ## Changed
+          - Plugin bumped to 2.6.0 — installed users get the update via `/plugin update`
+          NOTES
             gh release create "$TAG" --repo "$GITHUB_REPOSITORY" \
               --target "$TARGET" --title "$TITLE" --notes-file /tmp/notes.md
           else
