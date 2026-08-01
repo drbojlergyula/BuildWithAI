@@ -7,7 +7,7 @@
      Per the documentation conventions: completed phases get ONE summary line —
      full detail lives in docs/changelog.md. -->
 
-**Last Updated:** July 24, 2026 (v2.5.1 — the boring release: lesson lines, sharper breaker checks, five-agents design principle; 7 of 9 proposed additions rejected)
+**Last Updated:** July 24, 2026 (v2.6.0 — /template-update: roll template improvements into existing projects via three-way comparison)
 **Project Start:** April 2026
 
 ---
@@ -24,6 +24,7 @@ One line each — the full story is in `docs/changelog.md`.
 - ✅ **Phase 7 — Night Shift** (Jul 2026, v2.3.0): `owner-proxy` deputy (doc-derived authority), `/night-shift` with strict build lane + permissive prep lane, permissions preset, morning briefings — *experimental pending real-user nights*
 - ✅ **Phase 8 — The Impact Test** (Jul 2026, v2.4.0): ASSUME verdict — cheap reversible questions settled on evidence or flagged assumptions; PARK reserved for owner-level, expensive-if-wrong questions
 - ✅ **Phase 9 — Earning Trust** (Jul 2026, v2.5.0): supervised first night (rehearsal), morning ratification ritual, accept-rate scorecard with honesty gate; reversals become proxy precedent; scheduled nights rejected
+- ✅ **Phase 10 — Projects That Keep Up** (Jul 2026, v2.6.0): `/template-update` skill — three-way comparison against the `.claude/template-version` stamp; template-owned files update, customizations ask, project content never touched
 
 ---
 
@@ -41,7 +42,7 @@ One line each — the full story is in `docs/changelog.md`.
 - ✅ Product consolidation: BuildWithClaude deprecated; beginner on-ramp absorbed as `docs/start_here_with_claude.md`
 
 **Next (manual steps for the owner):**
-- Merge the current branch, then tag `v2.5.1` (match the version in `.claude-plugin/plugin.json`)
+- Merge the current branch, then tag `v2.6.0` (match the version in `.claude-plugin/plugin.json`)
 - Archive the BuildWithClaude repository on GitHub (Settings → Archive) after merging its deprecation README
 - Mark this repo as a Template repository (Settings → Template repository)
 - Record a short demo GIF for the README (fresh clone → welcome → /start → team reveal)

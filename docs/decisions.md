@@ -8,6 +8,7 @@
      The entries below are this template's own history; /start and /adopt-project
      replace them with your project's decisions. -->
 
+- 2026-07-24 — Template rollout to existing projects via `/template-update` skill with three-way comparison against a recorded base version — deterministic ownership boundary (template files vs. project files), consent on every conflict; plugin-only, git-merge, and CI-push alternatives rejected (cross-assistant requirement, persona, per-update consent)
 - 2026-07-24 — Design principle: five agents is the right number — a new agent or skill must earn its seat with user evidence, not architectural appeal (outcome of a two-AI design review that rejected 7 of 9 proposed additions)
 - 2026-07-24 — LESSON convention added to this log: verifier failures and bug root causes that reveal reusable rules get one LESSON line, so mistakes become precedent instead of repetition
 - 2026-07-24 — `/explore-product` (product-gap questioning) parked in brainstorm, not built — the healthy core lives in the advisor; revisit with user evidence

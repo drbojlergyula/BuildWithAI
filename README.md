@@ -116,6 +116,7 @@ Skills answer to slash commands, their names, or plain English — whichever you
 | Docs feel stale | `doc-sync-check` | "check the docs for consistency" |
 | Ready to launch | `go-live` | "are we ready to go live?" |
 | Leaving for the night | `night-shift` | "do the night shift" / "work autonomously until morning" |
+| The template has new features | `template-update` | "update my project to the latest template" |
 
 ---
 
@@ -199,7 +200,14 @@ BuildWithAI/
 | **A new project** | Use this repo as a template (button above) — you get the docs brain *and* the AI team |
 | **An existing project** | Install the plugin (commands at the top) — you get the AI team and can run `start` to add the docs brain |
 
-The plugin is versioned (currently `2.5.1`); when you update this repo and bump the version, everyone who installed it gets the update via `/plugin update`.
+The plugin is versioned (currently `2.6.0`); when you update this repo and bump the version, everyone who installed it gets the update via `/plugin update`.
+
+### Keeping projects up to date
+
+The template keeps improving after your project is born — and your project can follow, whichever way it was created:
+
+- **Installed as a plugin?** `/plugin update` — done.
+- **Created from the template?** Run **`/template-update`** inside your project. It compares your toolkit against the exact version you started from (stamped in `.claude/template-version`), shows you what's new in plain English, updates only template-owned files, asks before touching anything you customized — and **never** touches your docs, your code, or files you created. The whole update starts with a save point, so it is one `/go-back` from undone.
 
 ---
 

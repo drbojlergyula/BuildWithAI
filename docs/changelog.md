@@ -10,6 +10,25 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## v2.6.0 — 2026-07-24: Projects that keep up (template-update)
+
+The template evolves; projects born from it should not be left behind. Seat earned by firsthand user evidence: the owner maintains multiple template-born projects and hit this pain repeatedly.
+
+### Added
+- **`/template-update` skill** — pulls toolkit improvements from the public template into a project clone via **three-way comparison** (base version vs. local vs. latest): untouched files update cleanly, customized files become explained plain-English conflicts, user-created files are never touched — and `docs/`, code, and README are out of bounds absolutely. Dry-run report before any change; save-point first, so the whole update is one `/go-back` from undone. Works in every assistant (plain git against the public repo)
+- **`.claude/template-version` stamp** — every clone now carries the version it was born from, making the three-way comparison deterministic instead of guesswork; older clones get one-time archaeology. CI validator enforces the stamp matches the plugin version
+- **README "Keeping projects up to date"** — plugin installs use `/plugin update`; template clones use `/template-update`
+
+### Deliberately rejected (alternatives weighed)
+- **Plugin-only distribution** — plugins are Claude Code-only; cross-assistant support requires the files in the repo
+- **Git-remote merge** — one merge conflict strands a non-technical founder; the ownership-boundary model is merge semantics in founder language
+- **Push-based CI sync PRs** — per-update consent, same principle as the rejected scheduled nights
+
+### Changed
+- **Plugin** bumped to 2.6.0
+
+---
+
 ## v2.5.1 — 2026-07-24: The boring release (outcome of a two-AI design review)
 
 An outside AI proposed nine architectural additions; the review inside the template's own governance rejected or merged seven of them, using the documented anti-goals as grounds. What survived is deliberately small.
