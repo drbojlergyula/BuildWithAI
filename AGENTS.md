@@ -42,6 +42,7 @@ Reusable workflows live in `.claude/skills/<name>/SKILL.md` in the [Agent Skills
 | `fix-bug` | Something is broken — reproduce, fix, verify, record |
 | `go-live` | Before launch — readiness check with a Go / No-Go report |
 | `night-shift` | Autonomous work outside business hours — owner-proxy decides from documented intent or flagged low-impact assumptions, parks what truly needs the owner; prep lane of research and brainstorming; morning briefing (user-invoked only) |
+| `template-update` | The template released new versions — pulls toolkit improvements into this project via three-way comparison against the recorded base version; never touches the project's docs, code, or customizations |
 
 If the user invokes a skill by slash command (`/start`), by name, or by plain English ("start project setup", "put me in context", "add a feature to the spec"), execute the matching skill. If your environment does not surface skills automatically, read the skill's `SKILL.md` and follow it as instructions.
 

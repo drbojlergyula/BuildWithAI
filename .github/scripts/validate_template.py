@@ -105,6 +105,18 @@ if plugin_json.is_file() and marketplace_json.is_file():
     except (json.JSONDecodeError, IndexError):
         pass  # parse errors are reported by the JSON check above
 
+# --- The template-version stamp must match the plugin version (used by /template-update)
+version_file = ROOT / ".claude" / "template-version"
+if plugin_json.is_file():
+    try:
+        plugin_version = json.loads(plugin_json.read_text(encoding="utf-8")).get("version", "")
+        if not version_file.is_file():
+            errors.append(".claude/template-version: missing — /template-update needs it as the base-version stamp")
+        elif version_file.read_text(encoding="utf-8").strip() != f"v{plugin_version}":
+            errors.append(f".claude/template-version: '{version_file.read_text(encoding='utf-8').strip()}' does not match plugin.json version 'v{plugin_version}'")
+    except json.JSONDecodeError:
+        pass  # reported by the JSON check above
+
 # --- Every agent must be mentioned in the SessionStart hook's welcome text
 if hook.is_file():
     hook_text = hook.read_text(encoding="utf-8")
