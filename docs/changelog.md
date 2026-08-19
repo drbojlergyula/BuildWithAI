@@ -10,6 +10,31 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## v2.7.0 — 2026-08-01: The real night (orchestrator edition)
+
+Field feedback from real nights: the shift stalled on questions mid-run, PARK threw away working hours, and one context doing all the building degraded over long sessions. The goal — work continues 24/7 inside the envelope of documented intent — got its engine and its governor.
+
+### Added
+- **The night branch** — every night runs on `night/<date>`; the owner's main branch is written only by their morning merge. The branch name doubles as the night-mode marker: a drift guard that survives context compaction, unlike prose
+- **BRANCH verdict (owner-proxy's fifth)** — expensive-but-containable decisions are no longer parked: the proxy rules on best evidence and the work is *implemented* on its own `feature/night-*` branch; merge = ratify, delete = veto. One level of unratified depth, never towers. PARK survives only for questions meaningless without the owner; STOP is untouched — a branch cannot un-spend money
+- **Orchestrator loop + `builder` agent** — the night session stops building with its own hands: stories are packaged and delegated to `builder` (Sonnet, fresh context per story), keeping the orchestrator thin — which is both the token fix and the endurance fix for long nights. Seat earned by field feedback
+- **The delegation matrix** in `AGENTS.md` — expert/senior/junior/practitioner tiers as model *classes* with Anthropic and OpenAI-class columns; Claude Code enforces via agent frontmatter, Codex/Copilot honour by session
+- **Dynamic specialists** — a night may draft up to two new agents when a needed role is missing (researched if the lane is on), born provisional on the night branch, permanent only via morning merge
+- **Absence windows** — one explicit consent covers a bounded multi-day window ("off until Monday 8am, max 4 stories/cycle"), earned by a healthy scorecard; interim briefing per cycle. Open-ended standing autonomy stays rejected
+- **The adaptive throttle** — the scorecard (now tracking merge rate) governs autonomy in both directions: rising acceptance widens the next window, falling acceptance shrinks the mandate automatically
+- **Zero-questions rule** — during a night, addressing a question to the user is itself a failure; every question has a verdict path
+
+### Changed
+- **Preflight approvals** — from incremental allowlist to per-tool autonomous mode + deny baseline (an allowlist alone always loses to a long night)
+- **Ratification = merge** — the morning ritual now walks branches as well as rulings
+- **Plugin** bumped to 2.7.0 (13 skills, 6 agents)
+
+### Held against the 24/7 goal (the challenge, recorded)
+- Autonomy executes documented intent, never invents scope — when the plan runs out, the night preps and stops; the throttle on 24/7 is the owner's spec, by design
+- Merge-to-main stays a human act; STOP list untouched; Haiku practitioner tier rejected again (verification asymmetry)
+
+---
+
 ## v2.6.0 — 2026-07-24: Projects that keep up (template-update)
 
 The template evolves; projects born from it should not be left behind. Seat earned by firsthand user evidence: the owner maintains multiple template-born projects and hit this pain repeatedly.

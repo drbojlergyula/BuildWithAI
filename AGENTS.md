@@ -41,7 +41,7 @@ Reusable workflows live in `.claude/skills/<name>/SKILL.md` in the [Agent Skills
 | `doc-sync-check` | Docs feel out of date — find drift, contradictions, placeholders, code-vs-spec gaps |
 | `fix-bug` | Something is broken — reproduce, fix, verify, record |
 | `go-live` | Before launch — readiness check with a Go / No-Go report |
-| `night-shift` | Autonomous work outside business hours — owner-proxy decides from documented intent or flagged low-impact assumptions, parks what truly needs the owner; prep lane of research and brainstorming; morning briefing (user-invoked only) |
+| `night-shift` | Autonomous work outside business hours — an orchestrator on a dedicated night branch delegates stories to tiered builders; owner-proxy rules on every question (decide / assume / implement-on-branch / park / stop); supports multi-day absence windows; morning briefing, ratification by merge (user-invoked only) |
 | `template-update` | The template released new versions — pulls toolkit improvements into this project via three-way comparison against the recorded base version; never touches the project's docs, code, or customizations |
 
 If the user invokes a skill by slash command (`/start`), by name, or by plain English ("start project setup", "put me in context", "add a feature to the spec"), execute the matching skill. If your environment does not surface skills automatically, read the skill's `SKILL.md` and follow it as instructions.
@@ -56,11 +56,23 @@ Specialist personas live in `.claude/agents/*.md`. Claude Code runs them as nati
 | `spec-reviewer` | Requirements analyst — checks the spec for gaps and vagueness before building |
 | `build-verifier` | Independent QA — runs what was built and verifies it against the spec |
 | `research-analyst` | Web researcher — investigates competitors, pricing, tech choices; cites sources |
-| `owner-proxy` | Deputy owner — during `night-shift` runs: decides what the docs prove, settles cheap reversible questions on evidence or flagged assumptions, parks owner-level questions, stops on danger |
+| `owner-proxy` | Deputy owner — during `night-shift` runs: decides what the docs prove, assumes what is cheap, implements expensive-but-containable calls on provisional feature branches, parks what is meaningless without the owner, stops on danger |
+| `builder` | Implementation specialist — takes a self-contained work packet and builds exactly that in a fresh context, reporting back with evidence; the workhorse the night-shift orchestrator delegates stories to |
 
-**The team is cost-tiered.** `spec-reviewer`, `build-verifier`, and `research-analyst` do routine work and are meant to run on a mid-tier model; `project-advisor` and `owner-proxy` deserve your strongest model, because judgment is what is worth paying for.
+**The team is cost-tiered.** `spec-reviewer`, `build-verifier`, `research-analyst`, and `builder` do routine work and are meant to run on a mid-tier model; `project-advisor` and `owner-proxy` deserve your strongest model, because judgment is what is worth paying for.
 
-**`night-shift` works in every assistant.** Claude Code consults `owner-proxy` as a subagent; every other assistant adopts its file as a role for each ruling — verdict and grounds in its format — then returns to building, bound by the ruling exactly as if a separate agent had issued it. Approval mechanics are per-tool (the skill's preflight covers Claude Code settings, Codex approval modes, and Copilot tool approvals), and where native agent memory is unavailable, the proxy's tagged rulings in `docs/decisions.md` serve as its memory. Claude Code applies this automatically (each agent's `model` frontmatter); in Copilot, Codex, or any other assistant, the frontmatter has no effect — honour the tier by picking the cheaper model in your tool's model picker before adopting the role.
+**The delegation matrix** (used by the `night-shift` orchestrator, and good guidance any time work is delegated). Tiers are model *classes*, not product names, so the matrix survives model generations:
+
+| Tier | Work | Anthropic (Claude Code enforces via agent `model`) | OpenAI-class (Codex / Copilot guidance) |
+|---|---|---|---|
+| Expert | architecture, orchestration, proxy rulings | your strongest model (`inherit`) | your strongest reasoning model, high effort |
+| Senior | complex stories, hard debugging | newest Opus (`opus`) | a strong reasoning model |
+| Junior | routine stories, QA, research, most building | Sonnet (`sonnet`) | a mid-tier model |
+| Practitioner | mechanical edits, boilerplate | Sonnet too — Haiku is deliberately not used: a wrong cheap edit that slips past review costs more than the savings; truly mechanical work is done in place rather than delegated | mid or small — small only for truly mechanical work |
+
+Codex and Copilot cannot switch models per task inside one session: honour the tier by running the session at the model class matching the night's dominant tier, or split the work across sessions by tier. A task smaller than its own handoff packet is done in place, never delegated.
+
+**`night-shift` works in every assistant.** Claude Code runs it as a true orchestrator — `builder` and `owner-proxy` as subagents with fresh contexts; every other assistant plays the roles itself, sequentially: adopt `builder` for each delegated story (packet in, evidence-backed report out), adopt `owner-proxy` for each ruling — bound by the ruling exactly as if a separate agent had issued it. All night work lives on the `night/<date>` branch in every tool; the branch name is the night-mode marker. Approval mechanics are per-tool (the skill's preflight covers Claude Code permission modes, Codex approval modes, and Copilot tool approvals), and where native agent memory is unavailable, the proxy's tagged rulings in `docs/decisions.md` serve as its memory.
 
 ## Working conventions
 

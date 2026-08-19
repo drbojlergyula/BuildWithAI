@@ -45,13 +45,14 @@ Most templates give you empty folders. This one gives you **staff**:
 | 🔍 **spec-reviewer** | Requirements analyst. Catches gaps in your plan on paper, where they are cheap to fix. |
 | ✅ **build-verifier** | QA engineer. After a feature is built, independently runs it and proves it works. |
 | 🌐 **research-analyst** | Market researcher. Investigates competitors, pricing, and technology choices on the live web and files a cited brief. |
-| 🌙 **owner-proxy** | Your deputy. During a `night-shift` it decides what your docs prove, settles cheap reversible questions with research or a flagged assumption, and parks only what truly needs you. |
+| 🌙 **owner-proxy** | Your deputy. During a `night-shift` it decides what your docs prove, settles cheap questions with research or a flagged assumption, implements the expensive-but-containable calls on their own branches for your morning merge — and parks only what truly needs you. |
+| 🔨 **builder** | Implementation specialist. Takes a packaged story and builds it in a fresh context with evidence to show — the workhorse the night-shift orchestrator delegates to. |
 
 Plus guided workflows for the whole life of the project — including `build-next`, the daily rhythm that builds the next planned feature and has QA verify it, and `save-point`/`go-back`, git wrapped in video-game language:
 
 `start` (or `adopt-project`) → `build-next` → `save-point` → `new-feature` → `fix-bug` → `put-me-in-context` → `doc-sync-check` → `go-live`
 
-And when the day runs out: **`night-shift`** *(experimental in this release — share your first morning briefing!)* runs the same build loop unattended — the owner-proxy makes the calls your docs can prove, settles cheap reversible questions with research or a flagged assumption, and parks only what truly needs you: expensive-if-wrong stays yours. It briefs you at breakfast — and your first night is supervised: you watch the deputy work before you ever sleep on it. Every night is scored, too: the morning review tracks how much of the night's work you actually kept, so the night shift has to prove it pays for itself. When the build lane runs dry, the night switches to preparation: research briefs and brainstorms that turn every parked question into a thirty-second morning decision — data informs, you authorize. Every night starts with a save point, has a budget, and ends one `go-back` from undone.
+And when the day runs out: **`night-shift`** *(experimental — share your first morning briefing!)* keeps the project moving while you're off. It runs as an **orchestrator on its own night branch**: stories are packaged and delegated to tiered builders (your strongest model only where judgment lives — the matrix in `AGENTS.md` keeps the rest cheap), an independent verifier proves each one, and the owner-proxy rules on every question so nothing waits for you: what your docs prove gets decided, what's cheap gets assumed with a flag, and the expensive-but-containable calls get **implemented on their own feature branches** — merging is your morning ratification, deleting is your veto. Your main branch is untouched until you merge. Autonomy is earned, not switched on: the first night is supervised, every night is scored on how much you actually keep, healthy scorecards unlock multi-day **absence windows** ("off until Monday"), and falling scores shrink the mandate automatically — the honest fix is always your spec, not a longer night. When the plan runs out, the night preps your next decisions and stops: it executes your documented intent, never invents scope. Every night starts with a save point and ends one `go-back` from undone.
 
 ---
 
@@ -153,7 +154,7 @@ Each part of the template maps to one of those agentic concepts:
 |---|---|---|
 | Docs as memory | Memory · context window | Seven living documents are the project's long-term memory. Every session starts fully briefed instead of from zero. |
 | An AI project lead | Orchestrator | The main assistant takes your goal, breaks it into tasks, delegates to the specialists, and coordinates everything to done. It substitutes your labour, never your judgment. |
-| An AI team | Subagents · multi-agent | Five specialists on call: senior advisor, spec reviewer, independent QA verifier, web researcher, and the night-shift deputy. |
+| An AI team | Subagents · multi-agent | Six specialists on call: senior advisor, spec reviewer, independent QA verifier, web researcher, the night-shift deputy, and a builder for delegated stories. |
 | Guided workflows | Agent loop | One command runs a whole loop: `build-next` picks the next story, builds it, has QA prove it works, and records progress. |
 | House rules | Guardrails | Your non-negotiables, written once and re-read before every action. Breaking one blocks the launch. |
 | You stay in charge | Human-in-the-loop | Decisions are made on paper before code is written, and the AI asks before crossing any line that matters. |
@@ -200,7 +201,7 @@ BuildWithAI/
 | **A new project** | Use this repo as a template (button above) — you get the docs brain *and* the AI team |
 | **An existing project** | Install the plugin (commands at the top) — you get the AI team and can run `start` to add the docs brain |
 
-The plugin is versioned (currently `2.6.0`); when you update this repo and bump the version, everyone who installed it gets the update via `/plugin update`.
+The plugin is versioned (currently `2.7.0`); when you update this repo and bump the version, everyone who installed it gets the update via `/plugin update`.
 
 ### Keeping projects up to date
 

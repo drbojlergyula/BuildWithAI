@@ -1,13 +1,15 @@
 ---
 name: night-shift
-description: Autonomous work session for outside business hours — the owner-proxy decides from documented owner intent, settles cheap reversible questions on research or flagged assumptions, and parks only what truly needs the owner; plus a prep lane of research and brainstorming. Ends with a morning briefing. User-invoked only; never triggers automatically.
-argument-hint: [scope for the night, e.g. "3 stories" or "finish the MVP list"]
+description: Autonomous work session for outside business hours — runs as an orchestrator on a dedicated night branch, delegating stories to tiered builders while the owner-proxy answers every judgment question (deciding, assuming, or implementing on provisional feature branches — never waking the owner). Supports multi-day absence windows. Ends with a morning briefing; ratification happens by merge. User-invoked only; never triggers automatically.
+argument-hint: [scope, e.g. "3 stories", "the MVP list", or an absence window: "off until Monday 8am, max 4 stories/night"]
 disable-model-invocation: true
 ---
 
 # /night-shift — Your AI Team Works While You Sleep
 
-Runs the normal build rhythm unattended, in two lanes. The **build lane** is strict where it matters: every question that would normally wake the owner goes to the **owner-proxy** agent instead, which decides what the docs prove, settles cheap reversible questions on evidence or a stated assumption (each flagged for morning review), and parks only the questions that genuinely need the owner. The **prep lane** is permissive on purpose: research and brainstorming are additive and reversible, so when the build lane can't continue, the night keeps producing — briefs, options, and decision-ready parked questions. Strictness follows irreversibility, not the clock. The owner wakes up to verified features, prepared decisions, and a short briefing — never to surprises.
+The owner is off; progress continues **inside the envelope of their documented intent** — never beyond it. The session runs as an **orchestrator**: it does not build with its own hands. It plans, packages, and delegates stories to tiered builders, has the verifier prove each one, and consults the **owner-proxy** for every judgment call. All work happens on a dedicated **night branch** — the owner's `main` is untouchable until they merge. Two lanes as always: the build lane (governed by proxy verdicts) and the permissive prep lane (research and brainstorming — additive, reversible, always allowed).
+
+**The zero-questions rule:** during a night shift, addressing a question to the user is itself a failure. Every question has a verdict path — DECISION, ASSUME, BRANCH, PARK, or STOP. Find it.
 
 **User-invoked only.** Never start a night shift on your own initiative, and never treat "keep going" during daily work as an invitation to enter this mode.
 
@@ -15,87 +17,82 @@ Runs the normal build rhythm unattended, in two lanes. The **build lane** is str
 
 ### 0 — Preflight (while the owner is still awake)
 
-Do these checks before anything else; refuse to start if one fails:
+Refuse to start if a check fails:
 
-1. **The project is set up.** If the `template-state: untouched-example` sentinel is present in `docs/project_spec.md` or no plan exists in `docs/project_status.md`, stop and suggest `/start` — there is nothing to work on yet.
-2. **Unreviewed nights come first.** If `docs/decisions.md` still holds rulings tagged `review me` or `pending owner review` from a previous night, run "The morning after" ritual (below) before anything else. Night N+1 does not start on top of an unreviewed night N — skipping the review is how trust quietly stops being measured.
-3. **The scorecard gates ambition.** Open `docs/project_status.md`:
-   - **No "Night shift scorecard" section yet?** This is the first night, and it runs as a **rehearsal**: scope capped at one story, the owner stays and watches, answering nothing — they observe the deputy ruling in real time. Close with the mini-briefing and one question: "Comfortable running this unattended next time?" Skippable only if the owner explicitly says so.
-   - **Scorecard exists?** Read the recent accept rate. Below roughly half → recommend *not* running tonight: "You redid most of what I decided last night. Another night wastes money — the real fix is fifteen minutes on the spec and house rules, so your docs capture your intent." Soft gate; the owner can override.
-4. **Permissions won't stall the night.** The proxy answers *judgment* questions; it cannot click *approval* dialogs — those come from the tool itself, and an unattended session will hang on the first one. Every assistant has its own mechanism; configure the one you are running in, now, while the owner can approve it:
-   - **Claude Code:** check `.claude/settings.local.json` for a night-shift allowlist. If there isn't one, propose one: read the project's stack and offer the commands a build loop will need (test runner, dev server, linter, `git commit`), plus the deny baseline from `.claude/presets/night-shift.settings.json`. Write it to `.claude/settings.local.json` (gitignored) only with the owner's yes. The baseline is deliberately strict — it also denies `WebFetch` and external `curl -X POST`, which blocks `research-analyst` web reads and QA of local POST endpoints; if tonight needs either, the owner removes those lines now, knowingly (deny rules always beat allow rules).
-   - **Codex:** ask the owner to start the session in an autonomous approval mode with a workspace-limited sandbox (e.g. full-auto) — and treat the deny baseline as behavioral law: even when the sandbox would allow a command on the deny list, do not run it.
-   - **GitHub Copilot:** ask the owner to enable the surface's tool-approval setting for the session (e.g. the CLI's allow-tools options). Same rule: the deny baseline binds you even where the tool would permit the action.
-5. **The night has a budget — in units the session can count.** Stories or scope ("3 stories", "the MVP list", "everything in phase 2"), never tokens or money: a session cannot meter its own spend, and a budget it cannot measure is a budget it cannot honour. From the argument if given, else propose one sized to the AI-budget house rule in `docs/house_rules.md`, else ask before starting. A night without a countable budget does not start. Actual cost is what the owner checks in the morning, in their tool's own usage view.
-6. **The strongest model is loaded.** Recommend the owner switch the session to their strongest model before leaving — the proxy inherits it, and judgment is what it is there for. The build workers stay on their own tiers regardless.
-7. **The research lane is a named choice.** Ask the owner: should tonight include internet research — competitor and pricing briefs, technology comparisons, decision-ready briefs attached to parked questions? If yes, lift the web restrictions as part of the permissions step above (in Claude Code, the `WebFetch` deny in the baseline; elsewhere, the tool's network setting). If no, the prep lane still runs, but offline — brainstorming and analysis from the repo and docs only.
+1. **The project is set up.** `template-state: untouched-example` sentinel present, or no plan in `docs/project_status.md` → stop and suggest `/start`.
+2. **Unreviewed work comes first.** Rulings still tagged `review me` / `pending owner review`, or unmerged `night/*` / `feature/night-*` branches from a previous run → run "The morning after" (below) before anything new. New autonomy is not granted on top of unreviewed autonomy.
+3. **The scorecard gates ambition.** No scorecard section in `docs/project_status.md` yet → this is the first night and it runs as a **rehearsal**: one story, owner watching, answering nothing (skippable only by explicit say-so). Scorecard exists → size tonight to it: recent accept/merge rate below roughly half → recommend *not* running ("fix the spec, not another night" — soft gate); healthy rate → normal scope; an *absence window* (multi-day) may only be granted when the last scorecard entries are healthy — windows are an earned rung, not a default.
+4. **Approvals won't stall the night.** The proxy answers judgment questions; it cannot click approval dialogs. Set the tool's autonomous mode now, with the deny baseline (`.claude/presets/night-shift.settings.json`) as behavioral law everywhere:
+   - **Claude Code:** run the night session in an auto-accepting permission mode with the deny baseline merged into `.claude/settings.local.json`; an allowlist alone loses to a long night — some unforeseen command always stalls it.
+   - **Codex:** start in an autonomous approval mode with a workspace-limited sandbox (e.g. full-auto). The deny list binds even where the sandbox would allow.
+   - **GitHub Copilot:** enable the surface's tool-approval/allow-tools setting for the session. Same rule.
+5. **The budget is countable, and windows are explicit.** Stories or scope, never tokens or money. A single night: "3 stories". An **absence window**: an end time plus a per-cycle cap ("off until Monday 8am, max 4 stories per night-cycle") — one consent covering the whole window, sized to the AI-budget house rule. Open-ended autonomy is never granted; no end time, no window.
+6. **Models by tier.** The orchestrator and proxy run on the owner's strongest model — judgment tier. Builders run at the tier the delegation matrix in `AGENTS.md` assigns per task (Claude Code enforces via agent `model`; Codex and Copilot cannot switch per task — pick the session's model to match the night's dominant tier, or split the work across sessions by tier).
+7. **The research lane is a named choice.** Internet research tonight (briefs, comparisons, evidence for rulings)? If yes, lift the web restriction knowingly; if no, the prep lane runs offline from repo and docs.
 
-### 1 — Save point
+### 1 — The night branch
 
-Run the `/save-point` workflow: the whole night must be one `/go-back` away from undone.
+`/save-point` first, then create and switch to `night/<date>`. **Everything the night does lives on this branch** — commits, doc updates, drafted agents. The branch is also the mode marker: *if the current git branch starts with `night/`, night rules apply* — a fact that survives context loss when prose does not. `main` (or the owner's default branch) is written only by the owner's morning merge.
 
 ### 2 — The contract
 
-State the night's terms in one short message before starting, so it is on the record:
+One message, on the record:
 
-> Working until: [budget/scope]. Research lane: [on/off]. I will build from the plan in order, verify everything, and consult your deputy (owner-proxy) instead of you. It decides what your docs prove; cheap, reversible questions it settles with research or a sensible assumption, each flagged for your morning review; anything expensive-if-wrong gets parked for breakfast — with a decision-ready brief attached if the research lane is on. When the build lane can't continue, I switch to preparation: briefs and brainstorms, all as proposals in `docs/brainstorm.md`. I stop early if: a house rule is touched, [N] stories in a row fail verification, or the budget runs out. Nothing gets deployed, deleted, purchased, or sent anywhere external. Good night.
+> Working until: [scope / window end + per-cycle cap]. Research lane: [on/off]. Everything happens on `night/<date>` — your main branch is untouched until you merge. I orchestrate: stories go to tiered builders, the verifier proves each one, and your deputy rules on every question — deciding what your docs prove, assuming what is cheap, implementing expensive-but-containable calls on their own feature branches for your morning merge, parking only what is meaningless without you. I stop early if a house rule is touched, [N=2] stories in a row fail verification, or the budget runs out. Nothing is deployed, deleted, purchased, or sent anywhere external — ever. Good night.
 
-### 3 — The work loop
+### 3 — The orchestrator loop
 
-Repeat until the scope or budget is done:
+Repeat until scope, cycle cap, or window is done:
 
-1. Run the `/build-next` workflow for the next Not Started story — it owns picking, building, verifying, and recording; do not re-derive its steps here. Skip its "confirm with the user" gates; the contract above is the confirmation.
-2. **Any question that would go to the user goes to the owner-proxy agent instead.** In Claude Code, run it as a subagent. In Copilot, Codex, or any other assistant, read `.claude/agents/owner-proxy.md`, adopt that role fully for the ruling — verdict and grounds in its format, nothing else — then drop the role and return to building. The ruling binds you exactly as if a separate agent had issued it. Act on the verdict:
-   - **DECISION** — proceed as ruled; append the proxy's `Log as:` line to `docs/decisions.md` immediately, not at the end.
-   - **ASSUME** — proceed as ruled; append the proxy's `Log as:` line (tagged `ASSUMPTION … review me`) to `docs/decisions.md` immediately. If the proxy asked for evidence and the research lane is on, run the `research-analyst` first and re-consult with the brief; research lane off means the proxy rules on a stated assumption alone. If an assumption starts growing consequences mid-build — suddenly touching data, money, or other stories — stop building on it, unwind to the last clean point, and re-classify it as PARK.
-   - **PARK** — record the parked question under an "Active Ideas — parked by night shift" entry in `docs/brainstorm.md`, abandon that story cleanly (no half-built code left in the working tree), and move to the next story.
-   - **STOP** — end the night now; go to the morning briefing.
-3. A story that fails verification twice gets parked with its failure evidence. After [N = 2] consecutive parked-by-failure stories, stop — something is systematically wrong, and burning the rest of the budget on it is not a decision the proxy is allowed to make.
+1. **Pick and classify.** Next Not Started story from the plan. Classify its tier per the delegation matrix in `AGENTS.md` (routine → junior; complex → senior; architectural → expert). A task smaller than its own handoff packet is done in place, not delegated.
+2. **Package and delegate.** Assemble the work packet — story, acceptance criteria, architecture constraints, binding house rules, related decisions and lessons — and dispatch to the `builder` agent (Claude Code: as a subagent, fresh context per story; Codex/Copilot: adopt the builder role from `.claude/agents/builder.md`, work, drop the role). Expert-tier work stays with the orchestrator. The orchestrator's own context stays thin on purpose: packets out, reports in — that thinness is what lets a long night stay coherent.
+3. **Verify independently** with the `build-verifier`; append any lesson line from a FAIL to `docs/decisions.md`. Fix-and-reverify via the builder; two failures parks the story with evidence, two consecutive parked-by-failure stories ends the night — something systematic is wrong.
+4. **Every judgment question goes to the owner-proxy** (subagent in Claude Code; adopted role elsewhere — the ruling binds identically). Act on the verdict:
+   - **DECISION / ASSUME** — proceed on the night branch; append the `Log as:` line to `docs/decisions.md` immediately. An assumption that grows consequences mid-build is unwound and re-ruled.
+   - **BRANCH** — create the child branch off the night branch, implement and verify the ruling there, log it, then return to the night branch. **Never build other work on top of an unmerged BRANCH** — one level of unratified depth, no towers. If only BRANCH-dependent work remains, the build lane is done for this cycle.
+   - **PARK** — record in `docs/brainstorm.md` (with a research brief if the lane is on), abandon that story cleanly, next story.
+   - **STOP** — end the night now; go to the briefing.
+5. **Missing capability → draft a specialist.** If a story needs a role no agent covers (and doing it in place would be poor work): research current best practice for that role if the lane is on, then draft `.claude/agents/<name>.md` — description, scoped tools, tier-appropriate `model` — *on the night branch*, use it, and list it in the briefing. **Cap: two new specialists per night.** They are provisional like everything else: the morning merge decides whether they join the team. (The template's "five agents" principle governs the template's shipped roster — a project growing its own team from real needs is that principle working.)
 
-### 3b — The prep lane (when the build lane cannot continue)
+### 3b — The prep lane
 
-When every remaining story is parked, done, or blocked — and the night's budget is not yet spent — switch from committing to preparing. Everything this lane produces is a **proposal**: it lands in `docs/brainstorm.md`, never in the spec, never in code. That is why this lane needs no proxy rulings to proceed — its work is additive and reversible by construction.
+When the build lane cannot continue and budget remains: research briefs on parked and standing questions, brainstorms for upcoming stories — all proposals in `docs/brainstorm.md`, never in spec or code. **Data informs, docs authorize.** In an absence window, the prep lane is also where a cycle ends early rather than stacking dependent work on unratified decisions.
 
-- **Enrich every parked question** *(research lane on)*: run the `research-analyst` workflow on it and attach the brief to the parked entry — options, data with sources, and a recommendation — so the owner's morning decision takes thirty seconds instead of an afternoon.
-- **Brainstorm upcoming work:** for the next stories in the plan, explore approaches and trade-offs in the brainstorm format (Options considered / Open questions / Decision: *not decided yet*).
-- **Advance standing questions:** anything already open in `docs/brainstorm.md` that analysis or a cited brief would move forward.
+### 4 — Cycles and the morning briefing
 
-The rule that governs this lane: **data informs, docs authorize.** Research may make a parked question easy to answer; it never answers it. The proxy's PARK verdicts stand — enriched, not overturned.
+In an absence window, each night-cycle ends with an **interim briefing** (same format, appended, marked with its date) and a save point; the next cycle re-runs the loop under the same contract, re-anchored from the branch and the docs. The **final** briefing must stand alone:
 
-### 4 — Morning briefing
-
-Always produce this, even for a stopped or empty night. It is the last message of the session and must stand alone:
-
-> **Night shift report**
+> **Night shift report — [date(s)]**
 >
-> **Built and verified:** [story — one line each, with the verifier's verdict]
-> **Decided on your behalf:** [each proxy DECISION with its grounds — these are pending your review in `docs/decisions.md`]
-> **Assumed on your behalf:** [each ASSUME with its basis — tagged `review me` in `docs/decisions.md`; disagree with one? It is a small, local redo — just say which]
-> **Parked for you:** [each parked question, phrased so it can be answered over coffee — with its decision-ready brief when the research lane was on]
-> **Prepared for you:** [research briefs written and options explored — one line each, all waiting in `docs/brainstorm.md`]
-> **Stopped because:** [budget done / plan done / stop condition — one line]
-> **Spent:** [stories completed vs. the night's scope — for actual cost, check your tool's usage view, e.g. `/cost` in Claude Code]
+> **Built and verified** (on `night/<date>`): [story — one line each, verifier verdict]
+> **Decided / Assumed on your behalf:** [each with grounds/basis — tagged in `docs/decisions.md`; disagreeing with an assumption is a small, local redo]
+> **Implemented awaiting your merge:** [each BRANCH — branch name, what it does, the proxy's basis; merge = ratify, delete = veto]
+> **New specialists drafted:** [agent, tier, why — they exist only on the night branch until you merge]
+> **Parked for you:** [questions with their decision-ready briefs]
+> **Prepared for you:** [briefs and brainstorms in `docs/brainstorm.md`]
+> **Stopped because:** [one line] · **Spent:** [stories vs. scope; actual cost in your tool's usage view]
 >
-> To undo the whole night: `/go-back` to the save point "[label]". To continue: `/build-next`.
+> Everything is on `night/<date>` — your main branch is untouched. To take the night: say "merge the night" and review the feature branches one by one. To reject it all: delete the branches. To undo even the branch creation: `/go-back` to "[save-point label]".
 
-Then run the `/update-docs-and-commit` workflow and end with a final `/save-point` so the morning state is itself a save point.
+Then `/update-docs-and-commit` on the night branch and a final `/save-point`.
 
-### 5 — The morning after (ratification)
+### 5 — The morning after (ratification = merge)
 
-When the owner reacts to the briefing — in this session or the next — walk them through the night's rulings, one word each: **keep or redo**.
+When the owner reacts:
 
-1. For every DECISION and ASSUME from the night, update its tag in `docs/decisions.md` in place: `review me` / `pending owner review` → `ratified`, or `reversed — [what the owner chose instead]`.
-2. Reversals are work, and small work by construction — that is what ASSUME promised. Queue each redo, and hand every reversed ruling to the owner-proxy as precedent so the same assumption is never made twice.
-3. Append one line to the `## Night shift scorecard` section in `docs/project_status.md` (create the section on first use): `date — built [N] stories — rulings [M] — accepted [K]/[M]`. Keep the last ten nights; fold anything older into a single summary line — the scorecard is a gauge, not an archive.
-4. Say the number with its meaning: high acceptance means the docs are doing their job; low acceptance means the next fifteen minutes belong to the spec and house rules, not to another night.
+1. Walk the rulings — keep or redo, one word each. Update tags in `docs/decisions.md`: `ratified` / `reversed — [what the owner chose]`. Reversals feed the proxy as binding precedent.
+2. **Merges are the ratification:** the night branch merges into the default branch on the owner's yes; each `feature/night-*` branch is merged (ratified) or deleted (vetoed) individually. Drafted specialists live or die by the same merge. The session performs the merges only on the owner's explicit word — merging to main is a human act.
+3. Scorecard line in `docs/project_status.md`: `date — built [N] — rulings [M] — accepted [K]/[M] — branches merged [B]/[T]`. Last ten nights; older folded into one summary line.
+4. **The throttle reads the scorecard:** rising acceptance → the next window may be wider; falling acceptance → the next mandate shrinks itself (shorter scope, BRANCH tightens toward PARK) and the session says the honest thing — the docs, not the night, need the next fifteen minutes.
 
-The metric this ritual maintains is the only one that matters for autonomy: **cost per accepted change**. A night that produces work the owner throws away is not autonomy — it is expensive homework review.
+**Cost per accepted change** remains the only metric that matters — a night the owner throws away is not autonomy, it is expensive homework review.
 
 ## Rules
 
-- **User-invoked only** — enforced by `disable-model-invocation` in the frontmatter (Claude Code) and binding as prose everywhere else, same standing as `/go-back`.
-- **If the session loses context mid-night** (compaction, restart), re-anchor before touching anything: re-read `docs/project_status.md`, the tagged proxy rulings in `docs/decisions.md`, and the night's opening save-point label; restate the contract to yourself in one line; then resume the loop. The docs are the night's memory — trust them over recollection, and if they cannot reconstruct where the night stood, stop and write the briefing with what is known.
-- The proxy's verdicts bind this session: no proceeding past a PARK "just a little", no negotiating with a STOP.
-- Never deploy, delete data, add paid services, or contact anything external — these are STOPs even if a permission allowlist would technically let the command run.
-- Proxy decisions are provisional until the owner reviews them; the briefing and the `(pending owner review)` tags exist so nothing becomes permanent by default.
-- If this repo is the untouched template, there is no night shift — only `/start`.
+- **User-invoked only** — `disable-model-invocation` enforced in Claude Code, binding prose everywhere else.
+- **Zero questions to the user mid-night.** About to ask one? Check the branch: on `night/*`, the question goes to the proxy — always.
+- **Re-anchor after context loss:** current branch name, `docs/project_status.md`, tagged rulings in `docs/decisions.md`, opening save-point label. The branch and the docs are the night's memory; if they cannot reconstruct the state, stop and write the briefing with what is known.
+- Proxy verdicts bind: no proceeding past a PARK, no negotiating a STOP, no stacking on an unmerged BRANCH.
+- Never deploy, delete data, add paid services, or contact anything external — STOPs even where permissions would technically allow, and no branch makes them provisional.
+- **Only build what the ratified plan contains.** Autonomy executes documented intent; it never invents scope. When the plan runs out, the night switches to the prep lane and then stops — the throttle on autonomy is the owner's spec, by design.
+- If this repo is the untouched template: no night shift, only `/start`.

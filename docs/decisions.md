@@ -8,6 +8,11 @@
      The entries below are this template's own history; /start and /adopt-project
      replace them with your project's decisions. -->
 
+- 2026-08-01 — Night shift v2 runs on a night branch with ratification-by-merge; new BRANCH verdict implements expensive-but-containable decisions on child feature branches instead of parking the work — a branch is reversible by construction, so parking moves from the work to the merge; STOP untouched (a branch cannot un-spend money)
+- 2026-08-01 — Orchestrator pattern for nights: the session delegates stories to the new `builder` agent (fresh context per story) and stays thin — fixes long-run drift and token cost at once; builder seat earned by field feedback from real nights
+- 2026-08-01 — Absence windows: one explicit consent covers a bounded multi-day window, earned by a healthy scorecard; open-ended standing autonomy stays rejected — consent per delegation, window-scoped
+- 2026-08-01 — Dynamic specialists capped at two per night, born provisional on the night branch — the five-agents principle governs the template's shipped roster, not a project's own team
+- 2026-08-01 — Practitioner tier runs on Sonnet, not Haiku (re-affirmed) — verification asymmetry outweighs the savings; delegation matrix uses model classes, not product names, so it survives model generations
 - 2026-07-24 — Template rollout to existing projects via `/template-update` skill with three-way comparison against a recorded base version — deterministic ownership boundary (template files vs. project files), consent on every conflict; plugin-only, git-merge, and CI-push alternatives rejected (cross-assistant requirement, persona, per-update consent)
 - 2026-07-24 — Design principle: five agents is the right number — a new agent or skill must earn its seat with user evidence, not architectural appeal (outcome of a two-AI design review that rejected 7 of 9 proposed additions)
 - 2026-07-24 — LESSON convention added to this log: verifier failures and bug root causes that reveal reusable rules get one LESSON line, so mistakes become precedent instead of repetition
