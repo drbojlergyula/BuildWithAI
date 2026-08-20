@@ -21,6 +21,17 @@ Use it to think through a feature, weigh options, and settle on an approach. Onc
 <!-- Add ideas here. One H3 heading per idea.
      Example below — delete when you add your own. -->
 
+### Per-category auto-accept — the autonomy ladder's next rung *(template's own idea, parked 2026-08-01)*
+
+**The idea:**
+The morning review currently ratifies every ruling individually. Once a decision *category* (e.g. naming, copy wording) shows a long streak of acceptance in the scorecard, the owner could grant that category standing auto-accept — shrinking the morning review to genuinely contested items. This is the "cheaper ratification" answer to the 24/7 bottleneck: autonomy grows where trust is proven, per category, not globally.
+
+**Open questions:**
+- What streak length earns auto-accept, and what revokes it (one reversal? two?)
+- Where is the grant recorded so it binds sessions — house rules, or a scorecard annex?
+
+**Decision:** *(not decided — needs several weeks of real scorecard data first; building it before the data exists would be trust theater)*
+
 ### `/explore-product` — product-gap questioning *(template's own idea, parked 2026-07-24)*
 
 **The idea:**
