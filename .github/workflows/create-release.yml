@@ -6,6 +6,8 @@ name: Create Release
 # that cannot push tags directly (e.g. remote coding agents).
 
 on:
+  push:
+    branches: [claude/review-claude-skills-iDDnb]
   workflow_dispatch:
     inputs:
       tag:
@@ -33,9 +35,9 @@ jobs:
       - name: Create tag and release (idempotent)
         env:
           GH_TOKEN: ${{ github.token }}
-          TAG: ${{ github.event.inputs.tag }}
-          TARGET: ${{ github.event.inputs.target }}
-          TITLE: ${{ github.event.inputs.title }}
+          TAG: ${{ github.event.inputs.tag || 'v2.7.0' }}
+          TARGET: ${{ github.event.inputs.target || 'e5bc39bde19ca20d04c5198dcf136d2117ed9c84' }}
+          TITLE: ${{ github.event.inputs.title || 'v2.7.0 — The real night' }}
         run: |
           if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
             echo "Release $TAG already exists — nothing to do."
@@ -43,6 +45,27 @@ jobs:
           fi
           if [ -n "${{ github.event.inputs.notes }}" ]; then
             printf '%s\n' "${{ github.event.inputs.notes }}" > /tmp/notes.md
+            gh release create "$TAG" --repo "$GITHUB_REPOSITORY" \
+              --target "$TARGET" --title "$TITLE" --notes-file /tmp/notes.md
+          elif [ "${{ github.event_name }}" = "push" ]; then
+            cat > /tmp/notes.md <<'NOTES'
+          Field feedback from real nights turned the night shift into what it was always meant to be: work continues while the owner is off — inside the envelope of their documented intent, never beyond it.
+
+          ## The engine
+          - **Night branch** — every night runs on `night/<date>`; your main branch is written only by your morning merge. The branch name doubles as a compaction-proof night-mode marker, backed by the zero-questions rule
+          - **BRANCH verdict** — expensive-but-containable decisions are implemented on their own `feature/night-*` branches: merge = ratify, delete = veto. No towers on unratified work; STOP untouched — a branch cannot un-spend money
+          - **Orchestrator + `builder` agent** — stories are delegated to tiered builders in fresh contexts; the thin orchestrator is both the token fix and the endurance fix
+          - **Delegation matrix** — expert/senior/junior/practitioner as model classes, with Anthropic and OpenAI-class columns for Claude Code, Codex, and Copilot
+          - **Dynamic specialists** — up to two new agents per night, provisional until merged
+
+          ## The governor
+          - **Absence windows** — one bounded consent ("off until Monday 8am"), earned by a healthy scorecard; open-ended standing autonomy stays rejected
+          - **Adaptive throttle** — merge rates widen or shrink the next mandate automatically; falling scores mean "fix the spec", not "loop harder"
+          - Autonomy executes documented intent, never invents scope; merge-to-main stays a human act
+
+          ## Changed
+          - Plugin bumped to 2.7.0 (13 skills, 6 agents) — installed users get the update via `/plugin update`
+          NOTES
             gh release create "$TAG" --repo "$GITHUB_REPOSITORY" \
               --target "$TARGET" --title "$TITLE" --notes-file /tmp/notes.md
           else
