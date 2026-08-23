@@ -2,7 +2,7 @@
 
 This is a scratchpad for exploring ideas **before** they are ready for [project_spec.md](docs/project_spec.md).
 
-Use it to think through a feature, weigh options, and settle on an approach. Once a decision is made, move the outcome into the spec and clear or archive the entry here.
+Use it to think through a feature, weigh options, and settle on an approach. Once a decision is made, move the outcome into the spec and clear or archive the entry here. A research brief still worth reading *after* its decision is made moves to the reference shelf (`docs/reference/`) instead of the archive.
 
 ---
 

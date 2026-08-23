@@ -201,14 +201,14 @@ BuildWithAI/
 | **A new project** | Use this repo as a template (button above) — you get the docs brain *and* the AI team |
 | **An existing project** | Install the plugin (commands at the top) — you get the AI team and can run `start` to add the docs brain |
 
-The plugin is versioned (currently `2.7.0`); when you update this repo and bump the version, everyone who installed it gets the update via `/plugin update`.
+The plugin is versioned (currently `2.8.0`); when you update this repo and bump the version, everyone who installed it gets the update via `/plugin update`.
 
 ### Keeping projects up to date
 
 The template keeps improving after your project is born — and your project can follow, whichever way it was created:
 
 - **Installed as a plugin?** `/plugin update` — done.
-- **Created from the template?** Run **`/template-update`** inside your project. It compares your toolkit against the exact version you started from (stamped in `.claude/template-version`), shows you what's new in plain English, updates only template-owned files, asks before touching anything you customized — and **never** touches your docs, your code, or files you created. The whole update starts with a save point, so it is one `/go-back` from undone.
+- **Created from the template?** Run **`/template-update`** inside your project. It compares your toolkit against the exact version you started from (stamped in `.claude/template-version`), shows you what's new in plain English, updates only template-owned files, and asks before touching anything you customized. When a release changes the *structure* of the docs themselves, the update runs the template's versioned **migrations**: your project brain is restructured to the newest layout — every line accounted for as moved, merged, or kept, zero deleted, verified — and the before/after is shown for your yes first ("your 400-line spec becomes a 40-line index + 5 domain pages; every session loads less"). Your code and the files you created are never touched, and the whole update starts with a save point — one `/go-back` from undone.
 
 ---
 

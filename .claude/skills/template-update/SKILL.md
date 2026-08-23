@@ -1,6 +1,6 @@
 ---
 name: template-update
-description: Bring a project created from the BuildWithAI template up to the latest template version — updates the AI team, skills, and rules while never touching the project's own docs, code, or customizations. Uses a three-way comparison against the project's recorded template version. Use when the template has new releases the project should benefit from.
+description: Bring a project created from the BuildWithAI template up to the latest template version — updates the AI team, skills, and rules via three-way comparison against the recorded base version, and runs the template's versioned structural migrations (doc restructuring with zero-loss verification) when the jump includes them. Never rewrites or deletes the project's own content. Use when the template has new releases the project should benefit from.
 argument-hint: [optional target version, e.g. v2.6.0 — defaults to the latest release]
 ---
 
@@ -34,8 +34,10 @@ Never add remotes or tags to the project's own repository.
 **Template-owned** (may be updated by this skill):
 `.claude/` — skills, agents, rules, hooks, output-styles, presets, `statusline.sh`, `settings.json`, `template-version` — plus `.claude-plugin/` (if present), `.github/copilot-instructions.md`, the validator workflow and script, `AGENTS.md`, and `CLAUDE.md`.
 
-**Project-owned — NEVER touched, no exceptions:**
+**Project-owned — never touched by the file sync:**
 everything in `docs/`, `README.md`, all source code, `.env*`, `settings.local.json`, and **any file that does not exist in the base template** — if the user created it, it is theirs.
+
+One sanctioned exception: **structural migrations** (step 4b) may *restructure* project docs — move, split, consolidate — under zero-loss verification. They never rewrite content, never delete it, and run only with the owner's yes to the dry-run.
 
 ### 4 — Three-way comparison, file by file
 
@@ -48,6 +50,16 @@ For every template-owned file, compare three states — *base*, *local*, *latest
 
 **Special case — `AGENTS.md` and `CLAUDE.md`:** these are template-owned files that legitimately carry project-specific Overview content written by `/start`. Merge them section-wise: adopt the template's changes to the shared sections (skills/agents tables, conventions), keep the project's Overview untouched. Show the result before writing.
 
+### 4b — Structural migrations (when the jump includes them)
+
+Scan `<tmp>/latest/.claude/migrations/` for files with versions in the range `(base, target]`. Each is a versioned instruction file the template shipped **with** the structural change it describes — the updater executes, it never guesses. If the range holds several, they chain in version order, so a v2.3 project jumping to the latest runs every migration between, deterministically.
+
+At this stage, *plan* them: read each migration file against the project's actual docs and compute the before/after for the dry-run report (which files split, what consolidates, what the shelf gains — and, often, "this project is small; migration X changes nothing"). Execution happens only in step 6, after the owner's yes, in this per-migration sequence:
+
+1. Package the migration as a work packet — the migration file plus the project's affected docs — and execute it through the **`builder`** agent (Claude Code: subagent, fresh context; Codex/Copilot: adopt the builder role, execute, drop the role). Migrations *restructure*: they move, split, and consolidate. They never rewrite content, never delete it, and never "improve" anything along the way.
+2. Run the migration's **zero-loss verification**: every heading and entry of the old docs accounted for as moved, merged, or in place — deleted must be 0. A migration that cannot prove zero loss is rolled back to the save point and reported, not negotiated.
+3. Run `doc-sync-check` as the independent verifier on the result.
+
 ### 5 — The dry-run report (nothing is touched yet)
 
 Present the plan and wait for a yes:
@@ -56,7 +68,8 @@ Present the plan and wait for a yes:
 > **What's new for you** (from the template's changelog, in plain English): [2–5 bullets — the features, not the file names]
 > **Files to update cleanly:** [N] · **New files:** [N] · **Removed:** [N]
 > **Your customizations detected:** [list, each with keep/update/merge question]
-> **Never touched:** your docs, code, README, and [N] files you created yourself.
+> **Structural migrations:** [none — or, per migration, the before/after in plain English: "your 400-line spec becomes a 40-line index + 5 domain pages; your decision log drops from 180 to 60 active lines; every line accounted for — moved, merged, or kept, zero deleted. Every session after this loads less context."]
+> **Never touched:** your code, README, and [N] files you created yourself; your docs are restructured only by the migrations above, under zero-loss verification.
 > Proceed?
 
 If the template's changelog marks any version in the range as needing **migration** (a change to doc structure or conventions, not just files), surface it explicitly and follow its instructions — file sync alone does not cover behavioral changes.
@@ -64,10 +77,11 @@ If the template's changelog marks any version in the range as needing **migratio
 ### 6 — Apply, verify, record
 
 1. Run the `/save-point` workflow first — the whole update must be one `/go-back` from undone.
-2. Apply the plan exactly as approved, including conflict resolutions.
-3. Write the new version to `.claude/template-version`.
-4. If the project has the validator (`.github/scripts/validate_template.py`), run it.
-5. Record: one line in `docs/decisions.md` (`date — updated template v[base] → v[target] — [why]`), a changelog entry, then the `/update-docs-and-commit` workflow.
+2. Apply the file sync exactly as approved, including conflict resolutions.
+3. Execute the structural migrations in version order, per the sequence in step 4b — builder executes, zero-loss verifies, doc-sync-check confirms, each one.
+4. Write the new version to `.claude/template-version`.
+5. If the project has the validator (`.github/scripts/validate_template.py`), run it.
+6. Record: one line in `docs/decisions.md` (`date — updated template v[base] → v[target] — [why]`), a changelog entry, then the `/update-docs-and-commit` workflow.
 
 ## Rules
 

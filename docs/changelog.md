@@ -10,6 +10,28 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## v2.8.0 — 2026-08-20: The second brain grows up (structure + migrations)
+
+A senior review of the docs system as a second brain: brilliant *small* brain — fixed drawers, self-maintaining, cheap to carry — but it would hit a wall on the first genuinely complex product. This release lets it grow depth instead of bloat, and ships the machinery to bring every old project along.
+
+### Added
+- **Hub-and-spoke docs** — when a spec domain or architecture component outgrows its drawer (~150 lines), it moves verbatim to its own page (`docs/spec/<domain>.md`, `docs/architecture/<component>.md`); the main file stays a short index every session can afford to load, spokes open only when the work touches them. Split when depth demands, never preemptively
+- **The reference shelf** (`docs/reference/`) — durable knowledge that is neither intent nor history: keeper research briefs, integration notes, domain knowledge. Fed by promotion from brainstorm; never loaded by default; its README table keeps it discoverable
+- **Decision-log lifecycle** — superseded rulings get marked, and past ~100 lines old ratified night rulings consolidate into thematic one-liners; LESSON lines, reversals, and house-rule changes stay verbatim forever (the proxy's taste memory)
+- **Structural migrations** (`.claude/migrations/vX.Y.Z.md`) — whenever a release changes doc *structure*, it ships versioned transformation instructions with it. `/template-update` detects migrations in the version range, chains them in order, executes each through the `builder` in a fresh context, and enforces **zero-loss verification**: every heading and entry accounted for as moved, merged, or in place — deleted must be 0, or the migration rolls back. Dry-run shows the before/after ("your 400-line spec becomes a 40-line index + 5 pages") before anything is touched
+- **`migrations/v2.8.0.md`** — the first migration, bringing pre-2.8 projects onto this structure (conditionally: small docs are left whole)
+- **`doc-sync-check`** now verifies hub↔spoke integrity, shelf-table accuracy, and flags a decision log due for consolidation; the validator checks migration-file naming
+
+### Decided
+- **Interface stays one command:** structural migration is part of `/template-update`, not a second entry point — users have one intent ("bring my project current"), so they get one command. The muscle is the existing `builder` agent; no new roster seat
+- **Never ship a structure change without shipping its migration** — recorded as a standing rule
+- Migrations are the one sanctioned exception to "docs are never touched": they may restructure (move, split, consolidate) under zero-loss proof, never rewrite or delete
+
+### Changed
+- **Plugin** bumped to 2.8.0
+
+---
+
 ## v2.7.0 — 2026-08-01: The real night (orchestrator edition)
 
 Field feedback from real nights: the shift stalled on questions mid-run, PARK threw away working hours, and one context doing all the building degraded over long sessions. The goal — work continues 24/7 inside the envelope of documented intent — got its engine and its governor.
