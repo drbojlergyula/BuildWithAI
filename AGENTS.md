@@ -21,8 +21,9 @@ These documents are the project's long-term memory. Prefer updating them over le
 | `docs/brainstorm.md` | Scratchpad for ideas before they are ready for the spec |
 | `docs/project_status.md` | Current progress, active phase, upcoming milestones |
 | `docs/changelog.md` | Version history and notable changes |
+| `docs/reference/` | Durable knowledge shelf — research briefs and domain notes worth keeping; opened on demand, never loaded by default |
 
-The spec and architecture are the source of truth. After meaningful work: update the changelog and status. After a decision: promote it from brainstorm to spec and append one line to the decision log. `docs/house_rules.md` is binding: if a task conflicts with a house rule, stop and ask. Documentation conventions: `.claude/rules/documentation.md`.
+The spec and architecture are the source of truth. After meaningful work: update the changelog and status. After a decision: promote it from brainstorm to spec and append one line to the decision log. `docs/house_rules.md` is binding: if a task conflicts with a house rule, stop and ask. Complex projects split oversized docs hub-and-spoke: the main files stay short indexes, depth lives in `docs/spec/` and `docs/architecture/` pages opened only when the work touches them. Documentation conventions: `.claude/rules/documentation.md`.
 
 ## Skills — shared workflows (all assistants)
 

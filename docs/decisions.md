@@ -8,6 +8,9 @@
      The entries below are this template's own history; /start and /adopt-project
      replace them with your project's decisions. -->
 
+- 2026-08-20 — Second-brain structure: hub-and-spoke overflow, reference shelf, decision-log lifecycle — the docs grow depth instead of bloat; per-session context gets smaller, not larger
+- 2026-08-20 — Never ship a structure change without shipping its migration: `.claude/migrations/vX.Y.Z.md` files travel with the release; `/template-update` chains and executes them under zero-loss verification (moved/merged/in-place accounting, deleted must be 0)
+- 2026-08-20 — Migration is a command, not an agent: one entry point (`/template-update`) for one user intent; the muscle is the existing `builder` in a fresh context, `doc-sync-check` verifies — no new roster seat
 - 2026-08-01 — Night shift v2 runs on a night branch with ratification-by-merge; new BRANCH verdict implements expensive-but-containable decisions on child feature branches instead of parking the work — a branch is reversible by construction, so parking moves from the work to the merge; STOP untouched (a branch cannot un-spend money)
 - 2026-08-01 — Orchestrator pattern for nights: the session delegates stories to the new `builder` agent (fresh context per story) and stays thin — fixes long-run drift and token cost at once; builder seat earned by field feedback from real nights
 - 2026-08-01 — Absence windows: one explicit consent covers a bounded multi-day window, earned by a healthy scorecard; open-ended standing autonomy stays rejected — consent per delegation, window-scoped

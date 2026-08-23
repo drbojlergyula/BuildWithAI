@@ -117,6 +117,15 @@ if plugin_json.is_file():
     except json.JSONDecodeError:
         pass  # reported by the JSON check above
 
+# --- Migration files must be named vX.Y.Z.md and non-empty
+migrations_dir = ROOT / ".claude" / "migrations"
+if migrations_dir.is_dir():
+    for mig in sorted(migrations_dir.iterdir()):
+        if not re.fullmatch(r"v\d+\.\d+\.\d+\.md", mig.name):
+            errors.append(f"{mig.relative_to(ROOT)}: migration files must be named vX.Y.Z.md")
+        elif not mig.read_text(encoding="utf-8").strip():
+            errors.append(f"{mig.relative_to(ROOT)}: empty migration file")
+
 # --- Every agent must be mentioned in the SessionStart hook's welcome text
 if hook.is_file():
     hook_text = hook.read_text(encoding="utf-8")

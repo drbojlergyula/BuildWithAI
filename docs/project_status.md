@@ -7,7 +7,7 @@
      Per the documentation conventions: completed phases get ONE summary line —
      full detail lives in docs/changelog.md. -->
 
-**Last Updated:** August 1, 2026 (v2.7.0 — the real night: orchestrator on a night branch, BRANCH verdict, tiered builders, absence windows, adaptive throttle)
+**Last Updated:** August 20, 2026 (v2.8.0 — the second brain grows up: hub-and-spoke docs, reference shelf, decision-log lifecycle, versioned structural migrations with zero-loss verification)
 **Project Start:** April 2026
 
 ---
@@ -26,6 +26,7 @@ One line each — the full story is in `docs/changelog.md`.
 - ✅ **Phase 9 — Earning Trust** (Jul 2026, v2.5.0): supervised first night (rehearsal), morning ratification ritual, accept-rate scorecard with honesty gate; reversals become proxy precedent; scheduled nights rejected
 - ✅ **Phase 10 — Projects That Keep Up** (Jul 2026, v2.6.0): `/template-update` skill — three-way comparison against the `.claude/template-version` stamp; template-owned files update, customizations ask, project content never touched
 - ✅ **Phase 11 — The Real Night** (Aug 2026, v2.7.0): orchestrator on `night/<date>` branch delegating to tiered builders (`builder` agent, delegation matrix); BRANCH verdict — expensive-but-containable calls implemented on feature branches, merge = ratify; absence windows earned by scorecard; adaptive throttle; zero-questions rule — driven by field feedback from real nights
+- ✅ **Phase 12 — The Second Brain Grows Up** (Aug 2026, v2.8.0): hub-and-spoke doc overflow, `docs/reference/` shelf, decision-log lifecycle; versioned structural migrations (`.claude/migrations/`) executed by `/template-update` via the builder under zero-loss verification; standing rule — no structure change ships without its migration
 
 ---
 
@@ -43,7 +44,7 @@ One line each — the full story is in `docs/changelog.md`.
 - ✅ Product consolidation: BuildWithClaude deprecated; beginner on-ramp absorbed as `docs/start_here_with_claude.md`
 
 **Next (manual steps for the owner):**
-- Merge the current branch, then tag `v2.7.0` (match the version in `.claude-plugin/plugin.json`)
+- Merge the current branch, then tag `v2.8.0` (match the version in `.claude-plugin/plugin.json`)
 - Archive the BuildWithClaude repository on GitHub (Settings → Archive) after merging its deprecation README
 - Mark this repo as a Template repository (Settings → Template repository)
 - Record a short demo GIF for the README (fresh clone → welcome → /start → team reveal)

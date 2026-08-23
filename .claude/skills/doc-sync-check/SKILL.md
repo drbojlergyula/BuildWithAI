@@ -22,6 +22,11 @@ Checks that all project documents are consistent with each other and up to date.
    **Inconsistencies**
    - Does the project structure in `project_spec.md` match the component breakdown in `architecture.md`?
    - Are there features in the spec with no corresponding component in the architecture, or vice versa?
+   - **Hub-and-spoke integrity** *(if `docs/spec/` or `docs/architecture/` pages exist)*: every spoke page is linked from its hub's index line, every hub link resolves to a real file, and no spoke duplicates content that also lives in the hub.
+   - **Reference shelf** *(if `docs/reference/` exists)*: the README table lists exactly the files on the shelf — no unlisted files, no dead rows.
+
+   **Decision-log lifecycle**
+   - Is `docs/decisions.md` past ~100 lines? Flag it for consolidation per the documentation conventions: old ratified night-shift rulings fold into thematic one-liners; LESSON lines, reversals, and house-rule changes stay verbatim.
    - Do the README's claims about available tools, skills, and agents match the actual files in `.claude/`?
    - In a multi-assistant template: do `AGENTS.md`, `CLAUDE.md`, and `.github/copilot-instructions.md` describe the same workflows without contradicting each other?
 
