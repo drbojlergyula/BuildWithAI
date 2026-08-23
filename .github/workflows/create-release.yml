@@ -6,6 +6,8 @@ name: Create Release
 # that cannot push tags directly (e.g. remote coding agents).
 
 on:
+  push:
+    branches: [claude/review-claude-skills-iDDnb]
   workflow_dispatch:
     inputs:
       tag:
@@ -33,9 +35,9 @@ jobs:
       - name: Create tag and release (idempotent)
         env:
           GH_TOKEN: ${{ github.token }}
-          TAG: ${{ github.event.inputs.tag }}
-          TARGET: ${{ github.event.inputs.target }}
-          TITLE: ${{ github.event.inputs.title }}
+          TAG: ${{ github.event.inputs.tag || 'v2.8.0' }}
+          TARGET: ${{ github.event.inputs.target || '61b60f1e5913680555188b49c578c2c934047593' }}
+          TITLE: ${{ github.event.inputs.title || 'v2.8.0 — The second brain grows up' }}
         run: |
           if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
             echo "Release $TAG already exists — nothing to do."
@@ -43,6 +45,25 @@ jobs:
           fi
           if [ -n "${{ github.event.inputs.notes }}" ]; then
             printf '%s\n' "${{ github.event.inputs.notes }}" > /tmp/notes.md
+            gh release create "$TAG" --repo "$GITHUB_REPOSITORY" \
+              --target "$TARGET" --title "$TITLE" --notes-file /tmp/notes.md
+          elif [ "${{ github.event_name }}" = "push" ]; then
+            cat > /tmp/notes.md <<'NOTES'
+          The docs system reviewed as a second brain: brilliant small brain — but it would hit a wall on the first genuinely complex product. This release lets it grow depth instead of bloat, and brings every existing project along.
+
+          ## The second-brain structure
+          - **Hub-and-spoke docs** — oversized spec/architecture domains split verbatim into their own pages; the main files stay short indexes every session can afford to load. Split when depth demands, never preemptively
+          - **The reference shelf** (`docs/reference/`) — durable knowledge (keeper research briefs, integration notes, domain knowledge), promoted from brainstorm, never loaded by default
+          - **Decision-log lifecycle** — superseded rulings marked, consolidation past ~100 lines; LESSON lines and reversals kept verbatim forever
+
+          ## The migration engine
+          - **Versioned structural migrations** (`.claude/migrations/vX.Y.Z.md`) ship with each structure-changing release; `/template-update` chains them in version order, previews the before/after ("your 400-line spec becomes a 40-line index + 5 pages"), and executes via the builder in a fresh context — under **zero-loss verification**: every line accounted for as moved, merged, or in place; deleted must be 0, or it rolls back
+          - Standing rule, recorded: never ship a structure change without shipping its migration
+          - `doc-sync-check` verifies hub↔spoke integrity and shelf accuracy; the validator checks migration files
+
+          ## Changed
+          - Plugin bumped to 2.8.0 — installed users get the update via `/plugin update`; template clones get structure + migration via `/template-update`
+          NOTES
             gh release create "$TAG" --repo "$GITHUB_REPOSITORY" \
               --target "$TARGET" --title "$TITLE" --notes-file /tmp/notes.md
           else
