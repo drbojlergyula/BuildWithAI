@@ -10,6 +10,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## v2.9.1 — 2026-08-31: Sized at the door (plan hygiene + doc gardening)
+
+Owner field input: stories don't outgrow night-cycles in practice — so splitting belongs at the plan's entrance, not at build time. Plus two promoted harvest items.
+
+### Added
+- **Story sizing rule at the plan's door** — one story = one independently verifiable outcome buildable in a single sitting; enforced where stories are born (`/new-feature`, `/start`, `/adopt-project`), patrolled by `doc-sync-check` (oversized-story flag), with the night triage as last-resort vent (split-don't-build, noted in the briefing as a slipped gate)
+- **Plan coverage check** in `doc-sync-check` (from the Spec Kit `/analyze` idea): spec features with no story, orphan stories, and story-dependency validation (exists, non-circular, not scheduled backwards)
+- **Doc gardening in the prep lane** (from the AutoDream idea): nights prepare decision-log consolidations, status pruning, and hub-and-spoke split proposals — proposals only, morning-ratified; the gardener trims nothing the owner hasn't seen
+
+### Changed
+- **Plugin** bumped to 2.9.1
+
+---
+
 ## v2.9.0 — 2026-08-23: Self-equipping nights (browser verification + trusted provisioning)
 
 Owner field evidence from many real nights across projects: verification had a hole exactly where users live (web UI — the verifier couldn't click), and a night that discovers a missing tool at 3 AM must not fail. The night can now equip itself — but only from the owner's shop.

@@ -8,6 +8,8 @@
      The entries below are this template's own history; /start and /adopt-project
      replace them with your project's decisions. -->
 
+- 2026-08-31 — Story splitting happens at the plan's door, not at build time (owner field input: stories don't outgrow night-cycles when sized on entry) — enforced in new-feature/start/adopt-project, patrolled by doc-sync-check, night triage is only a vent
+- 2026-08-31 — Multi-project repos confirmed as the v3.0 direction (owner runs many projects per repo): the 3-layer portfolio brain (standards / portfolio / project), shipped with its migration per the standing rule
 - 2026-08-23 — Trusted sources are vendor-official per assistant: Anthropic for Claude Code, OpenAI for Codex, GitHub/Microsoft for Copilot — Codex parity is first-class, the rule is identical in every tool
 - 2026-08-23 — Nights may self-provision missing dev tools, but only from the owner-curated trusted-sources list, under the four-part test (free/dev-only/reversible/listed), smoke-tested, capped at two per night, ratified by morning merge — built on owner field evidence from many real nights; the internet at large is never a source at 3 AM
 - 2026-08-23 — Browser-testing integration is a conditional hook, not a vendored dependency — the verifier uses `webapp-testing` when installed and degrades gracefully when not; recommending at the moment of felt pain beats requiring at setup

@@ -45,7 +45,7 @@ One message, on the record:
 
 Repeat until scope, cycle cap, or window is done:
 
-1. **Pick and classify.** Next Not Started story from the plan. Classify its tier per the delegation matrix in `AGENTS.md` (routine → junior; complex → senior; architectural → expert). A task smaller than its own handoff packet is done in place, not delegated.
+1. **Pick and classify.** Next Not Started story from the plan. Classify its tier per the delegation matrix in `AGENTS.md` (routine → junior; complex → senior; architectural → expert). A task smaller than its own handoff packet is done in place, not delegated. An *oversized* story (bigger than one verifiable outcome) is not built — split it in the plan, note in the briefing that it slipped past the plan's door, and build its first piece.
 2. **Package and delegate.** Assemble the work packet — story, acceptance criteria, architecture constraints, binding house rules, related decisions and lessons — and dispatch to the `builder` agent (Claude Code: as a subagent, fresh context per story; Codex/Copilot: adopt the builder role from `.claude/agents/builder.md`, work, drop the role). Expert-tier work stays with the orchestrator. The orchestrator's own context stays thin on purpose: packets out, reports in — that thinness is what lets a long night stay coherent.
 3. **Verify independently** with the `build-verifier`; append any lesson line from a FAIL to `docs/decisions.md`. Fix-and-reverify via the builder; two failures parks the story with evidence, two consecutive parked-by-failure stories ends the night — something systematic is wrong.
 4. **Every judgment question goes to the owner-proxy** (subagent in Claude Code; adopted role elsewhere — the ruling binds identically). Act on the verdict:
@@ -59,6 +59,8 @@ Repeat until scope, cycle cap, or window is done:
 ### 3b — The prep lane
 
 When the build lane cannot continue and budget remains: research briefs on parked and standing questions, brainstorms for upcoming stories — all proposals in `docs/brainstorm.md`, never in spec or code. **Data informs, docs authorize.** In an absence window, the prep lane is also where a cycle ends early rather than stacking dependent work on unratified decisions.
+
+The prep lane also does **doc gardening** — the second brain tidies itself while the owner sleeps: run the `doc-sync-check` workflow and *prepare* what it flags — a decision-log consolidation draft, status pruning, a hub-and-spoke split proposal for an oversized doc. All of it as proposals on the night branch, ratified by the morning merge like everything else — the gardener trims nothing the owner hasn't seen.
 
 ### 4 — Cycles and the morning briefing
 
