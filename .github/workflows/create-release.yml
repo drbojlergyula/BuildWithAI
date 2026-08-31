@@ -6,8 +6,6 @@ name: Create Release
 # that cannot push tags directly (e.g. remote coding agents).
 
 on:
-  push:
-    branches: [claude/review-claude-skills-iDDnb]
   workflow_dispatch:
     inputs:
       tag:
@@ -35,9 +33,9 @@ jobs:
       - name: Create tag and release (idempotent)
         env:
           GH_TOKEN: ${{ github.token }}
-          TAG: ${{ github.event.inputs.tag || 'v2.9.1' }}
-          TARGET: ${{ github.event.inputs.target || '6a9534e00b428876a35f87a481812829cb3d438b' }}
-          TITLE: ${{ github.event.inputs.title || 'v2.9.1 — Sized at the door' }}
+          TAG: ${{ github.event.inputs.tag }}
+          TARGET: ${{ github.event.inputs.target }}
+          TITLE: ${{ github.event.inputs.title }}
         run: |
           if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
             echo "Release $TAG already exists — nothing to do."
@@ -45,20 +43,6 @@ jobs:
           fi
           if [ -n "${{ github.event.inputs.notes }}" ]; then
             printf '%s\n' "${{ github.event.inputs.notes }}" > /tmp/notes.md
-            gh release create "$TAG" --repo "$GITHUB_REPOSITORY" \
-              --target "$TARGET" --title "$TITLE" --notes-file /tmp/notes.md
-          elif [ "${{ github.event_name }}" = "push" ]; then
-            cat > /tmp/notes.md <<'NOTES'
-          Owner field input: stories don't outgrow night-cycles when they are sized on entry — so splitting moves to the plan's door.
-
-          ## Added
-          - **Story sizing rule** where stories are born (`/new-feature`, `/start`, `/adopt-project`): one story = one independently verifiable outcome buildable in a single sitting; anything bigger splits at the plan's door. Night triage is a vent only
-          - **Plan coverage check** in `doc-sync-check`: spec features with no story, orphan stories, dependency validation, oversized-story flag
-          - **Doc gardening in the prep lane**: nights prepare decision-log consolidations, status pruning, and hub-and-spoke split proposals — proposals only, morning-ratified
-
-          ## Changed
-          - Plugin bumped to 2.9.1 — `/plugin update` or `/template-update`
-          NOTES
             gh release create "$TAG" --repo "$GITHUB_REPOSITORY" \
               --target "$TARGET" --title "$TITLE" --notes-file /tmp/notes.md
           else
