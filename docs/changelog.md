@@ -10,6 +10,25 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## v2.9.0 — 2026-08-23: Self-equipping nights (browser verification + trusted provisioning)
+
+Owner field evidence from many real nights across projects: verification had a hole exactly where users live (web UI — the verifier couldn't click), and a night that discovers a missing tool at 3 AM must not fail. The night can now equip itself — but only from the owner's shop.
+
+### Added
+- **Browser-verified UI flows** — `build-verifier` uses a browser-testing skill when one is installed (e.g. Anthropic's `webapp-testing`): real click-throughs, screenshots as evidence, browser-console errors checked. Without one it degrades exactly to today's behaviour, and recommends the install at the moment of felt pain (repeated "not verifiable" UI items)
+- **Trusted-sources list** (`.claude/rules/trusted-sources.md`) — the *entire universe* of what a session may install unattended: free, dev-only, reversible tools from owner-curated sources. Sessions use the list; they never extend it
+- **Night-shift capability preflight** — the night's scope is scanned for gaps while the owner is awake ("tonight builds UI, no browser-testing skill — install now? two minutes"), because two minutes awake beats provisioning at 3 AM
+- **Mid-night provisioning** — a missing tool no longer fails or silently degrades the night: the proxy rules with the four-part test (free / dev-only / reversible / on the trusted list), the tool installs on the night branch, is smoke-tested before use, logged for morning review; the merge ratifies the dependency. Cap: two installs per night; any failure parks only the affected verification with a one-line morning fix
+
+### Decided
+- Downloading from the trusted list is not "external contact" — *sending* anything outward on the project's behalf is; the STOP line is unchanged
+- Evidence class recorded: this seat was earned by the owner's real nightly usage across projects, per the standing rule
+
+### Changed
+- **Plugin** bumped to 2.9.0
+
+---
+
 ## v2.8.0 — 2026-08-20: The second brain grows up (structure + migrations)
 
 A senior review of the docs system as a second brain: brilliant *small* brain — fixed drawers, self-maintaining, cheap to carry — but it would hit a wall on the first genuinely complex product. This release lets it grow depth instead of bloat, and ships the machinery to bring every old project along.

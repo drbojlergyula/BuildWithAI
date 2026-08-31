@@ -28,7 +28,8 @@ Refuse to start if a check fails:
    - **GitHub Copilot:** enable the surface's tool-approval/allow-tools setting for the session. Same rule.
 5. **The budget is countable, and windows are explicit.** Stories or scope, never tokens or money. A single night: "3 stories". An **absence window**: an end time plus a per-cycle cap ("off until Monday 8am, max 4 stories per night-cycle") — one consent covering the whole window, sized to the AI-budget house rule. Open-ended autonomy is never granted; no end time, no window.
 6. **Models by tier.** The orchestrator and proxy run on the owner's strongest model — judgment tier. Builders run at the tier the delegation matrix in `AGENTS.md` assigns per task (Claude Code enforces via agent `model`; Codex and Copilot cannot switch per task — pick the session's model to match the night's dominant tier, or split the work across sessions by tier).
-7. **The research lane is a named choice.** Internet research tonight (briefs, comparisons, evidence for rulings)? If yes, lift the web restriction knowingly; if no, the prep lane runs offline from repo and docs.
+7. **Tonight's stories can actually be verified.** Scan the night's scope for capability gaps — most commonly: UI stories with no browser-testing skill installed. Found one? Fix it now, while the owner is awake: "Tonight builds web UI, but I can't click without a browser-testing skill — install `webapp-testing` now? Two minutes, and every button tonight gets proven, not promised." Two minutes awake beats provisioning at 3 AM.
+8. **The research lane is a named choice.** Internet research tonight (briefs, comparisons, evidence for rulings)? If yes, lift the web restriction knowingly; if no, the prep lane runs offline from repo and docs.
 
 ### 1 — The night branch
 
@@ -52,7 +53,8 @@ Repeat until scope, cycle cap, or window is done:
    - **BRANCH** — create the child branch off the night branch, implement and verify the ruling there, log it, then return to the night branch. **Never build other work on top of an unmerged BRANCH** — one level of unratified depth, no towers. If only BRANCH-dependent work remains, the build lane is done for this cycle.
    - **PARK** — record in `docs/brainstorm.md` (with a research brief if the lane is on), abandon that story cleanly, next story.
    - **STOP** — end the night now; go to the briefing.
-5. **Missing capability → draft a specialist.** If a story needs a role no agent covers (and doing it in place would be poor work): research current best practice for that role if the lane is on, then draft `.claude/agents/<name>.md` — description, scoped tools, tier-appropriate `model` — *on the night branch*, use it, and list it in the briefing. **Cap: two new specialists per night.** They are provisional like everything else: the morning merge decides whether they join the team. (The template's "five agents" principle governs the template's shipped roster — a project growing its own team from real needs is that principle working.)
+5. **Missing tool → provision it, from the owner's shop only.** If mid-night work needs a tool that is not installed (a browser-testing skill, most typically), the night does not fail and does not degrade silently — it consults the proxy with the provisioning test: *free? dev-only (never ships in the product)? reversible? and listed in `.claude/rules/trusted-sources.md`?* All four yes → install it on the night branch, **smoke-test it** (open a page, click once) before relying on it, log the install tagged for morning review, and continue. Any no — or the install fails, or the research lane is off — → the affected verification parks with a one-line morning fix ("run this install and it never happens again"), and the rest of the night continues. Cap: two installs per night. The trusted list is the entire universe; the internet at large is not a source at 3 AM.
+6. **Missing capability → draft a specialist.** If a story needs a role no agent covers (and doing it in place would be poor work): research current best practice for that role if the lane is on, then draft `.claude/agents/<name>.md` — description, scoped tools, tier-appropriate `model` — *on the night branch*, use it, and list it in the briefing. **Cap: two new specialists per night.** They are provisional like everything else: the morning merge decides whether they join the team. (The template's "five agents" principle governs the template's shipped roster — a project growing its own team from real needs is that principle working.)
 
 ### 3b — The prep lane
 
@@ -68,6 +70,7 @@ In an absence window, each night-cycle ends with an **interim briefing** (same f
 > **Decided / Assumed on your behalf:** [each with grounds/basis — tagged in `docs/decisions.md`; disagreeing with an assumption is a small, local redo]
 > **Implemented awaiting your merge:** [each BRANCH — branch name, what it does, the proxy's basis; merge = ratify, delete = veto]
 > **New specialists drafted:** [agent, tier, why — they exist only on the night branch until you merge]
+> **Tools installed:** [each install — what, from which trusted source, smoke-test result, what it verified tonight; merge = the dependency stays]
 > **Parked for you:** [questions with their decision-ready briefs]
 > **Prepared for you:** [briefs and brainstorms in `docs/brainstorm.md`]
 > **Stopped because:** [one line] · **Spent:** [stories vs. scope; actual cost in your tool's usage view]
@@ -93,6 +96,6 @@ When the owner reacts:
 - **Zero questions to the user mid-night.** About to ask one? Check the branch: on `night/*`, the question goes to the proxy — always.
 - **Re-anchor after context loss:** current branch name, `docs/project_status.md`, tagged rulings in `docs/decisions.md`, opening save-point label. The branch and the docs are the night's memory; if they cannot reconstruct the state, stop and write the briefing with what is known.
 - Proxy verdicts bind: no proceeding past a PARK, no negotiating a STOP, no stacking on an unmerged BRANCH.
-- Never deploy, delete data, add paid services, or contact anything external — STOPs even where permissions would technically allow, and no branch makes them provisional.
+- Never deploy, delete data, add paid services, or contact anything external — STOPs even where permissions would technically allow, and no branch makes them provisional. (Downloading a tool from the trusted-sources list is not "external contact" — *sending* anything outward on the project's behalf is.)
 - **Only build what the ratified plan contains.** Autonomy executes documented intent; it never invents scope. When the plan runs out, the night switches to the prep lane and then stops — the throttle on autonomy is the owner's spec, by design.
 - If this repo is the untouched template: no night shift, only `/start`.

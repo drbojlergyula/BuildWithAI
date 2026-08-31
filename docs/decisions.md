@@ -8,6 +8,8 @@
      The entries below are this template's own history; /start and /adopt-project
      replace them with your project's decisions. -->
 
+- 2026-08-23 — Nights may self-provision missing dev tools, but only from the owner-curated trusted-sources list, under the four-part test (free/dev-only/reversible/listed), smoke-tested, capped at two per night, ratified by morning merge — built on owner field evidence from many real nights; the internet at large is never a source at 3 AM
+- 2026-08-23 — Browser-testing integration is a conditional hook, not a vendored dependency — the verifier uses `webapp-testing` when installed and degrades gracefully when not; recommending at the moment of felt pain beats requiring at setup
 - 2026-08-20 — Second-brain structure: hub-and-spoke overflow, reference shelf, decision-log lifecycle — the docs grow depth instead of bloat; per-session context gets smaller, not larger
 - 2026-08-20 — Never ship a structure change without shipping its migration: `.claude/migrations/vX.Y.Z.md` files travel with the release; `/template-update` chains and executes them under zero-loss verification (moved/merged/in-place accounting, deleted must be 0)
 - 2026-08-20 — Migration is a command, not an agent: one entry point (`/template-update`) for one user intent; the muscle is the existing `builder` in a fresh context, `doc-sync-check` verifies — no new roster seat
