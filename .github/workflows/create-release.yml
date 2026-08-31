@@ -6,8 +6,6 @@ name: Create Release
 # that cannot push tags directly (e.g. remote coding agents).
 
 on:
-  push:
-    branches: [claude/review-claude-skills-iDDnb]
   workflow_dispatch:
     inputs:
       tag:
@@ -35,9 +33,9 @@ jobs:
       - name: Create tag and release (idempotent)
         env:
           GH_TOKEN: ${{ github.token }}
-          TAG: ${{ github.event.inputs.tag || 'v2.9.0' }}
-          TARGET: ${{ github.event.inputs.target || '65a7e252f10844cea83664f8932cfe01c8cc4b6b' }}
-          TITLE: ${{ github.event.inputs.title || 'v2.9.0 — Self-equipping nights' }}
+          TAG: ${{ github.event.inputs.tag }}
+          TARGET: ${{ github.event.inputs.target }}
+          TITLE: ${{ github.event.inputs.title }}
         run: |
           if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
             echo "Release $TAG already exists — nothing to do."
@@ -45,22 +43,6 @@ jobs:
           fi
           if [ -n "${{ github.event.inputs.notes }}" ]; then
             printf '%s\n' "${{ github.event.inputs.notes }}" > /tmp/notes.md
-            gh release create "$TAG" --repo "$GITHUB_REPOSITORY" \
-              --target "$TARGET" --title "$TITLE" --notes-file /tmp/notes.md
-          elif [ "${{ github.event_name }}" = "push" ]; then
-            cat > /tmp/notes.md <<'NOTES'
-          Built on owner field evidence from many real nights: verification had a hole exactly where users live (web UI), and a night that discovers a missing tool at 3 AM must not fail. The night can now equip itself — but only from the owner's shop.
-
-          ## Added
-          - **Browser-verified UI flows** — the verifier uses a browser-testing skill when installed (e.g. Anthropic's `webapp-testing`): real click-throughs, screenshots as evidence, console errors checked; degrades gracefully without one and recommends the install at the moment of felt pain
-          - **Vendor-official trusted sources** — the entire universe of unattended installs, identical in every assistant: Anthropic's official skills repo + store in Claude Code, OpenAI's official repositories in Codex, GitHub/Microsoft's in Copilot; npm/PyPI only as declared dependencies. Install mechanics documented — nothing improvised at 3 AM
-          - **Capability preflight** — the night's scope is scanned for gaps while the owner is awake; in network-blocked sandboxes (Codex, typically) the awake install is the only real path
-          - **Mid-night provisioning** — four-part test (free / dev-only / reversible / listed), installed on the night branch, smoke-tested before use, morning-ratified; cap two per night; failures park only the affected verification
-          - **Decision-card briefings** — every branch awaiting merge is a plain-language card: what was decided, why, pros, cons, risk, and what saying no costs. The briefing is written for a person having coffee — if the owner needs a clarifying question to decide, the briefing failed
-
-          ## Changed
-          - Plugin bumped to 2.9.0 — installed users get the update via `/plugin update`; template clones via `/template-update`
-          NOTES
             gh release create "$TAG" --repo "$GITHUB_REPOSITORY" \
               --target "$TARGET" --title "$TITLE" --notes-file /tmp/notes.md
           else
