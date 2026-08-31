@@ -14,5 +14,8 @@ Sometimes the work needs a tool that is not installed — most often a browser-t
 
 | Source | What may be installed | Typical use |
 |---|---|---|
-| `anthropics/skills` (github.com/anthropics/skills) | Agent Skills, e.g. `webapp-testing` (Playwright browser testing), `frontend-design` | browser-verified UI flows with screenshots and console logs; frontend polish |
-| npm / PyPI — **only** as dependencies a listed skill requires | e.g. `playwright` and its Chromium | runtime for the skills above |
+| **Anthropic's official skills repository** (github.com/anthropics/skills) | **any skill in it** — e.g. `webapp-testing` (Playwright browser testing), `frontend-design`, `mcp-builder` | browser-verified UI flows with screenshots and console logs; frontend polish; whatever the work needs |
+| **Anthropic's official skill/plugin marketplace** (the store built into Claude Code) | any Anthropic-authored entry | same — the official store is trusted wholesale |
+| npm / PyPI — **only** as dependencies a skill above requires | e.g. `playwright` and its Chromium | runtime for the skills |
+
+Anthropic-official is trusted *wholesale*; the four-part test (free / dev-only / reversible / listed) still applies to every individual install — being on this list answers only the "listed" part, never the other three.
