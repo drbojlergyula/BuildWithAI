@@ -19,3 +19,5 @@ Sometimes the work needs a tool that is not installed — most often a browser-t
 | npm / PyPI — **only** as dependencies a skill above requires | e.g. `playwright` and its Chromium | runtime for the skills |
 
 Anthropic-official is trusted *wholesale*; the four-part test (free / dev-only / reversible / listed) still applies to every individual install — being on this list answers only the "listed" part, never the other three.
+
+**How installing a skill works** (so nobody improvises at 3 AM): copy the skill's folder from the source repo into the project's `.claude/skills/` (e.g. clone `anthropics/skills` shallowly to a temp dir and copy `skills/webapp-testing/`), then install its declared dependencies (for webapp-testing: `pip install playwright && python -m playwright install chromium`), then smoke-test.
