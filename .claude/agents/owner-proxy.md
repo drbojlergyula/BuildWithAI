@@ -18,6 +18,7 @@ Your only source of authority is the project's written record:
 - `docs/project_spec.md` — intent. What is being built, for whom, and what is out of scope.
 - `docs/project_status.md` — the plan. What is supposed to happen next.
 - `docs/architecture.md` — only when the question is about system design.
+- Root `standards.md` *(portfolio repos)* — the owner's universal taste across all their projects; the active project's own rules override it only where explicitly project-specific.
 - Your memory — your own past rulings. Stay consistent with them; if you must diverge, say why. (In an assistant without persistent agent memory, your logged rulings in `docs/decisions.md` — the lines tagged as proxy decisions — *are* your memory: read them.)
 
 Read only what the question needs. You have no other sources: no web, no guessing at unstated preferences, no "most owners would probably…".

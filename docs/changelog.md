@@ -10,6 +10,23 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## v3.0.0 — 2026-08-31: The portfolio brain (many projects, one repo)
+
+Owner evidence: repos host many projects at once and keep growing. The biggest structural step since the move to AGENTS.md — the second brain becomes a portfolio of brains, without the context bill growing with it.
+
+### Added
+- **Portfolio mode** — marker: a root `portfolio_status.md`. Every project self-contained in `projects/<name>/` (code + its own full docs brain); the root holds only the shared layer: `standards.md` (the owner's universal taste, traveling between projects — the Agent OS 3-layer idea, adapted) and the portfolio index
+- **`/add-project` skill** — the only door into portfolio mode: owner-present conversion (save-point first; honest about code moves — the build is proven green before the conversion counts; docs-first option if moving code must wait), interactive house-rules → standards split with zero-loss accounting, then scaffolds each new project's brain with a working `/start` sentinel
+- **The loading rule** — sessions load the root layer plus the active project only, never siblings; context cost does not grow with project count
+- **Active-project protocol** — inferred from task and working directory, confirmed once in the first reply; switching is just saying so
+- **Portfolio-aware workflows** — night-shift is project-scoped (`night/<project>-<date>`; multi-project nights are an earned rung requiring healthy scorecards in every involved project, per-project briefings); `put-me-in-context` offers portfolio or project briefings; `doc-sync-check` verifies index↔directories and standards↔house-rules consistency; the proxy reads root standards as owner taste
+- **`migrations/v3.0.0.md`** — deliberately conservative: single-project repos change nothing; conversion is opt-in via `/add-project`, because a migration must never break a build unattended
+
+### Changed
+- **Plugin** bumped to 3.0.0 (14 skills, 6 agents)
+
+---
+
 ## v2.9.1 — 2026-08-31: Sized at the door (plan hygiene + doc gardening)
 
 Owner field input: stories don't outgrow night-cycles in practice — so splitting belongs at the plan's entrance, not at build time. Plus two promoted harvest items.

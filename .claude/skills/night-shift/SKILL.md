@@ -19,7 +19,7 @@ The owner is off; progress continues **inside the envelope of their documented i
 
 Refuse to start if a check fails:
 
-1. **The project is set up.** `template-state: untouched-example` sentinel present, or no plan in `docs/project_status.md` → stop and suggest `/start`.
+1. **The project is set up — and in a portfolio repo, named.** `template-state: untouched-example` sentinel present, or no plan in the project's `project_status.md` → stop and suggest `/start`. In a portfolio repo (root `portfolio_status.md` exists), first fix the night's **target project** — scope, budget, scorecard, and branch are all project-scoped. A multi-project night ("work on webshop *and* crm tonight") is an **earned rung**: only when every involved project's own scorecard is healthy; each project gets its own night branch and its own briefing section.
 2. **Unreviewed work comes first.** Rulings still tagged `review me` / `pending owner review`, or unmerged `night/*` / `feature/night-*` branches from a previous run → run "The morning after" (below) before anything new. New autonomy is not granted on top of unreviewed autonomy.
 3. **The scorecard gates ambition.** No scorecard section in `docs/project_status.md` yet → this is the first night and it runs as a **rehearsal**: one story, owner watching, answering nothing (skippable only by explicit say-so). Scorecard exists → size tonight to it: recent accept/merge rate below roughly half → recommend *not* running ("fix the spec, not another night" — soft gate); healthy rate → normal scope; an *absence window* (multi-day) may only be granted when the last scorecard entries are healthy — windows are an earned rung, not a default.
 4. **Approvals won't stall the night.** The proxy answers judgment questions; it cannot click approval dialogs. Set the tool's autonomous mode now, with the deny baseline (`.claude/presets/night-shift.settings.json`) as behavioral law everywhere:
@@ -33,7 +33,7 @@ Refuse to start if a check fails:
 
 ### 1 — The night branch
 
-`/save-point` first, then create and switch to `night/<date>`. **Everything the night does lives on this branch** — commits, doc updates, drafted agents. The branch is also the mode marker: *if the current git branch starts with `night/`, night rules apply* — a fact that survives context loss when prose does not. `main` (or the owner's default branch) is written only by the owner's morning merge.
+`/save-point` first, then create and switch to `night/<date>` (portfolio repos: `night/<project>-<date>`). **Everything the night does lives on this branch** — commits, doc updates, drafted agents. The branch is also the mode marker: *if the current git branch starts with `night/`, night rules apply* — a fact that survives context loss when prose does not. `main` (or the owner's default branch) is written only by the owner's morning merge.
 
 ### 2 — The contract
 
