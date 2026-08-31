@@ -25,13 +25,13 @@ Use it to think through a feature, weigh options, and settle on an approach. Onc
 
 Full landscape reviewed (Spec Kit, BMAD v6, Agent OS, Kiro, Cline Memory Bank, Taskmaster, Ralph loops, claude-flow). Positioning confirmed: nobody combines non-technical persona + earned autonomy + cross-assistant single definition. Five refinements worth keeping, none urgent:
 
-1. **Coverage check** (from Spec Kit `/analyze`): doc-sync-check gains spec↔plan cross-checks — features with no story, orphan stories, story `depends on` validation. *Next small round, with #2.*
-2. **Doc gardening in the prep lane** (from AutoDream): nights propose decision-log consolidation, status pruning, hub-spoke splits — proposals only, morning-ratified. *Next small round, with #1.*
+1. ~~**Coverage check**~~ — *built in v2.9.1* (doc-sync-check: spec↔plan coverage, orphan stories, dependency validation)
+2. ~~**Doc gardening in the prep lane**~~ — *built in v2.9.1* (nights prepare consolidations/pruning/splits as morning-ratified proposals)
 3. **Scale-adaptive ceremony** (from BMAD): planning/ritual depth scales with task size — generalizes the parked preflight-compression debt. *After real-night feedback.*
-4. **Story-splitting guard** (from Taskmaster): a story bigger than one night-cycle gets split in the plan before building. *After real-night feedback.*
-5. **Cross-project owner profile** (from Agent OS 3-layer): the owner's standing preferences traveling between projects. *New complexity class — needs strong evidence.*
+4. ~~**Story-splitting guard**~~ — *superseded and built in v2.9.1 as the sizing rule at the plan's door* (owner field input: split on entry, not at build)
+5. **Cross-project owner profile** (from Agent OS 3-layer): *promoted to the v3.0 "Portfolio brain" direction* — owner evidence: many projects per repo, growing complexity. Design round pending.
 
-**Decision:** *(parked — ship v2.9.0 first; items 1–2 are the next candidate round)*
+**Decision:** *items 1, 2, 4 built (v2.9.1); item 5 is the v3.0 direction; item 3 waits for night feedback*
 
 ### Per-category auto-accept — the autonomy ladder's next rung *(template's own idea, parked 2026-08-01)*
 

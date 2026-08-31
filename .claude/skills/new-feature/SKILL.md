@@ -19,9 +19,9 @@ If the user provided a description as an argument, treat it as the answer to "wh
 
 2. **Clarify before writing.** List any ambiguities that would change how the feature gets built (who can do it, what happens on failure, limits, edge cases) and resolve them with the user now — each is one cheap question today or one expensive rebuild later. Also check `docs/house_rules.md`: if the feature conflicts with a house rule (budget, never-do list), raise it before going further.
 
-3. **Write the user stories.** Draft one to three user stories in the format
+3. **Write the user stories — build-sized.** Draft one to three user stories in the format
    *"A [user] can [do X] so that [goal]."*
-   Show them to the user and confirm the wording before writing anything into the spec.
+   **Sizing rule:** a story is one independently verifiable outcome that an agent can build *and* prove in a single sitting (or one night-cycle). If a story is bigger than that, split it here, during spec-writing — a story enters the plan already build-sized, never as homework for later. Show the stories to the user and confirm the wording before writing anything into the spec.
 
 4. **Place it in a version.** Recommend whether this belongs in the MVP, v1.0, or a later version — and say why. If it displaces something else, say that too. Confirm with the user.
 

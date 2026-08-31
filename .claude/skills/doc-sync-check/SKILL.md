@@ -25,6 +25,11 @@ Checks that all project documents are consistent with each other and up to date.
    - **Hub-and-spoke integrity** *(if `docs/spec/` or `docs/architecture/` pages exist)*: every spoke page is linked from its hub's index line, every hub link resolves to a real file, and no spoke duplicates content that also lives in the hub.
    - **Reference shelf** *(if `docs/reference/` exists)*: the README table lists exactly the files on the shelf — no unlisted files, no dead rows.
 
+   **Plan coverage and story health**
+   - Every feature in `project_spec.md` has at least one story in `project_status.md`'s plan — and every planned story traces back to something in the spec. Flag features with no story and orphan stories.
+   - Story dependencies make sense: if stories note "depends on", the dependency exists, is not circular, and is not scheduled later than the story that needs it.
+   - **Oversized stories:** flag any planned story that is not one independently verifiable outcome buildable in a single sitting — it should have been split at the plan's door (`/new-feature`, `/start`); propose the split.
+
    **Decision-log lifecycle**
    - Is `docs/decisions.md` past ~100 lines? Flag it for consolidation per the documentation conventions: old ratified night-shift rulings fold into thematic one-liners; LESSON lines, reversals, and house-rule changes stay verbatim.
    - Do the README's claims about available tools, skills, and agents match the actual files in `.claude/`?

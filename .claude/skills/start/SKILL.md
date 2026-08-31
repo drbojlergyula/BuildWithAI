@@ -117,7 +117,7 @@ Adjust based on feedback. Confirm the final stack before moving on.
 
 ### Phase 4 — Iteration planning
 
-Explain that you will now break the product into delivery iterations. Then propose a plan:
+Explain that you will now break the product into delivery iterations. Every planned item follows the **sizing rule**: one story = one independently verifiable outcome an agent can build and prove in a single sitting (or one night-cycle) — anything bigger gets split now, at the plan's door. Then propose a plan:
 
 **MVP — the smallest version that delivers real value**
 - List only the features absolutely necessary to validate the core idea

@@ -7,7 +7,7 @@
      Per the documentation conventions: completed phases get ONE summary line —
      full detail lives in docs/changelog.md. -->
 
-**Last Updated:** August 23, 2026 (v2.9.0 — self-equipping nights: browser-verified UI flows, trusted-sources provisioning, capability preflight)
+**Last Updated:** August 31, 2026 (v2.9.1 — sized at the door: story sizing rule, plan coverage check, doc gardening; v3.0 "Portfolio brain" direction confirmed)
 **Project Start:** April 2026
 
 ---
@@ -45,7 +45,7 @@ One line each — the full story is in `docs/changelog.md`.
 - ✅ Product consolidation: BuildWithClaude deprecated; beginner on-ramp absorbed as `docs/start_here_with_claude.md`
 
 **Next (manual steps for the owner):**
-- Merge the current branch, then tag `v2.9.0` (match the version in `.claude-plugin/plugin.json`)
+- Merge the current branch, then tag `v2.9.1` (match the version in `.claude-plugin/plugin.json`)
 - Archive the BuildWithClaude repository on GitHub (Settings → Archive) after merging its deprecation README
 - Mark this repo as a Template repository (Settings → Template repository)
 - Record a short demo GIF for the README (fresh clone → welcome → /start → team reveal)
