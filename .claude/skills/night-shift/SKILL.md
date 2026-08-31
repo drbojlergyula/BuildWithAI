@@ -68,7 +68,8 @@ In an absence window, each night-cycle ends with an **interim briefing** (same f
 >
 > **Built and verified** (on `night/<date>`): [story — one line each, verifier verdict]
 > **Decided / Assumed on your behalf:** [each with grounds/basis — tagged in `docs/decisions.md`; disagreeing with an assumption is a small, local redo]
-> **Implemented awaiting your merge:** [each BRANCH — branch name, what it does, the proxy's basis; merge = ratify, delete = veto]
+> **Implemented awaiting your merge** — one decision card per BRANCH, in plain words:
+> - *What I decided and built:* [one sentence] · *Why:* [the reasoning, cited] · *Pros:* [2–3] · *Cons:* [1–2, honestly] · *Risk if you approve:* [what could go wrong later] · *If you say no:* [delete the branch — what is lost, and that nothing else is touched] · *Your call:* merge / delete.
 > **New specialists drafted:** [agent, tier, why — they exist only on the night branch until you merge]
 > **Tools installed:** [each install — what, from which trusted source, smoke-test result, what it verified tonight; merge = the dependency stays]
 > **Parked for you:** [questions with their decision-ready briefs]
@@ -93,6 +94,7 @@ When the owner reacts:
 ## Rules
 
 - **User-invoked only** — `disable-model-invocation` enforced in Claude Code, binding prose everywhere else.
+- **The briefing is written for a person having coffee, not an engineer.** Plain words, no jargon, no file paths in the headline lines — what happened, why, what was decided on the owner's behalf and why, and exactly what needs their call, each with pros, cons, and risks. If the owner has to ask a clarifying question to decide, the briefing failed.
 - **Zero questions to the user mid-night.** About to ask one? Check the branch: on `night/*`, the question goes to the proxy — always.
 - **Re-anchor after context loss:** current branch name, `docs/project_status.md`, tagged rulings in `docs/decisions.md`, opening save-point label. The branch and the docs are the night's memory; if they cannot reconstruct the state, stop and write the briefing with what is known.
 - Proxy verdicts bind: no proceeding past a PARK, no negotiating a STOP, no stacking on an unmerged BRANCH.

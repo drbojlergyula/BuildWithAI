@@ -25,6 +25,7 @@ Owner field evidence from many real nights across projects: verification had a h
 - Evidence class recorded: this seat was earned by the owner's real nightly usage across projects, per the standing rule
 
 ### Changed
+- **Morning briefing: decision cards** — every BRANCH awaiting merge is presented as a plain-language card: what was decided and built, why, pros, cons, risk if approved, what saying no costs. New briefing rule: written for a person having coffee, not an engineer — if the owner needs a clarifying question to decide, the briefing failed
 - **Plugin** bumped to 2.9.0
 
 ---
