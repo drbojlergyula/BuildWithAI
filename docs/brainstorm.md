@@ -21,6 +21,18 @@ Use it to think through a feature, weigh options, and settle on an approach. Onc
 <!-- Add ideas here. One H3 heading per idea.
      Example below — delete when you add your own. -->
 
+### Competitive-research harvest *(deep market scan, parked 2026-08-23)*
+
+Full landscape reviewed (Spec Kit, BMAD v6, Agent OS, Kiro, Cline Memory Bank, Taskmaster, Ralph loops, claude-flow). Positioning confirmed: nobody combines non-technical persona + earned autonomy + cross-assistant single definition. Five refinements worth keeping, none urgent:
+
+1. **Coverage check** (from Spec Kit `/analyze`): doc-sync-check gains spec↔plan cross-checks — features with no story, orphan stories, story `depends on` validation. *Next small round, with #2.*
+2. **Doc gardening in the prep lane** (from AutoDream): nights propose decision-log consolidation, status pruning, hub-spoke splits — proposals only, morning-ratified. *Next small round, with #1.*
+3. **Scale-adaptive ceremony** (from BMAD): planning/ritual depth scales with task size — generalizes the parked preflight-compression debt. *After real-night feedback.*
+4. **Story-splitting guard** (from Taskmaster): a story bigger than one night-cycle gets split in the plan before building. *After real-night feedback.*
+5. **Cross-project owner profile** (from Agent OS 3-layer): the owner's standing preferences traveling between projects. *New complexity class — needs strong evidence.*
+
+**Decision:** *(parked — ship v2.9.0 first; items 1–2 are the next candidate round)*
+
 ### Per-category auto-accept — the autonomy ladder's next rung *(template's own idea, parked 2026-08-01)*
 
 **The idea:**
