@@ -7,10 +7,16 @@
 PROJECT="${CLAUDE_PROJECT_DIR:-.}"
 SPEC="$PROJECT/docs/project_spec.md"
 
+# Portfolio mode marker: a root portfolio_status.md (created by /add-project).
+# Checked first — portfolio repos have no root docs/project_spec.md.
+if [ -f "$PROJECT/portfolio_status.md" ]; then
+  cat <<'EOF'
+{"hookSpecificOutput":{"hookEventName":"SessionStart","additionalContext":"PORTFOLIO MODE: this repo hosts multiple projects (root portfolio_status.md is the index; each project's brain lives in projects/<name>/docs/). Infer the active project from the user's task or working directory and confirm it in your first reply; load the root layer (standards.md + the index) plus the active project's docs only — never sibling projects. If the user seems unsure, offer the portfolio briefing (/put-me-in-context) or 2-3 next actions from the active project's status."}}
+EOF
 # Single source of truth for "untouched template": the sentinel comment at the
 # top of docs/project_spec.md. /start and /adopt-project remove it when they
 # write the real spec. Skills reference the same marker.
-if [ -f "$SPEC" ] && grep -q "template-state: untouched-example" "$SPEC"; then
+elif [ -f "$SPEC" ] && grep -q "template-state: untouched-example" "$SPEC"; then
   cat <<'EOF'
 {"hookSpecificOutput":{"hookEventName":"SessionStart","additionalContext":"TEMPLATE STATE: untouched — this repository still contains the template's example project. If the user has not asked for something specific, warmly welcome them, mention that this template ships with a ready-made AI team (advisor, spec reviewer, build verifier, research analyst, a builder for delegated stories, and an owner-proxy deputy for autonomous night shifts) and guided workflows, and suggest running /start to set up their real project (about 5-10 minutes). Offer it — do not run it unprompted."}}
 EOF

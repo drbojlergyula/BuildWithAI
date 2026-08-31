@@ -2,6 +2,7 @@
 name: add-project
 description: Add a project to this repository — on first use converts a single-project repo into a portfolio (projects/<name>/ each with its own docs brain; shared standards and a portfolio index at the root), then scaffolds each new project's brain. Use when a repo hosts, or is about to host, more than one project.
 argument-hint: [project name, e.g. "webshop"]
+disable-model-invocation: true
 ---
 
 # /add-project — One Repo, Many Projects
@@ -35,7 +36,7 @@ From now on, sessions **infer the active project** from the task and working dir
 
 ### 3 — Add a new project
 
-1. Create `projects/<name>/docs/` from the template's fresh doc set — example content and the `template-state: untouched-example` sentinel included, so the project's own `/start` interview works exactly as on a fresh clone.
+1. Create `projects/<name>/docs/` from the template's **fresh** doc set — shallow-clone the public template at this repo's `.claude/template-version` tag into a temp dir and copy its `docs/` (never copy from another project's filled docs). Example content and the `template-state: untouched-example` sentinel included, so the project's own `/start` interview works exactly as on a fresh clone.
 2. Register it in `portfolio_status.md`.
 3. Hand off: "Project *[name]* is scaffolded — say `/start` to set it up (the interview will be scoped to this project)."
 
