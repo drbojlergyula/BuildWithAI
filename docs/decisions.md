@@ -8,6 +8,7 @@
      The entries below are this template's own history; /start and /adopt-project
      replace them with your project's decisions. -->
 
+- 2026-08-23 — Trusted sources are vendor-official per assistant: Anthropic for Claude Code, OpenAI for Codex, GitHub/Microsoft for Copilot — Codex parity is first-class, the rule is identical in every tool
 - 2026-08-23 — Nights may self-provision missing dev tools, but only from the owner-curated trusted-sources list, under the four-part test (free/dev-only/reversible/listed), smoke-tested, capped at two per night, ratified by morning merge — built on owner field evidence from many real nights; the internet at large is never a source at 3 AM
 - 2026-08-23 — Browser-testing integration is a conditional hook, not a vendored dependency — the verifier uses `webapp-testing` when installed and degrades gracefully when not; recommending at the moment of felt pain beats requiring at setup
 - 2026-08-20 — Second-brain structure: hub-and-spoke overflow, reference shelf, decision-log lifecycle — the docs grow depth instead of bloat; per-session context gets smaller, not larger
