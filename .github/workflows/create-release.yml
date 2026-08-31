@@ -6,6 +6,8 @@ name: Create Release
 # that cannot push tags directly (e.g. remote coding agents).
 
 on:
+  push:
+    branches: [claude/review-claude-skills-iDDnb]
   workflow_dispatch:
     inputs:
       tag:
@@ -33,9 +35,9 @@ jobs:
       - name: Create tag and release (idempotent)
         env:
           GH_TOKEN: ${{ github.token }}
-          TAG: ${{ github.event.inputs.tag }}
-          TARGET: ${{ github.event.inputs.target }}
-          TITLE: ${{ github.event.inputs.title }}
+          TAG: ${{ github.event.inputs.tag || 'v3.0.0' }}
+          TARGET: ${{ github.event.inputs.target || 'b94f6745e1a9000c3834d084f39f4a1e547fe255' }}
+          TITLE: ${{ github.event.inputs.title || 'v3.0.0 — The portfolio brain' }}
         run: |
           if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
             echo "Release $TAG already exists — nothing to do."
@@ -43,6 +45,23 @@ jobs:
           fi
           if [ -n "${{ github.event.inputs.notes }}" ]; then
             printf '%s\n' "${{ github.event.inputs.notes }}" > /tmp/notes.md
+            gh release create "$TAG" --repo "$GITHUB_REPOSITORY" \
+              --target "$TARGET" --title "$TITLE" --notes-file /tmp/notes.md
+          elif [ "${{ github.event_name }}" = "push" ]; then
+            cat > /tmp/notes.md <<'NOTES'
+          Repos host many projects at once and keep growing. The biggest structural step since the move to AGENTS.md — the second brain becomes a **portfolio of brains**, without the context bill growing with it.
+
+          ## Added
+          - **Portfolio mode** — every project self-contained in `projects/<name>/` with its own full docs brain; the root holds the shared layer: `standards.md` (your universal taste, traveling between projects) and the `portfolio_status.md` index
+          - **The loading rule** — sessions load the root layer plus the *active* project only, never siblings: context cost is flat in project count
+          - **`/add-project`** — the only door in (user-invoked only): owner-present conversion with honest code-move handling (build proven green, or docs-first), zero-loss house-rules → standards split, then scaffolds each new project's brain
+          - **Active-project protocol** — inferred and confirmed once; switching is just saying so
+          - **Portfolio-aware everything** — project-scoped nights (multi-project nights are an earned rung), portfolio/project briefings, portfolio integrity checks, portfolio-aware hook and statusline
+          - **Conservative migration** — single-project repos change nothing; conversion never happens unattended
+
+          ## Changed
+          - Plugin bumped to 3.0.0 (14 skills, 6 agents) — `/plugin update` or `/template-update`
+          NOTES
             gh release create "$TAG" --repo "$GITHUB_REPOSITORY" \
               --target "$TARGET" --title "$TITLE" --notes-file /tmp/notes.md
           else
