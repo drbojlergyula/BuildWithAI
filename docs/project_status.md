@@ -7,7 +7,7 @@
      Per the documentation conventions: completed phases get ONE summary line —
      full detail lives in docs/changelog.md. -->
 
-**Last Updated:** August 31, 2026 (v2.9.1 — sized at the door: story sizing rule, plan coverage check, doc gardening; v3.0 "Portfolio brain" direction confirmed)
+**Last Updated:** August 31, 2026 (v3.0.0 — the portfolio brain: many projects per repo, traveling standards, project-scoped nights, opt-in conversion via /add-project)
 **Project Start:** April 2026
 
 ---
@@ -27,6 +27,7 @@ One line each — the full story is in `docs/changelog.md`.
 - ✅ **Phase 10 — Projects That Keep Up** (Jul 2026, v2.6.0): `/template-update` skill — three-way comparison against the `.claude/template-version` stamp; template-owned files update, customizations ask, project content never touched
 - ✅ **Phase 11 — The Real Night** (Aug 2026, v2.7.0): orchestrator on `night/<date>` branch delegating to tiered builders (`builder` agent, delegation matrix); BRANCH verdict — expensive-but-containable calls implemented on feature branches, merge = ratify; absence windows earned by scorecard; adaptive throttle; zero-questions rule — driven by field feedback from real nights
 - ✅ **Phase 12 — The Second Brain Grows Up** (Aug 2026, v2.8.0): hub-and-spoke doc overflow, `docs/reference/` shelf, decision-log lifecycle; versioned structural migrations (`.claude/migrations/`) executed by `/template-update` via the builder under zero-loss verification; standing rule — no structure change ships without its migration
+- ✅ **Phase 14 — The Portfolio Brain** (Aug 2026, v3.0.0): portfolio mode (`projects/<name>/` self-contained brains, root standards + index, flat context cost), `/add-project` owner-present conversion, project-scoped nights with the multi-project rung, conservative migration (single-project repos unchanged)
 - ✅ **Phase 13 — Self-Equipping Nights** (Aug 2026, v2.9.0): browser-verified UI flows via conditional `webapp-testing` hook; vendor-official trusted sources (Anthropic / OpenAI / GitHub, per assistant); capability preflight while the owner is awake; mid-night provisioning under the four-part test, smoke-tested, morning-ratified; decision-card briefings — earned by owner field evidence from real nights
 
 ---
@@ -45,7 +46,7 @@ One line each — the full story is in `docs/changelog.md`.
 - ✅ Product consolidation: BuildWithClaude deprecated; beginner on-ramp absorbed as `docs/start_here_with_claude.md`
 
 **Next (manual steps for the owner):**
-- Merge the current branch, then tag `v2.9.1` (match the version in `.claude-plugin/plugin.json`)
+- Merge the current branch, then tag `v3.0.0` (match the version in `.claude-plugin/plugin.json`)
 - Archive the BuildWithClaude repository on GitHub (Settings → Archive) after merging its deprecation README
 - Mark this repo as a Template repository (Settings → Template repository)
 - Record a short demo GIF for the README (fresh clone → welcome → /start → team reveal)

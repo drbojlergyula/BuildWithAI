@@ -118,6 +118,7 @@ Skills answer to slash commands, their names, or plain English — whichever you
 | Ready to launch | `go-live` | "are we ready to go live?" |
 | Leaving for the night | `night-shift` | "do the night shift" / "work autonomously until morning" |
 | The template has new features | `template-update` | "update my project to the latest template" |
+| The repo will host more projects | `add-project` | "add a new project to this repo" |
 
 ---
 
@@ -201,7 +202,11 @@ BuildWithAI/
 | **A new project** | Use this repo as a template (button above) — you get the docs brain *and* the AI team |
 | **An existing project** | Install the plugin (commands at the top) — you get the AI team and can run `start` to add the docs brain |
 
-The plugin is versioned (currently `2.9.1`); when you update this repo and bump the version, everyone who installed it gets the update via `/plugin update`.
+### Many projects, one repo
+
+Repos grow. When yours starts hosting more than one project, **`/add-project`** converts it into a **portfolio**: every project self-contained in `projects/<name>/` with its own full brain (spec, status, decisions, scorecard), and one shared root layer — your `standards.md` (the taste that travels with you) and a `portfolio_status.md` index. Sessions load the root plus the *active* project only, so context cost never grows with project count. Night shifts stay project-scoped; multi-project nights are an earned rung, like everything else. The conversion is opt-in, owner-present, and honest about the one hard part: moving code can break builds, so the build is proven green before the conversion counts as done.
+
+The plugin is versioned (currently `3.0.0`); when you update this repo and bump the version, everyone who installed it gets the update via `/plugin update`.
 
 ### Keeping projects up to date
 

@@ -8,6 +8,8 @@
      The entries below are this template's own history; /start and /adopt-project
      replace them with your project's decisions. -->
 
+- 2026-08-31 — Portfolio brain (v3.0.0): projects/<name>/ self-contained with own brains; root = standards + index; sessions load root + active project only — context cost flat in project count; owner design choices: infer+confirm active project, laddered multi-project nights, house-rules split into traveling standards
+- 2026-08-31 — Portfolio conversion is opt-in and owner-present (/add-project), never part of an unattended migration — moving code can break builds, and a migration must never break a build unattended
 - 2026-08-31 — Story splitting happens at the plan's door, not at build time (owner field input: stories don't outgrow night-cycles when sized on entry) — enforced in new-feature/start/adopt-project, patrolled by doc-sync-check, night triage is only a vent
 - 2026-08-31 — Multi-project repos confirmed as the v3.0 direction (owner runs many projects per repo): the 3-layer portfolio brain (standards / portfolio / project), shipped with its migration per the standing rule
 - 2026-08-23 — Trusted sources are vendor-official per assistant: Anthropic for Claude Code, OpenAI for Codex, GitHub/Microsoft for Copilot — Codex parity is first-class, the rule is identical in every tool

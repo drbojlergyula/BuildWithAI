@@ -9,6 +9,8 @@ One prompt replaces onboarding meetings, status emails, and documentation huntin
 
 ## Steps
 
+0. **Portfolio repo?** (root `portfolio_status.md` exists): ask — or infer — whether the user wants the **portfolio briefing** (one paragraph per project from the index: state, phase, last night's scorecard, what needs the owner) or a **project briefing**. For a project briefing, read that project's `docs/` plus the root `standards.md`; never load sibling projects.
+
 1. **Read everything relevant:**
    - All files in `docs/`: `project_spec.md`, `architecture.md`, `project_status.md`, `changelog.md`, `brainstorm.md`, `house_rules.md`, `decisions.md`
    - Recent git history (`git log --oneline -15`) to catch work the docs may not mention yet

@@ -24,6 +24,10 @@ if [ -f "$STATUS_FILE" ]; then
   PHASE=$(grep -m1 '^### .*(IN PROGRESS' "$STATUS_FILE" \
     | sed -e 's/^### *//' -e 's/ *(IN PROGRESS.*//' -e 's/^[^A-Za-z0-9]*//' \
     | cut -c1-40)
+elif [ -f "$DIR/portfolio_status.md" ]; then
+  # Portfolio repo: no root project status — show the portfolio size instead.
+  NPROJ=$(find "$DIR/projects" -mindepth 1 -maxdepth 1 -type d 2>/dev/null | wc -l | tr -d ' ')
+  [ "$NPROJ" -gt 0 ] 2>/dev/null && PHASE="Portfolio: $NPROJ projects"
 fi
 
 # Last save point age (single git call; silent when not a repo yet)

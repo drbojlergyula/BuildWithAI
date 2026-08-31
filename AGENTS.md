@@ -25,6 +25,8 @@ These documents are the project's long-term memory. Prefer updating them over le
 
 The spec and architecture are the source of truth. After meaningful work: update the changelog and status. After a decision: promote it from brainstorm to spec and append one line to the decision log. `docs/house_rules.md` is binding: if a task conflicts with a house rule, stop and ask. Complex projects split oversized docs hub-and-spoke: the main files stay short indexes, depth lives in `docs/spec/` and `docs/architecture/` pages opened only when the work touches them. Documentation conventions: `.claude/rules/documentation.md`.
 
+**Portfolio mode** (repos hosting many projects — marker: a root `portfolio_status.md`): every project is self-contained in `projects/<name>/` with its own full docs brain; the root holds only the shared layer — `standards.md` (the owner's universal taste, traveling between projects) and `portfolio_status.md` (the index). **Loading rule:** sessions always load the root layer plus the *active* project's brain, never the other projects — context cost does not grow with project count. **Active-project protocol:** infer from the task and working directory, confirm once in the first reply; switching is just saying so. Without the root marker, everything behaves as the classic single-project template. **Path resolution:** in portfolio mode, every `docs/...` path in skills and agents means the *active project's* docs (`projects/<name>/docs/...`); the only root-level docs are `standards.md` and `portfolio_status.md`. The `.claude/` toolkit is shared by all projects — one team, many brains.
+
 ## Skills — shared workflows (all assistants)
 
 Reusable workflows live in `.claude/skills/<name>/SKILL.md` in the [Agent Skills](https://agentskills.io) open standard. Claude Code, GitHub Copilot, and Codex all discover skills from `.claude/skills/` natively — one definition works everywhere.
@@ -44,6 +46,7 @@ Reusable workflows live in `.claude/skills/<name>/SKILL.md` in the [Agent Skills
 | `go-live` | Before launch — readiness check with a Go / No-Go report |
 | `night-shift` | Autonomous work outside business hours — an orchestrator on a dedicated night branch delegates stories to tiered builders; owner-proxy rules on every question (decide / assume / implement-on-branch / park / stop); supports multi-day absence windows; morning briefing, ratification by merge (user-invoked only) |
 | `template-update` | The template released new versions — pulls toolkit improvements into this project via three-way comparison against the recorded base version; never touches the project's docs, code, or customizations |
+| `add-project` | The repo hosts (or will host) more than one project — converts to portfolio mode on first use (owner-present only), then scaffolds each new project's brain |
 
 If the user invokes a skill by slash command (`/start`), by name, or by plain English ("start project setup", "put me in context", "add a feature to the spec"), execute the matching skill. If your environment does not surface skills automatically, read the skill's `SKILL.md` and follow it as instructions.
 

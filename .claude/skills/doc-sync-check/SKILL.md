@@ -30,6 +30,10 @@ Checks that all project documents are consistent with each other and up to date.
    - Story dependencies make sense: if stories note "depends on", the dependency exists, is not circular, and is not scheduled later than the story that needs it.
    - **Oversized stories:** flag any planned story that is not one independently verifiable outcome buildable in a single sitting — it should have been split at the plan's door (`/new-feature`, `/start`); propose the split.
 
+   **Portfolio integrity** *(if a root `portfolio_status.md` exists)*
+   - The index lists exactly the project directories under `projects/` — no ghost rows, no unlisted projects.
+   - Root `standards.md` and any project's `house_rules.md` do not contradict each other; a project may tighten a standard, never silently loosen one.
+
    **Decision-log lifecycle**
    - Is `docs/decisions.md` past ~100 lines? Flag it for consolidation per the documentation conventions: old ratified night-shift rulings fold into thematic one-liners; LESSON lines, reversals, and house-rule changes stay verbatim.
    - Do the README's claims about available tools, skills, and agents match the actual files in `.claude/`?
