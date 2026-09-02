@@ -117,7 +117,7 @@ Skills answer to slash commands, their names, or plain English — whichever you
 | Just built a feature | agent: `build-verifier` | "verify the build" |
 | Need outside facts | agent: `research-analyst` | "research what competitors charge" |
 | Docs feel stale | `doc-sync-check` | "check the docs for consistency" |
-| Ready to launch | `go-live` | "are we ready to go live?" |
+| Ready to launch | `go-live` | "are we ready to go live?" — a fitness report for *your* product's intended use |
 | Leaving for the night | `night-shift` | "do the night shift" / "work autonomously until morning" |
 | The template has new features | `template-update` | "update my project to the latest template" |
 | The repo will host more projects | `add-project` | "add a new project to this repo" |

@@ -14,14 +14,14 @@ Ask the owner only when **all three** hold: (1) the feature touches something ri
 
 - **ROUTINE** — cosmetic, copy, local logic touching no data, auth, money, or dependency → build + verify. Nothing added. Ever.
 - **LOAD-BEARING** — sign-in / session / crypto, permissions, data model or migration, file handling, money, new dependency, external integration, CI or config → gates + adversarial verification + a decision card.
-- **IRREVERSIBLE / REGULATED** — data deletion or transformation at scale, production infrastructure, secrets, anything under the profile's regulated flag, and the governance files → gates + mandatory owner approval; above the ceiling → professional review recommended.
+- **IRREVERSIBLE / REGULATED** — data deletion or transformation at scale, production infrastructure, secrets, anything under the profile's regulated flag, and the governance files → gates + mandatory owner approval; above the ceiling → professional review recommended. Such a change may be *prepared* on a branch (code written, migration rehearsed on a copy) but never *applied* — running it against real data, infrastructure, or secrets is the owner's click.
 
-**Deterministic triggers** (path/diff-based — cannot be argued away): auth · session · login · crypto · permission paths; `migrations/` and schema files; lockfiles and manifests (`package.json`, `requirements*`, `go.mod`, …); `.env*`, secrets, keys; `.github/`, CI config; `Dockerfile`, infra; and the governance class below → tier floor. **Bias:** when torn, classify up — over-classifying costs minutes, under-classifying costs the product.
+**Deterministic triggers** (path-based, computed from `git diff --name-only` — never from memory, never argued away): auth · session · login · crypto · permission paths; `migrations/` and schema files; lockfiles and manifests (`package.json`, `requirements*`, `go.mod`, …); `.env*`, secrets, keys; `.github/`, CI config; `Dockerfile`, infra; and the governance class below → tier floor. **Bias:** when torn, classify up — over-classifying costs minutes, under-classifying costs the product.
 
 ## Evidence gates by tier
 
 - **ROUTINE:** none added — the verifier's behaviour check as before.
-- **LOAD-BEARING:** the proof command · secret scan of the diff (keys, tokens, passwords) · lockfile present and committed · dependency audit on dependency changes (`npm audit` / `pip-audit` / the stack's equivalent) · migration rehearsal on a copy before applying · architecture constraint tests if the project has them. **A failed gate is a FAIL, regardless of what any agent thinks.**
+- **LOAD-BEARING:** the proof command · secret scan of the diff (keys, tokens, passwords) · lockfile present and committed · dependency audit on dependency changes (`npm audit` / `pip-audit` / the stack's equivalent) · migration rehearsal on a copy before applying · architecture constraint tests if the project has them. **A failed gate is a FAIL, regardless of what any agent thinks.** If the proof command is still `none yet`, the first load-bearing change *creates* the first test — the one that proves this change — and records it as the proof command; "no tests exist" is never a reason to skip the gate.
 - **IRREVERSIBLE:** all of the above + a demonstrated backup/rollback path + owner approval.
 
 **Provenance** — every evidence line states who ran it: `CI` (agent-independent) · `agent-local` (the agent ran it; semi-deterministic) · `claimed` (not run). Load-bearing claims at go-live count only `CI` or owner-witnessed evidence. A project reaching the load-bearing tier gets a generated CI workflow that runs its proof command. **Vocabulary:** agents may say *appears / suggests*; only gates *pass*; only the owner *accepts*.
@@ -51,4 +51,4 @@ Ask the owner only when **all three** hold: (1) the feature touches something ri
 | SaaS with thousands of records | profile high — load-bearing defaults | ≤ 6 over its life |
 | App handling medical information | above the ceiling | flag + professional review |
 
-**The guarantee:** if a ROUTINE case ever triggers a gate or a question, that is a template bug.
+**The guarantee:** if a ROUTINE case ever triggers a gate or a question, that is a template bug. **Enforcement level, honestly:** `doc-sync-check` re-runs these cases as an LLM self-check and CI verifies the table exists; a harness-level automated eval is the next step, not a current claim.

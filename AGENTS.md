@@ -45,7 +45,7 @@ Reusable workflows live in `.claude/skills/<name>/SKILL.md` in the [Agent Skills
 | `put-me-in-context` | Anyone needs an instant, structured project briefing |
 | `doc-sync-check` | Docs feel out of date — find drift, contradictions, placeholders, code-vs-spec gaps |
 | `fix-bug` | Something is broken — reproduce, fix, verify, record |
-| `go-live` | Before launch — readiness check with a Go / No-Go report |
+| `go-live` | Before launch — readiness check against the engineering profile; fitness report (FIT / NOT YET FIT for the intended use) with accepted-risk cards and the ceiling flag |
 | `night-shift` | Autonomous work outside business hours — an orchestrator on a dedicated night branch delegates stories to tiered builders; owner-proxy rules on every question (decide / assume / implement-on-branch / park / stop); supports multi-day absence windows; morning briefing, ratification by merge (user-invoked only) |
 | `template-update` | The template released new versions — pulls toolkit improvements into this project via three-way comparison against the recorded base version; never touches the project's docs, code, or customizations |
 | `add-project` | The repo hosts (or will host) more than one project — converts to portfolio mode on first use (owner-present only), then scaffolds each new project's brain |

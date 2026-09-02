@@ -1,11 +1,11 @@
 ---
 name: go-live
-description: Pre-launch readiness check — verifies the product, docs, security basics, and operations are ready before deploying or showing the project to the world. Produces a Go / No-Go report. Use before any launch or deployment.
+description: Pre-launch readiness check — verifies the product, docs, security basics, and operations against the project's engineering profile before deploying or showing the project to the world. Produces a plain-English fitness report (FIT / NOT YET FIT for the intended use), with the ceiling flag when a product exceeds what the template can certify. Use before any launch or deployment.
 ---
 
 # /go-live — Launch Readiness Check
 
-Runs the checks a careful engineer would run before putting a product in front of real users, and turns them into a plain-English Go / No-Go report. Designed so a non-technical owner can launch with confidence.
+Runs the checks a careful engineer would run before putting a product in front of real users, and turns them into a plain-English fitness report — FIT or NOT YET FIT *for this product's intended use*, never "production ready" in the abstract. Designed so a non-technical owner can launch with confidence, and hears plainly when it is time to bring a professional.
 
 ## Steps
 
