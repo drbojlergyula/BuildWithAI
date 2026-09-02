@@ -126,6 +126,16 @@ if migrations_dir.is_dir():
         elif not mig.read_text(encoding="utf-8").strip():
             errors.append(f"{mig.relative_to(ROOT)}: empty migration file")
 
+# --- The engineering rule must define all three change tiers and the canonical cases
+eng_rule = ROOT / ".claude" / "rules" / "engineering.md"
+if eng_rule.is_file():
+    eng_text = eng_rule.read_text(encoding="utf-8")
+    for token in ("ROUTINE", "LOAD-BEARING", "IRREVERSIBLE", "Make the button pink"):
+        if token not in eng_text:
+            errors.append(f".claude/rules/engineering.md: missing '{token}' — tiers and canonical cases are the executable spec")
+else:
+    errors.append(".claude/rules/engineering.md: missing")
+
 # --- Every agent must be mentioned in the SessionStart hook's welcome text
 if hook.is_file():
     hook_text = hook.read_text(encoding="utf-8")

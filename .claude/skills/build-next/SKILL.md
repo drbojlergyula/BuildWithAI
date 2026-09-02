@@ -17,11 +17,12 @@ The bridge between the spec and reality. One command takes the next planned stor
    - The relevant constraints from `docs/architecture.md` (components, routes, data touched)
    - `docs/house_rules.md` — the non-negotiables
    - Any related entries in `docs/decisions.md`
-   State the packet back in 3–5 bullet points ("Building X. It must do A and B. It touches C. House rules that apply: D."). This is the contract for the build.
+   - The change's **tier** per `.claude/rules/engineering.md` — ROUTINE, LOAD-BEARING, or IRREVERSIBLE — decided by what it touches, with the deterministic path triggers as the floor. Routine stays free; load-bearing runs gates before it is done; irreversible needs the owner's approval before it is built.
+   State the packet back in 3–5 bullet points ("Building X. It must do A and B. It touches C. House rules that apply: D. Tier: E."). This is the contract for the build.
 
 3. **Build it.** Implement the smallest complete version that satisfies the stories. Match the existing code style. If a real decision comes up mid-build (a trade-off the owner should know about), make the sensible call, flag it, and append it to `docs/decisions.md`.
 
-4. **Verify it — independently.** Run the build-verifier agent on the feature. It will exercise the real flow and return PASS / FAIL with evidence. If it fails, fix and re-verify — do not declare done on a failed verification. If the report includes a lesson line, append it to the top of `docs/decisions.md` — a failure that teaches nothing will be paid for twice. If verification is impossible in this environment, tell the user exactly what to click or run to confirm it themselves.
+4. **Verify it — independently, with evidence.** Run the build-verifier agent on the feature with its tier. It exercises the real flow and, for load-bearing and above, runs the tier's **evidence gates** (proof command, secret scan, lockfile, dependency audit, migration rehearsal) — a failed gate is a FAIL regardless of how the code looks. It returns PASS / FAIL with evidence, each line labelled by who ran it. If it fails, fix and re-verify — do not declare done on a failed verification. If the report includes a lesson line, append it to the top of `docs/decisions.md` — a failure that teaches nothing will be paid for twice. If verification is impossible in this environment, tell the user exactly what to click or run to confirm it themselves.
 
 5. **Record the progress.** Mark the story done in `docs/project_status.md`, then run the `/update-docs-and-commit` workflow to handle the changelog, decision log, and commit — do not re-derive those steps here; that skill owns them.
 
@@ -30,6 +31,7 @@ The bridge between the spec and reality. One command takes the next planned stor
 ## Rules
 
 - One story per invocation. If the story is too big to build in one go, say so and propose splitting it in the spec first.
-- The verification step is not optional. A feature that was never run is not done.
+- The verification step is not optional. A feature that was never run is not done — and a load-bearing feature whose gates never ran is not verified, only described.
+- A ROUTINE change never gets a gate or a question. If it does, that is a template bug — say so.
 - Respect `docs/house_rules.md` as hard constraints — if a story conflicts with a house rule, stop and ask rather than quietly violating it.
 - If the template is untouched (the `template-state: untouched-example` sentinel comment is present in `docs/project_spec.md`) or no plan exists in the status doc, suggest `/start` (new project) or `/adopt-project` (existing code) instead.

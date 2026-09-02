@@ -37,7 +37,7 @@ Ask only what the code cannot tell you, one or two questions at a time:
 ### 4 — Write the project brain
 
 Create or fill the docs to match **reality, not aspiration**:
-1. `docs/project_spec.md` — what the product is, who it is for, features as user stories (mark each: ✅ built / 🚧 partial / ⏳ planned)
+1. `docs/project_spec.md` — what the product is, who it is for, features as user stories (mark each: ✅ built / 🚧 partial / ⏳ planned), and the Engineering Profile inferred from the code itself (auth module present → sign-in: users; upload handlers → uploads: yes; detect the proof command from `package.json` scripts, `Makefile`, `pyproject`, or CI — or record `none yet`)
 2. `docs/architecture.md` — the *actual* current architecture, including discovered conventions ("components use X pattern; keep following it") and any debt worth noting
 3. `docs/project_status.md` — phases with the built/partial/planned split, next milestone on top; every planned item build-sized (one verifiable outcome per story — split anything bigger now)
 4. `docs/house_rules.md` — the non-negotiables from the interview

@@ -8,6 +8,11 @@
      The entries below are this template's own history; /start and /adopt-project
      replace them with your project's decisions. -->
 
+- 2026-09-02 — Evidence layer (v3.1.0): risk determines rigor, agents make claims, gates produce evidence — three change tiers with deterministic path triggers, evidence gates with provenance labels, an inferred engineering profile; built on the finding that the template validated itself deterministically but the user's product only by LLM opinion
+- 2026-09-02 — Questions only when warranted: risky AND not inferable AND decisive, at feature entry, once — a low-risk project gets zero questions for its whole life; the budget is countable via `business decision` lines and exceeding it is a template bug
+- 2026-09-02 — The routine path is protected by executable spec (canonical cases re-run by doc-sync-check, checked by the validator), not by promise — a pink button that triggers a gate is a bug
+- 2026-09-02 — KILL CRITERION: if twenty real nights pass without a gate catching something the verifier alone would have passed, the evidence layer is theater and gets dialed back
+- 2026-09-02 — The ceiling is a feature: go-live judges fitness for intended use and says plainly when a product exceeds what the template can honestly certify — fake confidence is the one unforgivable failure
 - 2026-08-31 — Portfolio brain (v3.0.0): projects/<name>/ self-contained with own brains; root = standards + index; sessions load root + active project only — context cost flat in project count; owner design choices: infer+confirm active project, laddered multi-project nights, house-rules split into traveling standards
 - 2026-08-31 — Portfolio conversion is opt-in and owner-present (/add-project), never part of an unattended migration — moving code can break builds, and a migration must never break a build unattended
 - 2026-08-31 — Story splitting happens at the plan's door, not at build time (owner field input: stories don't outgrow night-cycles when sized on entry) — enforced in new-feature/start/adopt-project, patrolled by doc-sync-check, night triage is only a vent
