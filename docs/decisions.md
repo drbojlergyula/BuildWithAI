@@ -8,6 +8,9 @@
      The entries below are this template's own history; /start and /adopt-project
      replace them with your project's decisions. -->
 
+- 2026-09-02 — LESSON — the toolkit validated itself as a template but never as a project; every generated project failed CI on its first push after /start — a self-check that only covers the shipping artifact, never the produced artifact, is half a check. Fix: mode-aware validation keyed on the existing sentinel + a project-mode eval in CI
+- 2026-09-02 — Validation is mode-aware: template mode adds roster completeness and sentinel/plugin consistency; project mode keeps structural checks only — a project owns its docs, its own agents and skills, and its own roster, and the template must never fail it for that
+- 2026-09-02 — /adopt-project deletes the sentinel like /start does — the spec comment claimed both did; only one did, which left adopted projects stuck greeting the owner as an untouched template
 - 2026-09-02 — Evidence layer (v3.1.0): risk determines rigor, agents make claims, gates produce evidence — three change tiers with deterministic path triggers, evidence gates with provenance labels, an inferred engineering profile; built on the finding that the template validated itself deterministically but the user's product only by LLM opinion
 - 2026-09-02 — Questions only when warranted: risky AND not inferable AND decisive, at feature entry, once — a low-risk project gets zero questions for its whole life; the budget is countable via `business decision` lines and exceeding it is a template bug
 - 2026-09-02 — The routine path is protected by executable spec (canonical cases re-run by doc-sync-check, checked by the validator), not by promise — a pink button that triggers a gate is a bug
