@@ -164,6 +164,19 @@ if IS_TEMPLATE:
             if agent.stem not in hook_text and agent.stem.replace("-", " ") not in hook_text:
                 errors.append(f".claude/hooks/session-start.sh: does not mention agent '{agent.stem}'")
 
+    # The /start team reveal must introduce the whole team — it is the user's
+    # first impression, and it drifted silently for four releases before a real
+    # project caught it (owner-proxy, builder, night-shift and three more missing).
+    start_skill = ROOT / ".claude" / "skills" / "start" / "SKILL.md"
+    if start_skill.is_file():
+        start_text = start_skill.read_text(encoding="utf-8")
+        for agent in agents:
+            if agent.stem not in start_text:
+                errors.append(f".claude/skills/start/SKILL.md: the team reveal does not introduce agent '{agent.stem}'")
+        for skill in skills:
+            if skill.name not in start_text:
+                errors.append(f".claude/skills/start/SKILL.md: the setup handover never mentions skill '{skill.name}'")
+
     # Every skill and agent must be mentioned in README, AGENTS.md, and CLAUDE.md
     for doc_name in ("README.md", "AGENTS.md", "CLAUDE.md"):
         doc_path = ROOT / doc_name

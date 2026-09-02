@@ -10,6 +10,22 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## v3.1.2 — 2026-09-02: What the first real /start revealed
+
+A real project ran `/start` from a profile repo instead of an interview ("read who I am from there, then run start"). It worked — and exposed three defects the template could not see from the inside.
+
+### Fixed
+- **The team reveal had drifted for four releases.** `/start` introduced 4 of 6 agents and 10 of 14 skills — a new project met its team without `owner-proxy` or `builder`, and was never told the night shift or `/template-update` exist. The validator checked rosters in the README, AGENTS.md, CLAUDE.md and the hook, but never in the one place the *user* actually reads. Now it does — verified by negative test
+- **Skill invention without a mandate.** Phase 6 creates skills "if the user identifies something"; in a profile-driven run nobody is there to identify anything, and the setup invented two skills anyway. Phase 6 now says plainly: only the owner's own answer authorises it — otherwise the candidates go to the brainstorm as proposals
+
+### Added
+- **Phase 0b — profile-driven setup**, the interview-free mode. The owner pointing at a source ("read who I am from there") *is* the instruction: the source becomes the interview's input, every gap becomes a numbered assumption plus one `ASSUMPTION — review me` line, the mandate stays bounded (no invented skills; a flagged fact-check only when the plan depends on an external fact), and the handover states the ceiling out loud: **an interview-free setup is exactly as good as the source it read**
+
+### Changed
+- **Plugin** bumped to 3.1.2
+
+---
+
 ## v3.1.1 — 2026-09-02: The template validated as a project (four real bugs)
 
 First use of v3.1.0 on a real new project found four defects, each reproduced on a clean template copy. The common root: **the toolkit validated itself as a template, never as the thing it produces.** The v3.1.0 changelog said the blind spot was "template deterministic, product probabilistic" — it was one level higher than that.

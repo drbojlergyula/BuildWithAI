@@ -33,6 +33,21 @@ You now understand the full shape of what needs to be filled in. Keep this in mi
 
 ---
 
+### Phase 0b — Is there an interview at all?
+
+Sometimes the owner is not there to answer: they point at a source of truth instead — a profile repo, an existing document, notes — and say *"read who I am from there, then run start"*. That sentence **is** the instruction: the source is the interview's input, and asking what it already answers is asking the owner for what they just handed you.
+
+When that happens, run **profile-driven setup** instead of Phases 1–5:
+
+1. **Read the source as the interview's answers.** Map what it gives you onto the same questions Phases 1–5 would ask: what is being built, for whom, constraints, tempo, non-negotiables.
+2. **Everything the source does not answer becomes a numbered assumption** — all of them at the top of `docs/brainstorm.md`, plus one `ASSUMPTION — review me` line in `docs/decisions.md`. This is the whole trick: a question the owner is not there to answer becomes a thirty-second review item, not a stalled setup and not a silent guess.
+3. **Stay inside the mandate.** Write the docs, the profile, and the plan. Do **not** create new skills or agents — Phase 6 authorises that only when the owner identifies a repeating task, and in this mode there is no owner in the room to identify one; propose them in the brainstorm instead. If the plan depends on an external fact the source cannot supply (a course's credit weight, a platform's pricing, a deadline), a bounded fact-check is allowed and must be flagged as owner-added scope in the handover.
+4. **Say the ceiling out loud** in the wrap-up: *an interview-free setup is exactly as good as the source it read.* Where the source is thick — facts, constraints, working style — the docs are concrete. Where it is thin, the output is assumption, and the numbered list says exactly where.
+
+Then continue at Phase 6.
+
+---
+
 ### Phase 1 — Open the conversation
 
 Greet the user warmly and explain what is about to happen in one short paragraph. Then ask the first question:
@@ -183,14 +198,18 @@ This is the reveal. Introduce the team that now works for the user. Present it w
 > 🔍 **spec-reviewer** — your requirements analyst. Checks the spec for gaps before you build, so problems get caught on paper instead of in code.
 > ✅ **build-verifier** — your QA engineer. After something is built, it independently tests that the feature actually does what the spec says.
 > 🌐 **research-analyst** — your market researcher. Investigates competitors, pricing, technology choices, or anything else on the live web, and files a cited brief.
+> 🔨 **builder** — your implementer. Takes one packaged story and builds exactly that, with evidence to show for it.
+> 🌙 **owner-proxy** — your deputy. When you let the project work overnight, this one answers the questions in your place — only what your documents prove, and everything else waits for you.
 >
 > And your shortcut commands: `/build-next` builds the next planned feature (and has QA verify it), `/save-point` and `/go-back` are your save game and rewind, `/new-feature` adds to the plan, `/update-docs-and-commit` saves progress with fresh docs, `/put-me-in-context` briefs anyone instantly, `/doc-sync-check` keeps the docs honest, `/fix-bug` when something breaks, and `/go-live` when you're ready to launch.
+
+Do not list more than this now — the rest is introduced when it becomes useful, not on day one. Mention in one closing line only that they exist: `/night-shift` for unattended work while they sleep, `/template-update` to pull in template improvements later, `/adopt-project` for bringing other existing code into this system, and `/add-project` if this repo ever hosts more than one project.
 
 Then ask:
 
 > Based on your project, are there any other repeatable tasks worth automating? For example: adding a new record, running a regular check, publishing content, generating a report?
 
-If the user identifies something, create a new skill or agent for it in `.claude/` — briefly explain which type fits and why, then write the file.
+If the user identifies something, create a new skill or agent for it in `.claude/` — briefly explain which type fits and why, then write the file. **Only the owner's own answer authorises this.** In profile-driven setup (Phase 0b) there is nobody to answer: propose the candidates in `docs/brainstorm.md` as assumptions and let the owner say yes — an invented skill is scope the owner never asked for, however cheap it looks.
 
 ---
 
