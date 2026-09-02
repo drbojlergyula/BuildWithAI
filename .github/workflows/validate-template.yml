@@ -13,3 +13,6 @@ jobs:
 
       - name: Validate skills, agents, and config files
         run: python3 .github/scripts/validate_template.py
+
+      - name: Eval — a finished project must validate too
+        run: python3 .github/scripts/eval_project_mode.py

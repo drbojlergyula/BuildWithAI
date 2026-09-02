@@ -10,6 +10,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## v3.1.1 — 2026-09-02: The template validated as a project (four real bugs)
+
+First use of v3.1.0 on a real new project found four defects, each reproduced on a clean template copy. The common root: **the toolkit validated itself as a template, never as the thing it produces.** The v3.1.0 changelog said the blind spot was "template deterministic, product probabilistic" — it was one level higher than that.
+
+### Fixed
+- **CI demanded the sentinel that `/start` deletes** — every project born from the template went red on its first push after setup (the workflow ships with `.github/`). The validator is now **mode-aware**: the `template-state` sentinel decides template mode vs. project mode, the same marker the hook and `/template-update` already use
+- **Roster checks punished a project for having its own team** — one custom agent produced four errors, including a demand to edit the template-owned SessionStart hook (a permanent `/template-update` conflict). Roster completeness is now template-only; a project owns its docs, its team, and its roster
+- **Traceback instead of an error message** — deleting `CLAUDE.md` (legitimate for a Codex-only project, where `AGENTS.md` is canonical) produced a Python stack trace in CI. Guarded
+- **`/adopt-project` never deleted the sentinel** although the spec's own comment claimed it did — adopted projects were greeted as untouched templates forever, and their CI passed for the wrong reason. Instruction added
+
+### Added
+- **`.github/scripts/eval_project_mode.py`** — the missing eval, now in CI: it copies the repo, simulates a finished project (sentinel removed, own skill and agent added, `CLAUDE.md` deleted) and requires exit 0, plus a negative control (a skill without frontmatter must still fail, in project mode too). Verified against the old validator: it catches all four bugs
+
+### Changed
+- **Plugin** bumped to 3.1.1
+
+---
+
 ## v3.1.0 — 2026-09-02: The evidence layer (proves, not promises)
 
 Outcome of the "can software engineering be invisible?" deep challenge. The template validated *itself* deterministically but validated the *user's product* only by LLM opinion — and LLMs checking LLMs share failure modes. This release adds evidence where it was missing, proportional to risk, invisible to the non-engineer.

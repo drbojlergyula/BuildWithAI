@@ -36,6 +36,8 @@ Ask only what the code cannot tell you, one or two questions at a time:
 
 ### 4 — Write the project brain
 
+**Delete the `template-state: untouched-example` sentinel comment at the top of `docs/project_spec.md`** as you write the real spec — the same marker `/start` removes. It is how the welcome hook and the toolkit tell an untouched template from a real project; leaving it in makes this project greet you forever as an empty template.
+
 Create or fill the docs to match **reality, not aspiration**:
 1. `docs/project_spec.md` — what the product is, who it is for, features as user stories (mark each: ✅ built / 🚧 partial / ⏳ planned), and the Engineering Profile inferred from the code itself (auth module present → sign-in: users; upload handlers → uploads: yes; detect the proof command from `package.json` scripts, `Makefile`, `pyproject`, or CI — or record `none yet`)
 2. `docs/architecture.md` — the *actual* current architecture, including discovered conventions ("components use X pattern; keep following it") and any debt worth noting
