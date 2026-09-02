@@ -8,6 +8,9 @@
      The entries below are this template's own history; /start and /adopt-project
      replace them with your project's decisions. -->
 
+- 2026-09-02 — LESSON — roster drift hid in `/start`'s team reveal for four releases because the validator checked every roster except the one the user reads; a self-check must cover the user's first impression, not only the machine-facing files
+- 2026-09-02 — Phase 0b: profile-driven setup is a first-class mode — when the owner points at a source instead of answering, the source is the interview and the gaps become numbered assumptions; the honest ceiling (quality = source quality) is stated in the handover
+- 2026-09-02 — Skill creation in /start requires the owner's own answer; in interview-free runs candidates are proposed in the brainstorm, never created — an invented skill is scope the owner never asked for, however cheap
 - 2026-09-02 — LESSON — the toolkit validated itself as a template but never as a project; every generated project failed CI on its first push after /start — a self-check that only covers the shipping artifact, never the produced artifact, is half a check. Fix: mode-aware validation keyed on the existing sentinel + a project-mode eval in CI
 - 2026-09-02 — Validation is mode-aware: template mode adds roster completeness and sentinel/plugin consistency; project mode keeps structural checks only — a project owns its docs, its own agents and skills, and its own roster, and the template must never fail it for that
 - 2026-09-02 — /adopt-project deletes the sentinel like /start does — the spec comment claimed both did; only one did, which left adopted projects stuck greeting the owner as an untouched template
