@@ -6,8 +6,6 @@ name: Create Release
 # that cannot push tags directly (e.g. remote coding agents).
 
 on:
-  push:
-    branches: [claude/review-claude-skills-iDDnb]
   workflow_dispatch:
     inputs:
       tag:
@@ -35,9 +33,9 @@ jobs:
       - name: Create tag and release (idempotent)
         env:
           GH_TOKEN: ${{ github.token }}
-          TAG: ${{ github.event.inputs.tag || 'v3.1.1' }}
-          TARGET: ${{ github.event.inputs.target || 'f18c8daaab03f8b304051ab5514b26e55214e023' }}
-          TITLE: ${{ github.event.inputs.title || 'v3.1.1 — Validated as a project' }}
+          TAG: ${{ github.event.inputs.tag }}
+          TARGET: ${{ github.event.inputs.target }}
+          TITLE: ${{ github.event.inputs.title }}
         run: |
           if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
             echo "Release $TAG already exists — nothing to do."
@@ -45,24 +43,6 @@ jobs:
           fi
           if [ -n "${{ github.event.inputs.notes }}" ]; then
             printf '%s\n' "${{ github.event.inputs.notes }}" > /tmp/notes.md
-            gh release create "$TAG" --repo "$GITHUB_REPOSITORY" \
-              --target "$TARGET" --title "$TITLE" --notes-file /tmp/notes.md
-          elif [ "${{ github.event_name }}" = "push" ]; then
-            cat > /tmp/notes.md <<'NOTES'
-          First real use of v3.1.0 on a new project surfaced four defects, each reproduced on a clean template copy before fixing. The common root sits one level above the v3.1.0 finding: **the toolkit validated itself as a template, never as the thing it produces.**
-
-          ## Fixed
-          - **CI demanded the sentinel `/start` deletes** — every project born from the template went red on its first push after setup. Validation is now **mode-aware**, keyed on the same sentinel the hook and `/template-update` already use: template mode adds roster and consistency checks, project mode keeps structural checks only
-          - **Roster checks punished a project for having its own team** — one custom agent produced four errors, including a demand to edit the template-owned SessionStart hook (a permanent update conflict). Roster completeness is template-only now
-          - **Traceback instead of an error message** — deleting `CLAUDE.md` (legitimate in a Codex-only project) produced a Python stack trace in CI. Guarded
-          - **`/adopt-project` never deleted the sentinel** although the spec's own comment claimed it did — adopted projects were greeted as untouched templates forever
-
-          ## Added
-          - **`eval_project_mode.py`, wired into CI** — the missing eval: it simulates a finished project (sentinel gone, own skill and agent, no `CLAUDE.md`) and requires a clean pass, plus a negative control so passing can never mean the checks are switched off. Verified: it catches all four bugs against the old validator
-
-          ## Changed
-          - Plugin bumped to 3.1.1 — `/plugin update` or `/template-update`
-          NOTES
             gh release create "$TAG" --repo "$GITHUB_REPOSITORY" \
               --target "$TARGET" --title "$TITLE" --notes-file /tmp/notes.md
           else
