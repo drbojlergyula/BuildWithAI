@@ -151,6 +151,7 @@ Update these files in order:
    - What Is This Product (one clear paragraph)
    - Who Is It For (user types with descriptions)
    - Features & User Stories (written as "A [user] can [do X] so that [goal]", grouped by area)
+   - Engineering Profile — **inferred from the interview**, never asked as a questionnaire (`.claude/rules/engineering.md`): exposure, sign-in, data, money, uploads, integrations, scale, loss tolerance, regulated, proof command. Ask only where the three-condition rule requires it (risky *and* not inferable *and* changes what gets built) — for a low-risk product that is zero questions
    - Tech Stack table
    - System Design Preferences
    - API Design (any endpoints identified)

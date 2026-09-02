@@ -48,6 +48,8 @@ Most templates give you empty folders. This one gives you **staff**:
 | 🌙 **owner-proxy** | Your deputy. During a `night-shift` it decides what your docs prove, settles cheap questions with research or a flagged assumption, implements the expensive-but-containable calls on their own branches for your morning merge — and parks only what truly needs you. |
 | 🔨 **builder** | Implementation specialist. Takes a packaged story and builds it in a fresh context with evidence to show — the workhorse the night-shift orchestrator delegates to. |
 
+And underneath, invisibly: **it proves, not promises.** Every change is weighed by risk — a pink button stays a two-second change forever, while a login, an upload, or a payment triggers real checks (tests, secret scan, dependency audit, migration rehearsal) before "done" is allowed — and the launch report tells you honestly what the product is fit for, and when it's time to bring a professional.
+
 Plus guided workflows for the whole life of the project — including `build-next`, the daily rhythm that builds the next planned feature and has QA verify it, and `save-point`/`go-back`, git wrapped in video-game language:
 
 `start` (or `adopt-project`) → `build-next` → `save-point` → `new-feature` → `fix-bug` → `put-me-in-context` → `doc-sync-check` → `go-live`
@@ -115,7 +117,7 @@ Skills answer to slash commands, their names, or plain English — whichever you
 | Just built a feature | agent: `build-verifier` | "verify the build" |
 | Need outside facts | agent: `research-analyst` | "research what competitors charge" |
 | Docs feel stale | `doc-sync-check` | "check the docs for consistency" |
-| Ready to launch | `go-live` | "are we ready to go live?" |
+| Ready to launch | `go-live` | "are we ready to go live?" — a fitness report for *your* product's intended use |
 | Leaving for the night | `night-shift` | "do the night shift" / "work autonomously until morning" |
 | The template has new features | `template-update` | "update my project to the latest template" |
 | The repo will host more projects | `add-project` | "add a new project to this repo" |
@@ -206,7 +208,7 @@ BuildWithAI/
 
 Repos grow. When yours starts hosting more than one project, **`/add-project`** converts it into a **portfolio**: every project self-contained in `projects/<name>/` with its own full brain (spec, status, decisions, scorecard), and one shared root layer — your `standards.md` (the taste that travels with you) and a `portfolio_status.md` index. Sessions load the root plus the *active* project only, so context cost never grows with project count. Night shifts stay project-scoped; multi-project nights are an earned rung, like everything else. The conversion is opt-in, owner-present, and honest about the one hard part: moving code can break builds, so the build is proven green before the conversion counts as done.
 
-The plugin is versioned (currently `3.0.0`); when you update this repo and bump the version, everyone who installed it gets the update via `/plugin update`.
+The plugin is versioned (currently `3.1.0`); when you update this repo and bump the version, everyone who installed it gets the update via `/plugin update`.
 
 ### Keeping projects up to date
 

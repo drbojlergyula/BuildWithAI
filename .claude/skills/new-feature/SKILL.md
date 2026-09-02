@@ -18,6 +18,7 @@ If the user provided a description as an argument, treat it as the answer to "wh
    - How will you know it is working — what does success look like?
 
 2. **Clarify before writing.** List any ambiguities that would change how the feature gets built (who can do it, what happens on failure, limits, edge cases) and resolve them with the user now — each is one cheap question today or one expensive rebuild later. Also check `docs/house_rules.md`: if the feature conflicts with a house rule (budget, never-do list), raise it before going further.
+   **Engineering implications, silently:** check whether the feature changes the Engineering Profile in `docs/project_spec.md` (first sign-in, first upload, first money movement, other people's data) and update it. Business questions this raises are asked here, at feature entry, **only** under the three-condition rule in `.claude/rules/engineering.md` — risky *and* not inferable *and* changes what gets built — in plain words, once, and recorded in `docs/decisions.md` tagged `business decision`. Everything else is inferred or assumed-and-recorded.
 
 3. **Write the user stories — build-sized.** Draft one to three user stories in the format
    *"A [user] can [do X] so that [goal]."*

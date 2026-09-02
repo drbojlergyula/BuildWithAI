@@ -1,15 +1,15 @@
 ---
 name: go-live
-description: Pre-launch readiness check — verifies the product, docs, security basics, and operations are ready before deploying or showing the project to the world. Produces a Go / No-Go report. Use before any launch or deployment.
+description: Pre-launch readiness check — verifies the product, docs, security basics, and operations against the project's engineering profile before deploying or showing the project to the world. Produces a plain-English fitness report (FIT / NOT YET FIT for the intended use), with the ceiling flag when a product exceeds what the template can certify. Use before any launch or deployment.
 ---
 
 # /go-live — Launch Readiness Check
 
-Runs the checks a careful engineer would run before putting a product in front of real users, and turns them into a plain-English Go / No-Go report. Designed so a non-technical owner can launch with confidence.
+Runs the checks a careful engineer would run before putting a product in front of real users, and turns them into a plain-English fitness report — FIT or NOT YET FIT *for this product's intended use*, never "production ready" in the abstract. Designed so a non-technical owner can launch with confidence, and hears plainly when it is time to bring a professional.
 
 ## Steps
 
-1. **Establish what "live" means here.** Read `docs/project_spec.md` and `docs/architecture.md`. If the deployment target is unclear (hosting, domain, how users reach it), ask the user one question to pin it down.
+1. **Establish what "live" means here — and what "fit" means for this product.** Read `docs/project_spec.md` (including its Engineering Profile) and `docs/architecture.md`. The verdict is never "production ready" in the abstract: it is *fit for the intended use the profile describes*. A bakery site and a payments SaaS are judged against different bars, and the report says which bar applied. If the deployment target is unclear (hosting, domain, how users reach it), ask the user one question to pin it down.
 
 2. **Run the checklist.** For each area, actually inspect the repo — do not take the docs' word for it:
 
@@ -43,13 +43,23 @@ Runs the checks a careful engineer would run before putting a product in front o
    ```
    Go-Live Report — [project name]
 
-   Verdict: GO / NO-GO (with the one-line reason)
+   Verdict: FIT / NOT YET FIT for [the intended use, per the profile] (one-line reason)
+   Evidence: [N] gates passed — [how many ran in CI vs. agent-local; load-bearing claims
+             count only CI or owner-witnessed evidence]
 
    Blockers (must fix before launch)
    - ...
 
    Strongly recommended (fix in the first week)
    - ...
+
+   Accepted risks (your decision cards — merge = accepted)
+   - [risk] · why it is acceptable at this scale · what would change that
+
+   Above the ceiling (only when it applies)
+   - This product handles [regulated data / large-scale money / safety-relevant
+     behaviour]. I can verify the mechanics; I cannot certify this domain. Have a
+     professional review: [exact list of what they must look at].
 
    Ready
    - ...
@@ -63,4 +73,5 @@ Runs the checks a careful engineer would run before putting a product in front o
 
 - A NO-GO verdict is a favour, not a failure — deliver it plainly and kindly.
 - Verify by looking at code and running things, never by assuming the docs are accurate.
+- If the owner proceeds against a NOT YET FIT or above-the-ceiling verdict, record it as their decision card in `docs/decisions.md` — accountability made explicit is all a tool can honestly do.
 - Keep the report shareable: the owner should be able to paste it to a partner or client as-is.

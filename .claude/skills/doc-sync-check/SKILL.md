@@ -34,6 +34,11 @@ Checks that all project documents are consistent with each other and up to date.
    - The index lists exactly the project directories under `projects/` — no ghost rows, no unlisted projects.
    - Root `standards.md` and any project's `house_rules.md` do not contradict each other; a project may tighten a standard, never silently loosen one.
 
+   **Engineering profile vs. reality** *(if the spec has an Engineering Profile)*
+   - Does the profile match the code? "Sign-in: none" beside an auth module, "uploads: no" beside a file handler, "money: no" beside a payments SDK — each is drift; propose the corrected line.
+   - Is the proof command real (runs) or `none yet` while tests exist?
+   - In a multi-assistant template repo, re-run the canonical cases in `.claude/rules/engineering.md` against the current rules: every ROUTINE case must still produce zero gates and zero questions. A drift here is a template bug.
+
    **Decision-log lifecycle**
    - Is `docs/decisions.md` past ~100 lines? Flag it for consolidation per the documentation conventions: old ratified night-shift rulings fold into thematic one-liners; LESSON lines, reversals, and house-rule changes stay verbatim.
    - Do the README's claims about available tools, skills, and agents match the actual files in `.claude/`?

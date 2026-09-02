@@ -53,6 +53,22 @@ A small business owner needs a simple way to collect customer orders via a web f
 
 <!-- This section captures the technical decisions for your project. If you are not sure, leave a section blank and ask Claude to help you decide. -->
 
+## Engineering Profile
+
+<!-- Inferred from the interview and this spec — never a questionnaire. The AI uses it to decide how much
+     rigor each change needs (see .claude/rules/engineering.md). Plain words; ~10 lines. Example: -->
+
+- **Exposure:** public order form; private dashboard
+- **Sign-in:** the owner only (no customer accounts)
+- **Data:** customers' names and contact details — personal data
+- **Money moves:** no
+- **File uploads:** no
+- **External integrations:** none
+- **Scale:** tens of orders a day
+- **Loss tolerance:** a submitted order must never be lost
+- **Regulated:** no
+- **Proof command:** none yet
+
 ## Tech Stack
 
 <!-- Replace with your chosen technologies.
