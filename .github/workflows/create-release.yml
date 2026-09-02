@@ -6,8 +6,6 @@ name: Create Release
 # that cannot push tags directly (e.g. remote coding agents).
 
 on:
-  push:
-    branches: [claude/review-claude-skills-iDDnb]
   workflow_dispatch:
     inputs:
       tag:
@@ -35,9 +33,9 @@ jobs:
       - name: Create tag and release (idempotent)
         env:
           GH_TOKEN: ${{ github.token }}
-          TAG: ${{ github.event.inputs.tag || 'v3.1.2' }}
-          TARGET: ${{ github.event.inputs.target || '1727f3ec991ad8754fd1d44e17d4d8393d5ff7d8' }}
-          TITLE: ${{ github.event.inputs.title || 'v3.1.2 — What the first real /start revealed' }}
+          TAG: ${{ github.event.inputs.tag }}
+          TARGET: ${{ github.event.inputs.target }}
+          TITLE: ${{ github.event.inputs.title }}
         run: |
           if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
             echo "Release $TAG already exists — nothing to do."
@@ -45,22 +43,6 @@ jobs:
           fi
           if [ -n "${{ github.event.inputs.notes }}" ]; then
             printf '%s\n' "${{ github.event.inputs.notes }}" > /tmp/notes.md
-            gh release create "$TAG" --repo "$GITHUB_REPOSITORY" \
-              --target "$TARGET" --title "$TITLE" --notes-file /tmp/notes.md
-          elif [ "${{ github.event_name }}" = "push" ]; then
-            cat > /tmp/notes.md <<'NOTES'
-          A real project ran `/start` from a profile repo instead of an interview — *"read who I am from there, then run start"*. The run was correct, and the template's own question rule authorised it. It also exposed three defects the template could not see from the inside.
-
-          ## Fixed
-          - **The team reveal had drifted for four releases** — `/start` introduced 4 of 6 agents (no `owner-proxy`, no `builder`) and 10 of 14 skills, so a new project met its team incomplete and never heard that the night shift or `/template-update` exist. Same family as v3.1.1: the validator checked every roster **except the one the user actually reads**. Now it checks that one too, negative-tested
-          - **Skill invention without a mandate** — Phase 6 creates skills *"if the user identifies something"*; in a profile-driven run nobody is there to identify anything. Only the owner's own answer authorises it now; otherwise candidates are proposed in the brainstorm
-
-          ## Added
-          - **Phase 0b — profile-driven setup**, the interview-free mode as a first-class path: the source becomes the interview's input, every gap becomes a numbered assumption plus an `ASSUMPTION — review me` line, the mandate stays bounded, and the handover states the ceiling out loud — **an interview-free setup is exactly as good as the source it read**
-
-          ## Changed
-          - Plugin bumped to 3.1.2 — `/plugin update` or `/template-update`
-          NOTES
             gh release create "$TAG" --repo "$GITHUB_REPOSITORY" \
               --target "$TARGET" --title "$TITLE" --notes-file /tmp/notes.md
           else
