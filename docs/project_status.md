@@ -7,7 +7,7 @@
      Per the documentation conventions: completed phases get ONE summary line —
      full detail lives in docs/changelog.md. -->
 
-**Last Updated:** September 2, 2026 (v3.1.2 — first real /start in the field: team reveal completed, profile-driven setup mode, mandate guard)
+**Last Updated:** September 2, 2026 (v3.1.3 — sandbox findings: content-based tier triggers, shipped secret-scan patterns; auth-boundary probe validated on a planted leak)
 **Project Start:** April 2026
 
 ---
@@ -47,7 +47,7 @@ One line each — the full story is in `docs/changelog.md`.
 - ✅ Product consolidation: BuildWithClaude deprecated; beginner on-ramp absorbed as `docs/start_here_with_claude.md`
 
 **Next (manual steps for the owner):**
-- Merge the current branch, then tag `v3.1.2` (match the version in `.claude-plugin/plugin.json`)
+- Merge the current branch, then tag `v3.1.3` (match the version in `.claude-plugin/plugin.json`)
 - Archive the BuildWithClaude repository on GitHub (Settings → Archive) after merging its deprecation README
 - Mark this repo as a Template repository (Settings → Template repository)
 - Record a short demo GIF for the README (fresh clone → welcome → /start → team reveal)
