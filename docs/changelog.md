@@ -10,6 +10,23 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## v3.1.3 — 2026-09-02: Sandbox findings (the evidence layer's first real exercise)
+
+Two projects were built on the template in a sandbox — a bakery site and an invoice portal with a deliberately planted authorization hole — and the mechanics were run against them. One strong positive, two real gaps, both of the same shape: **a "deterministic" check written as prose is improvised at run time.**
+
+### Validated (measured, not claimed)
+- **The verifier's auth-boundary probe caught a real data leak.** The story's own test passed green; the checklist item added in v2.5.1 ("can a wrong user reach something they shouldn't?") produced a probe that returned `200` with another customer's invoice. The claim/evidence split worked exactly as designed: the agent named what to test, execution produced ground truth
+- **The routine path stayed free** — a CSS colour change tripped no trigger, no gate, no question
+
+### Fixed
+- **Path triggers alone miss real auth code.** In the sandbox, the invoice portal's entire session and ownership logic lived in `app/main.py` — a path that trips nothing; only an unrelated dependency change happened to raise the tier. Triggers now run a **second pass over diff content** (`session`, `authoriz`, `authenticat`, `permission`, `role`, `token`, `password`, `crypt`, `owner_id`, `user_id`), because real projects put auth in `main.py`, `routes.py`, `api.py`
+- **"Secret scan of the diff" was prose, so the regex was invented on the spot — and missed.** A plausible hand-rolled pattern let a live `sk_live_…` key through because it expected the keyword before the `=`. The rule now ships the actual patterns (Stripe, AWS, GitHub, Slack, JWT, private keys, and generic secret assignments) and prefers `gitleaks`/`detect-secrets` when the project has one
+
+### Changed
+- **Plugin** bumped to 3.1.3
+
+---
+
 ## v3.1.2 — 2026-09-02: What the first real /start revealed
 
 A real project ran `/start` from a profile repo instead of an interview ("read who I am from there, then run start"). It worked — and exposed three defects the template could not see from the inside.
