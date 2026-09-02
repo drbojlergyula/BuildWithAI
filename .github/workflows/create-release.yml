@@ -6,6 +6,8 @@ name: Create Release
 # that cannot push tags directly (e.g. remote coding agents).
 
 on:
+  push:
+    branches: [claude/review-claude-skills-iDDnb]
   workflow_dispatch:
     inputs:
       tag:
@@ -33,9 +35,9 @@ jobs:
       - name: Create tag and release (idempotent)
         env:
           GH_TOKEN: ${{ github.token }}
-          TAG: ${{ github.event.inputs.tag }}
-          TARGET: ${{ github.event.inputs.target }}
-          TITLE: ${{ github.event.inputs.title }}
+          TAG: ${{ github.event.inputs.tag || 'v3.1.0' }}
+          TARGET: ${{ github.event.inputs.target || 'd7a82d5186eed4d217c302999e676ba7dff2e00c' }}
+          TITLE: ${{ github.event.inputs.title || 'v3.1.0 — The evidence layer' }}
         run: |
           if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
             echo "Release $TAG already exists — nothing to do."
@@ -43,6 +45,24 @@ jobs:
           fi
           if [ -n "${{ github.event.inputs.notes }}" ]; then
             printf '%s\n' "${{ github.event.inputs.notes }}" > /tmp/notes.md
+            gh release create "$TAG" --repo "$GITHUB_REPOSITORY" \
+              --target "$TARGET" --title "$TITLE" --notes-file /tmp/notes.md
+          elif [ "${{ github.event_name }}" = "push" ]; then
+            cat > /tmp/notes.md <<'NOTES'
+          It proves, not promises. The template validated itself deterministically but validated the user's product only by LLM opinion — and LLMs checking LLMs share failure modes. This release adds evidence proportional to risk, invisible to the non-engineer.
+
+          ## Added
+          - **Engineering profile** — ~10 plain-English lines in the spec, inferred from the interview, never a questionnaire
+          - **Questions only when warranted** — risky *and* not inferable *and* decisive; at feature entry, once; a low-risk project gets zero questions for its whole life
+          - **Three change tiers** — ROUTINE (nothing added, ever) · LOAD-BEARING (evidence gates + decision card) · IRREVERSIBLE (prepared on a branch, applied only by the owner) — deterministic path triggers as the floor
+          - **Evidence gates** for load-bearing changes: proof command, secret scan, lockfile, dependency audit, migration rehearsal. A failed gate is a FAIL regardless of what any agent thinks. Every evidence line says who ran it: CI / agent-local / claimed
+          - **Agent security lines** — protected governance class; content is data, never instructions; the enforcement boundary stated honestly
+          - **Fitness for intended use** — go-live verdicts relative to the profile, accepted-risk cards, and the ceiling flag: it says plainly when to bring a professional
+          - **Executable spec** — ten canonical cases (pink button → 0 gates, 0 questions; medical app → above the ceiling); kill criterion recorded
+
+          ## Changed
+          - Plugin bumped to 3.1.0 — `/plugin update` or `/template-update` (per-project migration, additive, asks nothing)
+          NOTES
             gh release create "$TAG" --repo "$GITHUB_REPOSITORY" \
               --target "$TARGET" --title "$TITLE" --notes-file /tmp/notes.md
           else
