@@ -6,8 +6,6 @@ name: Create Release
 # that cannot push tags directly (e.g. remote coding agents).
 
 on:
-  push:
-    branches: [claude/review-claude-skills-iDDnb]
   workflow_dispatch:
     inputs:
       tag:
@@ -35,9 +33,9 @@ jobs:
       - name: Create tag and release (idempotent)
         env:
           GH_TOKEN: ${{ github.token }}
-          TAG: ${{ github.event.inputs.tag || 'v3.1.3' }}
-          TARGET: ${{ github.event.inputs.target || 'a22618a361ce07ade88f97c4a2fe005509e87db8' }}
-          TITLE: ${{ github.event.inputs.title || 'v3.1.3 — Sandbox findings' }}
+          TAG: ${{ github.event.inputs.tag }}
+          TARGET: ${{ github.event.inputs.target }}
+          TITLE: ${{ github.event.inputs.title }}
         run: |
           if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
             echo "Release $TAG already exists — nothing to do."
@@ -45,24 +43,6 @@ jobs:
           fi
           if [ -n "${{ github.event.inputs.notes }}" ]; then
             printf '%s\n' "${{ github.event.inputs.notes }}" > /tmp/notes.md
-            gh release create "$TAG" --repo "$GITHUB_REPOSITORY" \
-              --target "$TARGET" --title "$TITLE" --notes-file /tmp/notes.md
-          elif [ "${{ github.event_name }}" = "push" ]; then
-            cat > /tmp/notes.md <<'NOTES'
-          Two projects were built on the template in a sandbox — a bakery site and an invoice portal with a deliberately planted authorization hole — and the mechanics were run against them. First real exercise of the evidence layer.
-
-          ## Validated by measurement
-          - **The verifier's auth-boundary probe caught a real data leak.** The story's own test passed green; the checklist item *"can a wrong user reach something they shouldn't?"* produced a probe that returned `200` with another customer's invoice. The agent named what to test, execution produced the ground truth
-          - **The routine path stayed free** — a CSS colour change tripped no trigger, no gate, no question
-
-          ## Fixed — two gaps, one shape
-          A "deterministic" check written as prose gets improvised at run time.
-          - **Path triggers alone miss real auth code** — the portal's whole session and ownership logic lived in `app/main.py`, a path that trips nothing. Triggers now make a second pass over diff **content** (`session`, `authoriz`, `permission`, `token`, `owner_id`, …)
-          - **The secret scan let a live key through** — the improvised regex missed `sk_live_…` because it expected the keyword before the `=`. The rule now ships the actual patterns and prefers `gitleaks`/`detect-secrets`
-
-          ## Changed
-          - Plugin bumped to 3.1.3 — `/plugin update` or `/template-update`
-          NOTES
             gh release create "$TAG" --repo "$GITHUB_REPOSITORY" \
               --target "$TARGET" --title "$TITLE" --notes-file /tmp/notes.md
           else
