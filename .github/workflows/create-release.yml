@@ -6,8 +6,6 @@ name: Create Release
 # that cannot push tags directly (e.g. remote coding agents).
 
 on:
-  push:
-    branches: [claude/review-claude-skills-iDDnb]
   workflow_dispatch:
     inputs:
       tag:
@@ -35,9 +33,9 @@ jobs:
       - name: Create tag and release (idempotent)
         env:
           GH_TOKEN: ${{ github.token }}
-          TAG: ${{ github.event.inputs.tag || 'v3.2.0' }}
-          TARGET: ${{ github.event.inputs.target || 'a3309a6dcca82e3153fc4c291f28c8c0d39c9594' }}
-          TITLE: ${{ github.event.inputs.title || 'v3.2.0 — What two autonomous field runs found' }}
+          TAG: ${{ github.event.inputs.tag }}
+          TARGET: ${{ github.event.inputs.target }}
+          TITLE: ${{ github.event.inputs.title }}
         run: |
           if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
             echo "Release $TAG already exists — nothing to do."
@@ -45,30 +43,6 @@ jobs:
           fi
           if [ -n "${{ github.event.inputs.notes }}" ]; then
             printf '%s\n' "${{ github.event.inputs.notes }}" > /tmp/notes.md
-            gh release create "$TAG" --repo "$GITHUB_REPOSITORY" \
-              --target "$TARGET" --title "$TITLE" --notes-file /tmp/notes.md
-          elif [ "${{ github.event_name }}" = "push" ]; then
-            cat > /tmp/notes.md <<'NOTES'
-          Two independent autonomous builds ran on the same template version. One verified its claims; the second filed a field report that found a correctness trap our own reviews had missed.
-
-          ## SERIOUS — placeholder house rules were declared binding
-          The rules file says house rules bind and an agent must **stop and ask the owner** on conflict. The shipped `docs/house_rules.md` was placeholder content for a bakery order form: `$20/month`, "never add a dependency without flagging it". A run given a **$5/month** budget and an explicit *"do not ask me"* had to override it — a more literal agent would have budgeted $20, or stopped to ask an owner who had just forbidden questions.
-
-          Fixed with the template's own convention: a `house-rules: unset` marker, a rule stating that **nothing binds while it is present**, `/start` and `/adopt-project` clearing it, and the validator enforcing it.
-
-          ## Also fixed
-          - **Case-collision check moved into the validator** — both runs shipped `docs/ARCHITECTURE.md` beside `docs/architecture.md`, which are one file on macOS and Windows. Invisible on Linux CI; now a build failure, negative-tested
-          - **Phase 0b widened** to name brief-driven runs: a brief saying "do not ask me" does not make `/start` inapplicable, it makes the interview half the wrong half
-          - **Spec-as-output legitimised** when viability is an empirical question
-          - **Measure before committing to an architecture** — one run threw away a finished pipeline after discovering it needed 461 MB against a 128 MB limit; decisions reversed by data are now logged, not hidden
-          - **Owner-driven vs. autonomous** stated, so autonomous runs follow the workflow skills' outcomes without invoking them
-
-          ## Measured, deliberately parked
-          Always-loaded context is ~7,000 tokens. Trimming it risks the one file non-Claude assistants always read, so it gets its own round.
-
-          ## Changed
-          - Plugin bumped to 3.2.0 — `/plugin update` or `/template-update`
-          NOTES
             gh release create "$TAG" --repo "$GITHUB_REPOSITORY" \
               --target "$TARGET" --title "$TITLE" --notes-file /tmp/notes.md
           else
