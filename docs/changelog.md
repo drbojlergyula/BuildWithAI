@@ -10,6 +10,22 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## v3.1.5 — 2026-09-03: Verified against a real shipped project
+
+The HEKTAR repository — produced by an autonomous session from one brief — was extracted and its build record checked claim by claim, independently, in a fresh environment.
+
+### Verified (run, not read)
+`45 unit tests passed` · `33/33 e2e checks passed` · `lint clean` — every figure exactly as claimed. Zero runtime dependencies confirmed from `package.json`; no AI at request time confirmed by grep; payload sizes match (decimal MB); the validation gate really does call `wms.geo.admin.ch` and `api3.geo.admin.ch`; the pipeline is exactly the 1,492 lines claimed; the nine engineering docs are 13,051 words against a claim of ~13,000. **The template's own validator passed the finished project in project mode** — first external confirmation of the v3.1.1 fix on someone else's repository.
+
+### Fixed
+- **Case-collision check** in `doc-sync-check`: the run produced `docs/ARCHITECTURE.md` beside the template's `docs/architecture.md` — a correct hub-and-spoke split, but the two names differ only by case, so on macOS and Windows `git clone` warns and one file silently wins. Any such pair is now flagged with a proposed rename
+- **Numbers in owner-facing reports** now follow the claim/evidence rule: reproducible by a stated command, or labelled an estimate. The build record led with "9,547 lines of code written" — the one headline figure that could not be reproduced from the shipped repository (5,370 lines of source), inside a document whose whole value was that everything else could be
+
+### Changed
+- **Plugin** bumped to 3.1.5
+
+---
+
 ## v3.1.4 — 2026-09-03: What an autonomous end-to-end build revealed
 
 The template was given one brief — *"research the Swiss market, find something worth building, build it"* — and ran a full autonomous session: 21 candidates, two products abandoned on evidence, 10 federal datasets ingested, 9,547 lines of code, 78 automated checks. One gap, one misattribution to correct.

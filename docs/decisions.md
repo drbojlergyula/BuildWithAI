@@ -8,6 +8,9 @@
      The entries below are this template's own history; /start and /adopt-project
      replace them with your project's decisions. -->
 
+- 2026-09-03 — LESSON — a figure in an owner-facing report is a claim, not evidence: an otherwise fully checkable build record led with an unreproducible line count. Numbers must carry the command that produces them, or be labelled estimates
+- 2026-09-03 — Case-differing filenames in one directory are a portability bug (macOS/Windows lose one on clone) — doc-sync-check flags them; found when a brief's uppercase doc names landed beside the template's lowercase set
+- 2026-09-03 — External verification: a finished project built on the template passed the template's own validator in project mode, and its 78 claimed checks all ran green in a fresh environment — the v3.1.1 mode-aware fix confirmed outside this repo
 - 2026-09-03 — LESSON — a rule written in passive voice has no owner: "a load-bearing project gets a generated CI workflow" was acted on only by /build-next, so an autonomous session produced 78 passing tests with nothing running them. Every mechanism needs a named workflow that performs it
 - 2026-09-03 — Field-validated by an autonomous end-to-end build: separate-context research agents and "verify by running it" were the decisive mechanisms (killed two products on evidence, caught silent data corruption); the engineering profile correctly sent effort to correctness rather than security ceremony
 - 2026-09-03 — Keep the evidence honest when the template is presented publicly: an autonomous run credited the template with review passes and parallel research tracks that came from the operator's brief, not from any template file
