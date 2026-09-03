@@ -10,6 +10,30 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## v3.2.0 — 2026-09-03: What two autonomous field runs found
+
+A second autonomous build on the same template version filed a critical field report. It found one correctness trap the template's own reviews had missed, independently confirmed a bug found the same day, and measured the always-loaded context cost precisely.
+
+### Fixed — SERIOUS: placeholder house rules were declared binding
+`.claude/rules/house-rules.md` says house rules are binding and an agent must stop and ask the owner on conflict. The shipped `docs/house_rules.md` was **placeholder content for a bakery order form**, setting "$20/month" and forbidding new dependencies. A field run given a $5/month budget had to notice and override it; a more literal agent would have budgeted $20, or stopped to ask an owner who had explicitly said not to ask. **Placeholder content must never sit behind a rule that says binding.** The file now carries a `house-rules: unset` marker, the rule states plainly that nothing binds while it is present, `/start` and `/adopt-project` delete it when writing real rules, and the validator enforces its presence in template mode.
+
+### Fixed — case-collision check, now deterministic
+Two independent runs shipped `docs/ARCHITECTURE.md` beside `docs/architecture.md`; on macOS and Windows these are one file, so `git clone` warns and one silently wins. Invisible on Linux CI. `validate_template.py` now walks the tree and fails on any pair of paths differing only by case (negative-tested), alongside the `doc-sync-check` flag added in v3.1.5.
+
+### Added
+- **Phase 0b widened** — the interview-free mode now names both shapes it must recognise: the owner *pointing at a source*, and the owner *handing over a written brief* that forbids questions. A brief that says "do not ask me" does not make `/start` inapplicable; it makes Phases 1–5 the wrong half of it
+- **Spec-as-output is legitimate** — for products whose viability is an empirical question, building and measuring first, then writing the spec from what the build proved, is honest; say so in the decision log rather than back-dating a spec
+- **Measure before committing to an architecture** — when a design depends on a platform limit or a data property, write the smallest script that measures the real number first and record it; a decision reversed by data is logged as `REVERSED BY MEASUREMENT`. Measured why: a run discovered mid-build that aggregating one day of data needed 461 MB against a 128 MB worker limit, and an already-written pipeline was thrown away
+- **Owner-driven vs. autonomous** stated explicitly — `save-point`, `update-docs-and-commit` and the user-invoked skills serve an owner steering turn by turn; an autonomous run follows their outcomes without invoking them
+
+### Measured, not yet acted on
+Always-loaded instruction context is **~7,000 tokens** before any work (`CLAUDE.md` 490, `AGENTS.md` 2,793, four rules files 3,502) — the field report's estimate was accurate. A meaningful share describes capabilities rather than constraining behaviour. Parked deliberately: trimming it means moving content out of the one file non-Claude assistants always read, and getting that wrong breaks cross-assistant discovery, which is the product's differentiator.
+
+### Changed
+- **Plugin** bumped to 3.2.0
+
+---
+
 ## v3.1.5 — 2026-09-03: Verified against a real shipped project
 
 The HEKTAR repository — produced by an autonomous session from one brief — was extracted and its build record checked claim by claim, independently, in a fresh environment.

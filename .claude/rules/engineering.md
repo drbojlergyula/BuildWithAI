@@ -22,6 +22,8 @@ Ask the owner only when **all three** hold: (1) the feature touches something ri
 
 *By content* (`git diff -U0`, case-insensitive): `session`, `authenticat`, `authoriz`, `permission`, `role`, `token`, `password`, `hash`, `crypt`, `owner_id`, `user_id` in added or changed lines. **Path alone is not enough** — measured in a sandbox: an invoice portal's entire session and ownership logic lived in `app/main.py`, whose path trips no trigger; only an unrelated dependency change happened to raise the tier. Real projects put auth in `main.py`, `routes.py`, `api.py`.
 
+**Measure before you commit to an architecture.** When a design depends on a platform limit or a data property — a memory ceiling, a payload size, whether a dataset even contains the field — write the smallest script that measures the real number *before* building on the assumption, and record the number in `docs/decisions.md`. A decision reversed by data is a normal outcome, not a failure: log it as `REVERSED BY MEASUREMENT — [what was assumed] → [what was measured]`. Measured why: a field run discovered mid-build that aggregating one day of data needed 461 MB against a 128 MB worker limit, and an already-written pipeline had to be thrown away.
+
 **Bias:** when torn, classify up — over-classifying costs minutes, under-classifying costs the product.
 
 ## Evidence gates by tier
