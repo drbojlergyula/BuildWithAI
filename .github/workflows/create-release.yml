@@ -6,6 +6,8 @@ name: Create Release
 # that cannot push tags directly (e.g. remote coding agents).
 
 on:
+  push:
+    branches: [claude/review-claude-skills-iDDnb]
   workflow_dispatch:
     inputs:
       tag:
@@ -33,9 +35,9 @@ jobs:
       - name: Create tag and release (idempotent)
         env:
           GH_TOKEN: ${{ github.token }}
-          TAG: ${{ github.event.inputs.tag }}
-          TARGET: ${{ github.event.inputs.target }}
-          TITLE: ${{ github.event.inputs.title }}
+          TAG: ${{ github.event.inputs.tag || 'v3.1.4' }}
+          TARGET: ${{ github.event.inputs.target || '1a88917e2568d5396f78cad71d79dbd412c8093a' }}
+          TITLE: ${{ github.event.inputs.title || 'v3.1.4 — What an autonomous build revealed' }}
         run: |
           if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
             echo "Release $TAG already exists — nothing to do."
@@ -43,6 +45,24 @@ jobs:
           fi
           if [ -n "${{ github.event.inputs.notes }}" ]; then
             printf '%s\n' "${{ github.event.inputs.notes }}" > /tmp/notes.md
+            gh release create "$TAG" --repo "$GITHUB_REPOSITORY" \
+              --target "$TARGET" --title "$TITLE" --notes-file /tmp/notes.md
+          elif [ "${{ github.event_name }}" = "push" ]; then
+            cat > /tmp/notes.md <<'NOTES'
+          The template was given one brief — *"research the Swiss market, find something worth building, build it"* — and ran a full autonomous session: 21 candidates, two products abandoned on evidence, 9,547 lines of code, 78 automated checks, and a verification record that lists what it did **not** verify.
+
+          ## Fixed
+          - **CI generation had no owner.** "A load-bearing project gets a generated CI workflow" was passive voice, acted on only by `/build-next` — so an autonomous session produced 78 passing tests with nothing running them, leaving every check at `agent-local`. The offer is now owned by whichever workflow first records or creates the proof command, and required before load-bearing work is called done
+
+          ## Validated in the field
+          - **Separate-context research agents — decisive:** the competitor agent found the incumbent that killed the chosen product; the dataset agent proved the tax data ends in 2018
+          - **"Verify by running it" — decisive:** live probes caught a GDAL overview averaging the nodata sentinel into real values, which would have silently corrupted every number in the product while looking plausible
+          - **The engineering profile — material:** classified the product low-risk on security and sent effort to correctness, where the real risk was
+          - **The ceiling held:** the run's own record ends with seven things it did not verify
+
+          ## Changed
+          - Plugin bumped to 3.1.4 — `/plugin update` or `/template-update`
+          NOTES
             gh release create "$TAG" --repo "$GITHUB_REPOSITORY" \
               --target "$TARGET" --title "$TITLE" --notes-file /tmp/notes.md
           else
