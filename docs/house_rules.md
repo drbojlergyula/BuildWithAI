@@ -1,5 +1,10 @@
 # House Rules
 
+<!-- house-rules: unset — everything below is EXAMPLE content, not this project's rules.
+     While this marker is present there are no house rules yet: the owner's current
+     instructions govern. /start and /adopt-project delete this line when they write
+     the real rules. Do not edit it by hand. -->
+
 <!-- The short list of things that are ALWAYS true for this project — the owner's
      non-negotiables. Every AI workflow re-reads this file before acting.
      Keep it under ~10 rules. If everything is a rule, nothing is.

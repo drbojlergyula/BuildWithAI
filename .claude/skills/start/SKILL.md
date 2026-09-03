@@ -35,7 +35,12 @@ You now understand the full shape of what needs to be filled in. Keep this in mi
 
 ### Phase 0b — Is there an interview at all?
 
-Sometimes the owner is not there to answer: they point at a source of truth instead — a profile repo, an existing document, notes — and say *"read who I am from there, then run start"*. That sentence **is** the instruction: the source is the interview's input, and asking what it already answers is asking the owner for what they just handed you.
+Sometimes the owner is not there to answer. Two shapes, both common:
+
+- **They point at a source** — a profile repo, an existing document, notes — and say *"read who I am from there, then run start"*.
+- **They hand you the brief itself** — a long written instruction describing what to build and the constraints, often ending with *"do not ask me, just build it"*.
+
+Either sentence **is** the instruction: that source or brief is the interview's input, and asking what it already answers is asking the owner for what they just handed you. A brief that forbids questions does not make `/start` inapplicable — it makes Phases 1–5 the wrong half of it.
 
 When that happens, run **profile-driven setup** instead of Phases 1–5:
 
@@ -178,7 +183,7 @@ Update these files in order:
 
 5. **`docs/changelog.md`** — add the first entry: project initialized, date, summary of what was decided.
 
-6. **`docs/house_rules.md`** — replace the example with the user's real non-negotiables from the interview (budget ceiling, never-without-asking list, always rules, tone). Keep it under ~10 rules.
+6. **`docs/house_rules.md`** — **delete the `house-rules: unset` marker** and replace the example with the user's real non-negotiables from the interview (budget ceiling, never-without-asking list, always rules, tone). Keep it under ~10 rules.
 
 7. **`docs/decisions.md`** — clear the example rows and seed the log with the real decisions just made (stack choice, MVP cut lines, anything debated) — one line each: date, decision, why.
 

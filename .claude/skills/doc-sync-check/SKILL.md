@@ -25,6 +25,9 @@ Checks that all project documents are consistent with each other and up to date.
    - **Hub-and-spoke integrity** *(if `docs/spec/` or `docs/architecture/` pages exist)*: every spoke page is linked from its hub's index line, every hub link resolves to a real file, and no spoke duplicates content that also lives in the hub.
    - **Reference shelf** *(if `docs/reference/` exists)*: the README table lists exactly the files on the shelf — no unlisted files, no dead rows.
 
+   **Filename safety**
+   - Two files in the same directory whose names differ only by case (`docs/ARCHITECTURE.md` beside `docs/architecture.md`) collide on macOS and Windows: `git clone` warns and one silently wins. Flag any such pair and propose a rename. Measured in the field — a brief that mandated uppercase doc names produced exactly this collision beside the template's own lowercase set.
+
    **Plan coverage and story health**
    - Every feature in `project_spec.md` has at least one story in `project_status.md`'s plan — and every planned story traces back to something in the spec. Flag features with no story and orphan stories.
    - Story dependencies make sense: if stories note "depends on", the dependency exists, is not circular, and is not scheduled later than the story that needs it.

@@ -7,7 +7,7 @@
      Per the documentation conventions: completed phases get ONE summary line —
      full detail lives in docs/changelog.md. -->
 
-**Last Updated:** September 3, 2026 (v3.1.4 — autonomous end-to-end build: CI-generation ownership fixed; profile, research agents and verify-by-running validated in the field)
+**Last Updated:** September 3, 2026 (v3.2.0 — two autonomous field runs: binding-placeholder trap closed, deterministic case check, brief-driven setup, measure-first)
 **Project Start:** April 2026
 
 ---
@@ -47,7 +47,7 @@ One line each — the full story is in `docs/changelog.md`.
 - ✅ Product consolidation: BuildWithClaude deprecated; beginner on-ramp absorbed as `docs/start_here_with_claude.md`
 
 **Next (manual steps for the owner):**
-- Merge the current branch, then tag `v3.1.4` (match the version in `.claude-plugin/plugin.json`)
+- Merge the current branch, then tag `v3.2.0` (match the version in `.claude-plugin/plugin.json`)
 - Archive the BuildWithClaude repository on GitHub (Settings → Archive) after merging its deprecation README
 - Mark this repo as a Template repository (Settings → Template repository)
 - Record a short demo GIF for the README (fresh clone → welcome → /start → team reveal)

@@ -93,6 +93,19 @@ for style in sorted(styles_dir.glob("*.md")) if styles_dir.is_dir() else []:
         if not fm.get(field):
             errors.append(f"{style.relative_to(ROOT)}: missing '{field}' in frontmatter")
 
+# --- Filenames that differ only by case collide on macOS and Windows (both modes)
+# git clone warns and one file silently wins. Invisible on Linux CI, which is why
+# two independent field runs shipped docs/ARCHITECTURE.md beside docs/architecture.md.
+seen = {}
+for path in ROOT.rglob("*"):
+    if not path.is_file() or any(part in {".git", "node_modules", "__pycache__"} for part in path.parts):
+        continue
+    key = str(path.relative_to(ROOT)).lower()
+    if key in seen:
+        errors.append(f"{seen[key]} and {path.relative_to(ROOT)}: names differ only by case — they collide on macOS and Windows")
+    else:
+        seen[key] = path.relative_to(ROOT)
+
 # --- Mode: is this the template itself, or a project built from it?
 # The sentinel is the marker (same convention as the hook and /template-update).
 SENTINEL = "template-state: untouched-example"
@@ -128,6 +141,12 @@ if rules_dir.is_dir():
 # that is a defect, so none of it is checked outside the template itself.
 # ---------------------------------------------------------------------------
 if IS_TEMPLATE:
+    # The example house rules must carry their "unset" marker, or the binding
+    # house-rules rule would make placeholder content authoritative.
+    hr = ROOT / "docs" / "house_rules.md"
+    if hr.is_file() and "house-rules: unset" not in hr.read_text(encoding="utf-8"):
+        errors.append("docs/house_rules.md: missing the 'house-rules: unset' marker — example content must never be binding")
+
     # The sentinel in the spec and the string the hook greps for must match.
     if hook.is_file() and SENTINEL not in hook.read_text(encoding="utf-8"):
         errors.append(".claude/hooks/session-start.sh: does not grep for the sentinel present in docs/project_spec.md")

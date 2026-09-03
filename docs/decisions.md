@@ -8,6 +8,13 @@
      The entries below are this template's own history; /start and /adopt-project
      replace them with your project's decisions. -->
 
+- 2026-09-03 — LESSON — placeholder content behind a rule that says "binding" is a correctness trap: the example house rules ($20/month, no new dependencies) contradicted a field run's actual brief, and a literal agent would have obeyed the placeholder or stopped to ask an owner who forbade questions. Every shipped example that a rule treats as authoritative needs an "unset" marker, like the spec sentinel
+- 2026-09-03 — Case-collision detection moved into the validator (deterministic) after two independent field runs produced the same ARCHITECTURE.md/architecture.md collision — an LLM-read check in doc-sync-check was not enough for a bug class Linux CI cannot see
+- 2026-09-03 — Spec-as-output is legitimate when viability is empirical, and architecture that depends on a platform limit must be preceded by a measurement — a decision reversed by data is logged, not hidden
+- 2026-09-03 — Always-loaded context measured at ~7,000 tokens; trimming parked deliberately because the candidates live in the one file non-Claude assistants always read
+- 2026-09-03 — LESSON — a figure in an owner-facing report is a claim, not evidence: an otherwise fully checkable build record led with an unreproducible line count. Numbers must carry the command that produces them, or be labelled estimates
+- 2026-09-03 — Case-differing filenames in one directory are a portability bug (macOS/Windows lose one on clone) — doc-sync-check flags them; found when a brief's uppercase doc names landed beside the template's lowercase set
+- 2026-09-03 — External verification: a finished project built on the template passed the template's own validator in project mode, and its 78 claimed checks all ran green in a fresh environment — the v3.1.1 mode-aware fix confirmed outside this repo
 - 2026-09-03 — LESSON — a rule written in passive voice has no owner: "a load-bearing project gets a generated CI workflow" was acted on only by /build-next, so an autonomous session produced 78 passing tests with nothing running them. Every mechanism needs a named workflow that performs it
 - 2026-09-03 — Field-validated by an autonomous end-to-end build: separate-context research agents and "verify by running it" were the decisive mechanisms (killed two products on evidence, caught silent data corruption); the engineering profile correctly sent effort to correctness rather than security ceremony
 - 2026-09-03 — Keep the evidence honest when the template is presented publicly: an autonomous run credited the template with review passes and parallel research tracks that came from the operator's brief, not from any template file
