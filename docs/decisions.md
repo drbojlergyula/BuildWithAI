@@ -8,6 +8,9 @@
      The entries below are this template's own history; /start and /adopt-project
      replace them with your project's decisions. -->
 
+- 2026-09-03 — LESSON — a rule written in passive voice has no owner: "a load-bearing project gets a generated CI workflow" was acted on only by /build-next, so an autonomous session produced 78 passing tests with nothing running them. Every mechanism needs a named workflow that performs it
+- 2026-09-03 — Field-validated by an autonomous end-to-end build: separate-context research agents and "verify by running it" were the decisive mechanisms (killed two products on evidence, caught silent data corruption); the engineering profile correctly sent effort to correctness rather than security ceremony
+- 2026-09-03 — Keep the evidence honest when the template is presented publicly: an autonomous run credited the template with review passes and parallel research tracks that came from the operator's brief, not from any template file
 - 2026-09-02 — LESSON — a deterministic check written as prose is not deterministic: sandbox-measured, an improvised secret-scan regex missed a live sk_live_ key, and path-only tier triggers missed an entire session/authz module in app/main.py. Ship the patterns and the second (content) pass, not the intention
 - 2026-09-02 — Sandbox evidence: the verifier's auth-boundary probe caught a real cross-tenant leak that the story's own passing test could not see — the claim/evidence split earns its keep; routine changes stayed free in the control case
 - 2026-09-02 — LESSON — roster drift hid in `/start`'s team reveal for four releases because the validator checked every roster except the one the user reads; a self-check must cover the user's first impression, not only the machine-facing files

@@ -33,6 +33,16 @@ Full landscape reviewed (Spec Kit, BMAD v6, Agent OS, Kiro, Cline Memory Bank, T
 
 **Decision:** *items 1, 2, 4 built (v2.9.1); item 5 is the v3.0 direction; item 3 waits for night feedback*
 
+### `/verification-record` — a shareable audit trail *(parked 2026-09-03, one strong data point)*
+
+**The idea:** compose the raw material the brain already holds (decisions, changelog, validation logs, test output, rejected options) into a single shareable HTML record: what was decided, what was rejected and why, what the tests caught, what is *not* verified.
+
+**Evidence for:** an operator asked for exactly this by hand after an autonomous build, and the result was the most credible artifact the project has produced — precisely because it documented two abandoned products, four caught bugs and seven unverified claims. "A build log with no rejections and no failures is a marketing document."
+
+**Evidence against:** its quality came from that run's specific content. A generic composer might produce a generic document, and the raw material is already in the brain for anyone who wants it. Also a 15th skill — the seat must be earned.
+
+**Decision:** *(not decided — revisit if a second operator asks for the same artifact by hand)*
+
 ### Per-category auto-accept — the autonomy ladder's next rung *(template's own idea, parked 2026-08-01)*
 
 **The idea:**
