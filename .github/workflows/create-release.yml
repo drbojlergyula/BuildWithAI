@@ -6,8 +6,6 @@ name: Create Release
 # that cannot push tags directly (e.g. remote coding agents).
 
 on:
-  push:
-    branches: [claude/review-claude-skills-iDDnb]
   workflow_dispatch:
     inputs:
       tag:
@@ -35,9 +33,9 @@ jobs:
       - name: Create tag and release (idempotent)
         env:
           GH_TOKEN: ${{ github.token }}
-          TAG: ${{ github.event.inputs.tag || 'v3.2.1' }}
-          TARGET: ${{ github.event.inputs.target || 'dfd6dc612962af72f1bdf4fbd680362029378d7f' }}
-          TITLE: ${{ github.event.inputs.title || 'v3.2.1 — Three runs on one version' }}
+          TAG: ${{ github.event.inputs.tag }}
+          TARGET: ${{ github.event.inputs.target }}
+          TITLE: ${{ github.event.inputs.title }}
         run: |
           if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
             echo "Release $TAG already exists — nothing to do."
@@ -45,26 +43,6 @@ jobs:
           fi
           if [ -n "${{ github.event.inputs.notes }}" ]; then
             printf '%s\n' "${{ github.event.inputs.notes }}" > /tmp/notes.md
-            gh release create "$TAG" --repo "$GITHUB_REPOSITORY" \
-              --target "$TARGET" --title "$TITLE" --notes-file /tmp/notes.md
-          elif [ "${{ github.event_name }}" = "push" ]; then
-            cat > /tmp/notes.md <<'NOTES'
-          Three independent autonomous builds on v3.2.0, each with a running build log and a structured field report — the largest evidence set yet, and it caught a regression shipped hours earlier.
-
-          ## REGRESSION fixed (introduced in v3.2.0)
-          The `house-rules: unset` check was a plain substring match. A run wrote real binding rules and explained *in the file's text* that it had removed the marker — so that sentence matched, and every session would have read genuine house rules as unset. The exact failure v3.2.0 existed to prevent, inverted. The marker now counts only as an **active HTML comment**; a prose mention does not.
-
-          ## Also fixed
-          - **Checks need negative controls.** Convergent across all three runs: one found five of eight real defects by reading output and disbelieving it rather than by any gate; another found three bugs *inside its own checking tools*. Prove a check fails on bad input before trusting it — a check only ever seen passing is an assumption wearing a green tick
-          - **trusted-sources scope clarified** — environment-provided tools and the product's own dependencies were never governed by it; the list covers only what a session installs for itself
-
-          ## Validated in the field
-          - The **case-collision check caught a real bug** — one report calls it *"the single clearest instance of template value in this run"*, and it fires on a second run's repo that shipped the collision unfixed
-          - **CI generation worked** in all three; the Engineering Profile was written in all three; the provenance vocabulary was adopted directly
-
-          ## Changed
-          - Plugin bumped to 3.2.1 — `/plugin update` or `/template-update`
-          NOTES
             gh release create "$TAG" --repo "$GITHUB_REPOSITORY" \
               --target "$TARGET" --title "$TITLE" --notes-file /tmp/notes.md
           else
