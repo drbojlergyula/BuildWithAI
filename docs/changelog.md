@@ -10,6 +10,28 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## v3.1.4 — 2026-09-03: What an autonomous end-to-end build revealed
+
+The template was given one brief — *"research the Swiss market, find something worth building, build it"* — and ran a full autonomous session: 21 candidates, two products abandoned on evidence, 10 federal datasets ingested, 9,547 lines of code, 78 automated checks. One gap, one misattribution to correct.
+
+### Fixed
+- **CI generation had no owner.** The rule said a load-bearing project "gets a generated CI workflow" — passive voice, and the only skill that acted on it was `/build-next`. A single autonomous session that never called `/build-next` produced **78 passing tests with nothing running them**, leaving every check at `agent-local`, the weakest evidence tier that still counts. The offer is now owned explicitly by whichever workflow first records or creates the proof command (`/start`, `/adopt-project`, `/build-next`), and any session must offer it before calling load-bearing work done
+
+### Validated in the field (the run's own honest self-assessment)
+- **Specialist agents with separate contexts — decisive.** The competitor agent found the incumbent that killed the chosen product; the dataset agent proved the tax data ends in 2018
+- **"Verify by running it" — decisive.** Live HTTP probes before design caught a GDAL overview that averaged the `-9999` nodata sentinel into real values: using it would have silently corrupted every noise number in the product while looking plausible. Found by testing, not by reasoning — the claim/evidence split, again
+- **Engineering profile — material.** Correctly classified the product as low-risk on security (no auth, no data, no money) and pushed effort toward correctness, which is where the real risk was. First field confirmation that risk-adaptive rigor sends effort to the right place instead of imposing ceremony
+- **House rules as binding — material.** "Only key-free, openly licensed sources" is what made the first product rejection unavoidable rather than a matter of taste
+- **The ceiling behaviour held.** The build's own record ends with seven things it did *not* verify, including "no real users have used it" and "absence of a competitor is absence of evidence, not proof"
+
+### Recorded
+- **Misattribution caught:** the run credited "three mandated review passes" and parallel research tracks to the template — both came from the operator's brief, not from any template file. Noted so the evidence stays honest when the run is presented publicly
+
+### Changed
+- **Plugin** bumped to 3.1.4
+
+---
+
 ## v3.1.3 — 2026-09-02: Sandbox findings (the evidence layer's first real exercise)
 
 Two projects were built on the template in a sandbox — a bakery site and an invoice portal with a deliberately planted authorization hole — and the mechanics were run against them. One strong positive, two real gaps, both of the same shape: **a "deterministic" check written as prose is improvised at run time.**
