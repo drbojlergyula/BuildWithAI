@@ -21,6 +21,8 @@ Sometimes the work needs a tool that is not installed — most often a browser-t
 | **GitHub Copilot** | GitHub's and Microsoft's official repositories and Copilot's official extensions | any official skill/tool — plus the Anthropic skills repo, same reason |
 | any | npm / PyPI — **only** as dependencies a skill above declares | e.g. `playwright` and its Chromium |
 
+**Two things this rule does not govern, and never did.** (1) *Tools the environment already provides* — a preinstalled browser, runtime or CLI is not an install decision; use it. (2) *The product's own dependencies* — adding a package the project itself needs is ordinary build work, classified LOAD-BEARING like any dependency change, not an unattended session install. This list governs only what a session installs **for itself**. Measured why: a field run read the npm line as forbidding a browser its environment had already provisioned, and recorded a deviation it did not need to make.
+
 Vendor-official answers only the **"listed"** part of the four-part test (free / dev-only / reversible / listed) — the other three must still hold for every individual install.
 
 **How installing a skill works** (so nobody improvises at 3 AM): copy the skill's folder from the source repo into the project's `.claude/skills/` (e.g. clone `anthropics/skills` shallowly to a temp dir and copy `skills/webapp-testing/`), then install its declared dependencies (for webapp-testing: `pip install playwright && python -m playwright install chromium`), then smoke-test.

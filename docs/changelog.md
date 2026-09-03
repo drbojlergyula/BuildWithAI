@@ -10,6 +10,31 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## v3.2.1 — 2026-09-03: Three runs on one version
+
+Three independent autonomous builds on v3.2.0, each with a running build log and a structured field report. The largest evidence set yet — and it caught a regression shipped hours earlier.
+
+### Fixed — REGRESSION introduced in v3.2.0
+The `house-rules: unset` check was a **plain substring match**. A run wrote excellent binding rules and explained in the text that it had *removed* the marker — so the sentence describing the removal matched, and every session reading that project would have treated real, binding house rules as unset. The exact failure the v3.2.0 fix existed to prevent, inverted. The marker now counts **only as an active HTML comment**; a prose mention does not.
+
+### Fixed — checks need negative controls
+Convergent across all three runs: one found **five of its eight real defects by reading output and disbelieving it**, not by any gate; another found **three separate bugs inside its own checking tools**, including a secret scanner that never matched anything. Gates now carry the rule: prove the check passes on good input *and* fails on bad input before trusting it. *A check that has only ever been seen passing is an assumption wearing a green tick.*
+
+### Fixed — trusted-sources read as narrower than intended
+A run recorded a deviation it did not need to make, reading the npm/PyPI line as forbidding a browser its environment had already provisioned. The rule now states what it never governed: tools the environment already provides are not an install decision, and the product's own dependencies are ordinary LOAD-BEARING build work. The list governs only what a session installs **for itself**.
+
+### Validated in the field, across three runs
+- **The case-collision check caught a real bug** — one report calls it *"the single clearest instance of template value in this run"*. It fired in another run too, on a repo that shipped with the collision unfixed
+- **CI generation worked** — all three produced a workflow running their own tests, the gap closed in v3.1.4
+- **The Engineering Profile was written in all three**; the spec sentinel was cleared in all three
+- **The provenance vocabulary was adopted directly** — one report: *"the brief asks for check attribution; the template supplied the working vocabulary"*
+- Scale: 5,679 / 7,713 / 5,759 source lines; 868 / 620 / 626 build-log entries
+
+### Changed
+- **Plugin** bumped to 3.2.1
+
+---
+
 ## v3.2.0 — 2026-09-03: What two autonomous field runs found
 
 A second autonomous build on the same template version filed a critical field report. It found one correctness trap the template's own reviews had missed, independently confirmed a bug found the same day, and measured the always-loaded context cost precisely.

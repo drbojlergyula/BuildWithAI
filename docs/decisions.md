@@ -8,6 +8,9 @@
      The entries below are this template's own history; /start and /adopt-project
      replace them with your project's decisions. -->
 
+- 2026-09-03 — LESSON — a marker check must match the marker's *form*, not its text: the v3.2.0 house-rules substring match read a sentence saying "the marker has been removed" as the marker itself, inverting the rule it was meant to enforce. Markers are HTML comments; check for the comment
+- 2026-09-03 — Every check needs a both-directions test (passes on good input, fails on bad) — convergent finding from three runs: five of eight defects in one were caught by reading rather than by gates, and another found three bugs inside its own checking tools
+- 2026-09-03 — trusted-sources governs only what a session installs for itself: environment-provided tools and the product's own dependencies were never in scope, and reading it otherwise cost a run a needless documented deviation
 - 2026-09-03 — LESSON — placeholder content behind a rule that says "binding" is a correctness trap: the example house rules ($20/month, no new dependencies) contradicted a field run's actual brief, and a literal agent would have obeyed the placeholder or stopped to ask an owner who forbade questions. Every shipped example that a rule treats as authoritative needs an "unset" marker, like the spec sentinel
 - 2026-09-03 — Case-collision detection moved into the validator (deterministic) after two independent field runs produced the same ARCHITECTURE.md/architecture.md collision — an LLM-read check in doc-sync-check was not enough for a bug class Linux CI cannot see
 - 2026-09-03 — Spec-as-output is legitimate when viability is empirical, and architecture that depends on a platform limit must be preceded by a measurement — a decision reversed by data is logged, not hidden

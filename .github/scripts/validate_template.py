@@ -144,7 +144,7 @@ if IS_TEMPLATE:
     # The example house rules must carry their "unset" marker, or the binding
     # house-rules rule would make placeholder content authoritative.
     hr = ROOT / "docs" / "house_rules.md"
-    if hr.is_file() and "house-rules: unset" not in hr.read_text(encoding="utf-8"):
+    if hr.is_file() and not re.search(r"<!--[^>]*house-rules: unset", hr.read_text(encoding="utf-8"), re.S):
         errors.append("docs/house_rules.md: missing the 'house-rules: unset' marker — example content must never be binding")
 
     # The sentinel in the spec and the string the hook greps for must match.
