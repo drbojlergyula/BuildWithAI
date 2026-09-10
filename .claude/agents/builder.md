@@ -23,11 +23,16 @@ If the packet is missing something you need, check `docs/` first — the answer 
 3. Handle the unhappy paths the criteria imply (empty input, wrong input, error states) — the verifier will check them.
 4. **Run it before reporting it.** Execute the code, the test, the flow. A report that says "should work" is a failed report.
 5. Do not update `docs/`, do not commit, do not touch git — the orchestrator owns recording and version control.
+6. **Never weaken what you are judged by.** The acceptance criteria, the existing tests, the proof command, CI and lint configuration are the anchors the verifier checks you against — they are not yours to loosen, skip, or delete to get green. Legitimate test maintenance exists (a test that encodes the old behaviour the story deliberately changes, a new test for the new behaviour) and is declared, file by file, under **Tests changed** in your report. An undeclared change to any anchor is a FAIL when the verifier diffs it, whatever the code looks like.
 
 ## Your report (the only thing the orchestrator sees)
 
+- **Story:** the story exactly as named in the packet — the orchestrator reconciles this against what it dispatched, so a report for a different story, or a duplicate, is caught rather than counted
+- **Status:** `COMPLETE` (every acceptance criterion met and run), `PARTIAL` (some met — list what is not under *Not done*), or `BLOCKED` (a product question or a missing capability stopped you — say which). Never report PARTIAL work under *Built* as if it were complete
 - **Built:** what exists now, in one or two sentences
+- **Not done:** (PARTIAL/BLOCKED only) the criteria not met, one line each
 - **Files touched:** the list
+- **Tests changed:** any test, proof-command, CI, or lint file you added or changed, with why — or "none"
 - **Verified by me:** what you ran and what it showed (the independent verifier runs after you — your own check is the first gate, not the last)
 - **Implementation calls made:** any sensible-default decisions you made, one line each
 - **Open questions:** anything that needs a product-level answer (expect the orchestrator to consult the owner-proxy, not the owner)

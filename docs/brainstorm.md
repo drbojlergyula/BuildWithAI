@@ -33,6 +33,18 @@ Full landscape reviewed (Spec Kit, BMAD v6, Agent OS, Kiro, Cline Memory Bank, T
 
 **Decision:** *items 1, 2, 4 built (v2.9.1); item 5 is the v3.0 direction; item 3 waits for night feedback*
 
+### Parallel research and reviews — a bounded pilot, not a feature *(designed 2026-09-10, deferred until a real workload)*
+
+**Prompted by:** an architecture review against "graph engineering" (fan out independent work, verify with fresh context, reconcile the fan-in, freeze the rules an optimizer would bend). Most of it the template already does sequentially. The one place parallelism plausibly pays is *research and review*, where angles genuinely need nothing from each other. Parallel *implementation* does not qualify: two stories on one codebase share files and the proof command — a hidden edge, exactly the article's own "false independence" failure.
+
+**What already exists, verified against the vendor docs (2026-09-10):** Claude Code runs subagents in parallel (default cap 20 concurrent, 3 nesting layers, enforced by the runtime) and offers dynamic workflows (16 concurrent agents, 1,000 per run, enforced; the size guideline and any "cap: N" in a prompt are *advisory*). Workflows take **no mid-run user input** — sign-off between stages means one workflow per stage, still true. Codex and Copilot have neither primitive, so anything built on them is Claude Code-only by construction.
+
+**The pilot, if a workload ever justifies it:** two or three `research-analyst` runs, one per independent angle, on a real parked question from a night's prep lane — one round, no retries beyond the runtime's own, no shared files written. Then a synthesis that reconciles *by claim*, never by URL. Measure against the sequential brief on the same question: elapsed time, cost from the tool's usage view, defects found in morning review, owner rework. Each figure carries the command or view that produced it, or is labelled an estimate.
+
+**What the article gets wrong, and the template must not copy:** majority voting across *correct / current / source real* is unsound — they are conjunctive requirements, not three opinions (a wrong claim with a fresh, real source wins 2–1); deduplicating by source URL discards distinct claims from one page; a failed lookup leaves a claim unverified, never refuted; and topology buys width, not judgment — a fleet does not remove a single point of failure, it moves it to the synthesizer. The first three are now rules in `research-analyst`, independent of any parallelism.
+
+**Decision:** *(deferred — a proposed pilot is not a measured improvement; run it only on a real question, and record the numbers here before anyone calls it faster or better)*
+
 ### `/verification-record` — a shareable audit trail *(parked 2026-09-03, one strong data point)*
 
 **The idea:** compose the raw material the brain already holds (decisions, changelog, validation logs, test output, rejected options) into a single shareable HTML record: what was decided, what was rejected and why, what the tests caught, what is *not* verified.
