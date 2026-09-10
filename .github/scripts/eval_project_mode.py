@@ -80,10 +80,23 @@ with tempfile.TemporaryDirectory() as tmp:
     if code == 0:
         failures.append("negative control passed — a skill without frontmatter must fail even in project mode")
 
+    # 4. Negative control for the handoff contract: a verifier that has lost its
+    #    NOT VERIFIABLE verdict must fail template mode (a check only ever seen
+    #    passing is an assumption wearing a green tick).
+    lost = Path(tmp) / "lost-contract"
+    shutil.copytree(ROOT, lost, symlinks=True, ignore=shutil.ignore_patterns(".git"))
+    verifier = lost / ".claude" / "agents" / "build-verifier.md"
+    verifier.write_text(verifier.read_text(encoding="utf-8").replace("NOT VERIFIABLE", "NOT CHECKED"),
+                        encoding="utf-8")
+    code, out = run_validator(lost)
+    if code == 0 or "NOT VERIFIABLE" not in out:
+        failures.append(f"negative control passed — a verifier without the NOT VERIFIABLE verdict must fail template mode:\n{out}")
+
 if failures:
     print(f"Project-mode eval FAILED ({len(failures)} problem(s)):\n")
     for f in failures:
         print(f"  ✗ {f}\n")
     sys.exit(1)
 
-print("Project-mode eval passed: template validates, a finished project validates, real breakage still fails.")
+print("Project-mode eval passed: template validates, a finished project validates, real breakage still fails, "
+      "a lost handoff contract still fails.")

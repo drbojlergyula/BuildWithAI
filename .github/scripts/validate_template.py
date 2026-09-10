@@ -147,6 +147,25 @@ if IS_TEMPLATE:
     if hr.is_file() and not re.search(r"<!--[^>]*house-rules: unset", hr.read_text(encoding="utf-8"), re.S):
         errors.append("docs/house_rules.md: missing the 'house-rules: unset' marker — example content must never be binding")
 
+    # The handoff contract between builder, verifier, and orchestrator must exist
+    # in the agent definitions: the builder reports a Story and a Status, the
+    # verifier has a NOT VERIFIABLE verdict and labels its context. This checks
+    # only that the contract is written, not that a run honours it — the runtime
+    # consumer is the orchestrating session, and no code sits at that boundary.
+    contract = {
+        ".claude/agents/builder.md": ("**Story:**", "**Status:**", "**Tests changed:**"),
+        ".claude/agents/build-verifier.md": ("NOT VERIFIABLE", "Verifier context:", "Anchors:"),
+    }
+    for rel, tokens in contract.items():
+        path = ROOT / rel
+        if not path.is_file():
+            errors.append(f"{rel}: missing from the template")
+            continue
+        text = path.read_text(encoding="utf-8")
+        for token in tokens:
+            if token not in text:
+                errors.append(f"{rel}: missing '{token}' — the handoff contract the orchestrator reconciles against")
+
     # The sentinel in the spec and the string the hook greps for must match.
     if hook.is_file() and SENTINEL not in hook.read_text(encoding="utf-8"):
         errors.append(".claude/hooks/session-start.sh: does not grep for the sentinel present in docs/project_spec.md")

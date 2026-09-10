@@ -7,7 +7,7 @@
      Per the documentation conventions: completed phases get ONE summary line —
      full detail lives in docs/changelog.md. -->
 
-**Last Updated:** September 3, 2026 (v3.2.1 — three runs on one version: marker regression fixed, negative-control rule, trusted-sources clarified)
+**Last Updated:** September 10, 2026 (v3.2.2 — graph-engineering review: night-shift governance contradiction closed, handoff contract, frozen anchors, independence disclosed; parallel pilot deferred)
 **Project Start:** April 2026
 
 ---
@@ -47,12 +47,12 @@ One line each — the full story is in `docs/changelog.md`.
 - ✅ Product consolidation: BuildWithClaude deprecated; beginner on-ramp absorbed as `docs/start_here_with_claude.md`
 
 **Next (manual steps for the owner):**
-- Merge the current branch, then tag `v3.2.1` (match the version in `.claude-plugin/plugin.json`)
+- Merge the current branch, then tag `v3.2.2` (match the version in `.claude-plugin/plugin.json`)
 - Archive the BuildWithClaude repository on GitHub (Settings → Archive) after merging its deprecation README
 - Mark this repo as a Template repository (Settings → Template repository)
 - Record a short demo GIF for the README (fresh clone → welcome → /start → team reveal)
 - Submit the plugin to `anthropics/claude-plugins-community` for marketplace discovery (see the prepared submission package)
-- **Get 5 real non-technical users through /start and a second session** — the next feature round should be driven by what they hit, not by new ideas
+- **Get 5 real non-technical users through /start and a second session** — the next feature round should be driven by what they hit, not by new ideas. *Honest note (2026-09-10): this line has stood since July while six releases were driven by autonomous runs from a technical operator, and the distribution steps above it are still unchecked. The priority holds — but only if the steps that produce those users actually happen before the next internal refinement round.*
 
 **Later candidates:**
 - Example filled-in project docs (to show what a real setup looks like)

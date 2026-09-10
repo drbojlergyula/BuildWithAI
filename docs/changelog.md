@@ -10,6 +10,36 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## v3.2.2 — 2026-09-10: Reconciled, not redesigned (the graph-engineering review)
+
+An architecture review against the "graph engineering" pattern — bounded tasks, parallel fan-out, fresh-context verifiers, fan-in accounting, frozen rules. Verdict: the template already runs most of it sequentially; what it lacked was consistency between its own promises. No orchestration engine was added. Four focused changes, one contradiction closed.
+
+### Fixed — night-shift contradicted its own rules
+Step 3.6 let a night draft new agents; the rules section and `engineering.md` forbade any change to agents and skills at night — and step 3.5 (tool installs) had the same problem, unnoticed. Introduced in v3.1.0, shipped through five releases. The governance class now distinguishes **existing** files (owner-only, never edited at night) from **additions** under two sanctioned exceptions, each proxy-ruled, capped at two, provisional, merge-ratified. The specialist capability stays — it was an intentional v2.7.0 design — but is now bounded: tools no wider than the builder's, no memory, never a verifier or judge, adds a file and edits nothing. Branch isolation makes the file reversible; the bound is what makes execution safe.
+
+### Added — a handoff contract at the dispatch boundary
+- **Builder report** gains *Story* (echoed from the packet, so the orchestrator reconciles identity rather than counting), *Status* — `COMPLETE` / `PARTIAL` / `BLOCKED` — *Not done*, and *Tests changed*
+- **Verifier report** gains `NOT VERIFIABLE` as a fourth verdict (the rules text already said "downgrade to not verifiable"; the verdict line did not offer it), a *Verifier context* label (`isolated` / `same-session role`), and an *Anchors* line
+- **Night loop** reconciles before verifying: wrong or duplicate reports are discarded, PARTIAL is re-dispatched once or parked, BLOCKED goes to the proxy, NOT VERIFIABLE lands in a new briefing section — *Built, awaiting your check* — never under *Built and verified*
+- **Validator** checks the contract tokens exist in both agent files (template mode), with a negative control in the eval. Honestly labelled: this proves the contract is written, not that a run honours it — no code sits at the boundary, and none was added (JSON task databases stay rejected, per 2026-07-02)
+
+### Added — anchors are frozen
+A builder may never weaken what it is judged by: tests, proof command, CI and lint config, acceptance criteria. Declared test maintenance is legitimate; an undeclared anchor change is a FAIL on its own, regardless of tier. The verifier diffs the anchors against the builder's declaration. CI running an agent-edited check proves nothing about the check.
+
+### Changed — independence is disclosed, not assumed
+Adopting `build-verifier` in the session that built the code (Codex, Copilot) is role discipline, not fresh-context verification. `AGENTS.md`, the Copilot adapter, and the verifier itself now say so, and the report label makes the go-live evidence rule computable. The Copilot adapter's roster also gained the two agents it had been missing (`builder`, `owner-proxy`).
+
+### Changed — research rules
+Three separate requirements per finding (correct, current, source resolves — conjunctive, no voting); a failed lookup is unverified, never refuted; deduplicate by claim, never by URL.
+
+### Deferred — parallel research pilot
+Designed and bounded in `docs/brainstorm.md` with a measurement protocol; not built. Verified against the vendor docs on 2026-09-10: subagent and workflow caps are runtime-enforced, size guidelines are advisory, and workflows still take no mid-run user input (sign-off between stages = one workflow per stage). Redesigning nights around a workflow engine was rejected: stories on one codebase share files (a real edge), and Codex/Copilot cannot run it.
+
+### Changed
+- **Plugin** bumped to 3.2.2
+
+---
+
 ## v3.2.1 — 2026-09-03: Three runs on one version
 
 Three independent autonomous builds on v3.2.0, each with a running build log and a structured field report. The largest evidence set yet — and it caught a regression shipped hours earlier.
