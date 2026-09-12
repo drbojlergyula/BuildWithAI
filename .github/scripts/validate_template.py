@@ -106,6 +106,34 @@ for path in ROOT.rglob("*"):
     else:
         seen[key] = path.relative_to(ROOT)
 
+# --- Portability gate (both modes): tests, CI, and scripts must not pin a
+# machine-specific absolute path. Measured in the field: a project's browser
+# suites imported Playwright from /opt/node22/lib/node_modules/..., so every
+# green UI assertion was tied to one sandbox and the offered CI file could not
+# run them. A check that only passes on the machine that wrote it has never
+# passed anywhere. Comment lines are skipped; /tmp and /usr are deliberately
+# not flagged (portable across Unix, and used by shebangs and hooks).
+PORTABILITY_RE = re.compile(r"""['"](?:/opt/|/home/|/Users/|/root/|/mnt/|/private/|[A-Za-z]:\\)""")
+CODE_SUFFIXES = {".js", ".mjs", ".cjs", ".ts", ".mts", ".tsx", ".py", ".sh", ".yml", ".yaml", ".toml", ".json"}
+SKIP_DIRS = {".git", "node_modules", "__pycache__", ".wrangler", "dist", "build", ".venv", "venv", "coverage"}
+COMMENT_RE = re.compile(r"^\s*(#|//|\*|<!--)")
+for path in ROOT.rglob("*"):
+    if not path.is_file() or path.suffix not in CODE_SUFFIXES:
+        continue
+    if any(part in SKIP_DIRS for part in path.parts):
+        continue
+    try:
+        lines = path.read_text(encoding="utf-8", errors="ignore").splitlines()
+    except OSError:
+        continue
+    for lineno, line in enumerate(lines, 1):
+        if COMMENT_RE.match(line):
+            continue
+        if PORTABILITY_RE.search(line):
+            errors.append(f"{path.relative_to(ROOT)}:{lineno}: machine-specific absolute path in a code file — "
+                          "portability gate: resolve the tool through package resolution or an environment "
+                          "variable with a documented fallback")
+
 # --- Mode: is this the template itself, or a project built from it?
 # The sentinel is the marker (same convention as the hook and /template-update).
 SENTINEL = "template-state: untouched-example"
@@ -154,7 +182,17 @@ if IS_TEMPLATE:
     # consumer is the orchestrating session, and no code sits at that boundary.
     contract = {
         ".claude/agents/builder.md": ("**Story:**", "**Status:**", "**Tests changed:**"),
-        ".claude/agents/build-verifier.md": ("NOT VERIFIABLE", "Verifier context:", "Anchors:"),
+        ".claude/agents/build-verifier.md": ("NOT VERIFIABLE", "Verifier context:", "Anchors:", "Oracle:"),
+        # v3.2.3 — lines a field run showed to be load-bearing: a proxy that
+        # passed unverified gates, a briefing that issued a readiness verdict on
+        # agent-local evidence, a report that recommended a permission bypass,
+        # and three agents that agreed with a spec nobody had checked against
+        # its source.
+        ".claude/agents/owner-proxy.md": ("An unverified gate is not a passed gate",),
+        ".claude/skills/night-shift/SKILL.md": ("A night issues no readiness verdict", "Denials bind subagents",
+                                                "**Built on unverified gates:**", "**Evidence:**"),
+        ".claude/rules/engineering.md": ("Conformance is not correctness", "portability scan",
+                                         "Dangerous error classes get zero, not a rate"),
     }
     for rel, tokens in contract.items():
         path = ROOT / rel

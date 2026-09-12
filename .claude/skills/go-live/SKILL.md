@@ -17,6 +17,7 @@ Runs the checks a careful engineer would run before putting a product in front o
    - Do the MVP user stories in the spec have working implementations?
    - Does every user-facing flow have an error path (failed submit, empty state, bad input)?
    - Is there a sensible first-time experience (what a brand-new user sees)?
+   - Does every user-facing statement of an outside authority's rule, rate, cap, or formula trace to a quoted source in `docs/reference/`, in every language the product ships? A paraphrase that no source says is a blocker — the product is making a legal or financial claim on the owner's behalf.
 
    **Security & secrets**
    - Scan the repo for committed secrets: API keys, passwords, tokens, `.env` files. Check `.gitignore` covers env and data files.
@@ -46,6 +47,10 @@ Runs the checks a careful engineer would run before putting a product in front o
    Verdict: FIT / NOT YET FIT for [the intended use, per the profile] (one-line reason)
    Evidence: [N] gates passed — [how many ran in CI vs. agent-local; load-bearing claims
              count only CI or owner-witnessed evidence]
+   Oracle:   [per load-bearing story: independent (quoted source) or spec-only — a
+             spec-only story has been shown to conform to the spec, not to be correct;
+             every external-rule claim in the product needs an independent oracle
+             before FIT]
 
    Blockers (must fix before launch)
    - ...

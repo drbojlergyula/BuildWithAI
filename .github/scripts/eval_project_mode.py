@@ -13,8 +13,12 @@ validator is happy:
   * the project added its own skill and its own agent
   * CLAUDE.md is deleted (a Codex-only project keeps AGENTS.md as canonical)
 
-Plus a negative control, so "passing" cannot mean "checks are switched off":
-a genuinely broken skill must still fail, in both modes.
+Plus negative controls, so "passing" cannot mean "checks are switched off":
+a genuinely broken skill must still fail, in both modes; a lost handoff-contract
+line must fail; a test that imports a tool from a machine-specific absolute
+path must fail the portability gate in project mode (measured in the field:
+/opt/node22/... pinned an entire browser suite to one sandbox); and a proxy that
+has lost the "unverified gate is not a passed gate" rule must fail template mode.
 """
 import shutil
 import subprocess
@@ -24,6 +28,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 SENTINEL = "template-state: untouched-example"
+# The sandbox-pinned import a field run shipped. Assembled from pieces so this
+# file carries the pattern without itself tripping the portability gate.
+PINNED_IMPORT = "/" + "opt/node22/lib/node_modules/playwright/index.mjs"
 
 
 def run_validator(repo: Path):
@@ -48,6 +55,17 @@ def make_project(repo: Path):
                                         encoding="utf-8")
 
     (repo / "CLAUDE.md").unlink(missing_ok=True)
+
+    # A portable browser test: the tool is resolved by package name, and the
+    # only absolute path is in a comment — neither may trip the portability gate.
+    ui_test = repo / "app" / "test" / "ui" / "run.mjs"
+    ui_test.parent.mkdir(parents=True, exist_ok=True)
+    ui_test.write_text(
+        "// Falls back to the sandbox path '" + PINNED_IMPORT + "' only via env.\n"
+        "const mod = process.env.PLAYWRIGHT_IMPORT || 'playwright';\n"
+        "const pw = await import(mod);\n"
+        "console.log(typeof pw.chromium);\n",
+        encoding="utf-8")
 
 
 failures = []
@@ -92,6 +110,35 @@ with tempfile.TemporaryDirectory() as tmp:
     if code == 0 or "NOT VERIFIABLE" not in out:
         failures.append(f"negative control passed — a verifier without the NOT VERIFIABLE verdict must fail template mode:\n{out}")
 
+    # 5. Negative control for the portability gate: the exact line a field run
+    #    shipped — a test importing Playwright from a sandbox-specific path —
+    #    must fail in project mode, and the message must name the gate.
+    pinned = Path(tmp) / "pinned-path"
+    shutil.copytree(ROOT, pinned, symlinks=True, ignore=shutil.ignore_patterns(".git"))
+    make_project(pinned)
+    (pinned / "app" / "test" / "ui" / "run.mjs").write_text(
+        "import * as pw from '" + PINNED_IMPORT + "';\n"
+        "console.log(typeof pw.chromium);\n",
+        encoding="utf-8")
+    code, out = run_validator(pinned)
+    if code == 0 or "portability gate" not in out or "app/test/ui/run.mjs:1" not in out:
+        failures.append(f"negative control passed — a test pinned to /opt/... must fail the portability gate "
+                        f"in project mode and name the file and line:\n{out}")
+
+    # 6. Negative control for the proxy's gate rule: a deputy that has lost
+    #    "an unverified gate is not a passed gate" must fail template mode —
+    #    the rule exists because a run's proxy ruled DECISION on two gates
+    #    nobody had passed.
+    lenient = Path(tmp) / "lenient-proxy"
+    shutil.copytree(ROOT, lenient, symlinks=True, ignore=shutil.ignore_patterns(".git"))
+    proxy = lenient / ".claude" / "agents" / "owner-proxy.md"
+    proxy.write_text(proxy.read_text(encoding="utf-8").replace("An unverified gate is not a passed gate",
+                                                               "A flagged gate may pass"),
+                     encoding="utf-8")
+    code, out = run_validator(lenient)
+    if code == 0 or "unverified gate" not in out:
+        failures.append(f"negative control passed — a proxy without the unverified-gate rule must fail template mode:\n{out}")
+
 if failures:
     print(f"Project-mode eval FAILED ({len(failures)} problem(s)):\n")
     for f in failures:
@@ -99,4 +146,5 @@ if failures:
     sys.exit(1)
 
 print("Project-mode eval passed: template validates, a finished project validates, real breakage still fails, "
-      "a lost handoff contract still fails.")
+      "a lost handoff contract still fails, a machine-pinned test fails the portability gate, "
+      "a lenient proxy fails.")

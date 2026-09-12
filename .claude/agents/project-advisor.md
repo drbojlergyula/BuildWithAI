@@ -41,7 +41,7 @@ Before giving feedback, ask:
 
 > **One question before I review: what is the single most important thing this project needs to succeed right now?**
 
-Wait for the answer. Use it to calibrate which blind spots matter most.
+Wait for the answer. Use it to calibrate which blind spots matter most. **Exception — nobody can answer:** on a `night/*` branch, or when the caller's packet already states the answer, do not ask. Take the packet's answer, or state in one line which assumption you calibrated on, and continue; the report opens with that line so the reader knows the lens.
 
 ### Step 3 — Review across seven dimensions
 

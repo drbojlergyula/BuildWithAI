@@ -10,6 +10,43 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## v3.2.3 — 2026-09-12: What the first full autonomous night on v3.2.2 proved
+
+A complete `/night-shift` run on v3.2.2 — brief-driven `/start`, seven research packets, an advisor challenge, six proxy rulings, four builders, three isolated verifier passes, a self-contained HTML report with a JSONL journal — delivered a working bilingual product with 241 green assertions across six suites (per the last verifier reports) and a verdict of "READY FOR CONTROLLED DEPLOYMENT". The product states a legal rule wrong in both languages, says 40 % is "twice" 10 %, treats two vial sizes as equivalent packs, and was selected on two gates nobody passed. Every engineering check passed. That is the finding: the checks measured agreement between agents, not agreement with the world. The toolkit in that run was byte-identical to v3.2.2, so every fix below is against the current template.
+
+### Fixed — conformance was being reported as correctness
+The verifier re-derived every number "by hand" from the spec's own formula; the builder had implemented that formula; the research had paraphrased the authority ("only 25 of 40 points count toward the cap" became "the other 15 are uncapped" — the authority caps them separately at CHF 420). Three fresh contexts, one oracle. The verifier report now carries an **`Oracle:` line** — *independent* (the quoted source each expected value was checked against) or *spec-only* (proves conformance to the spec, not that the spec is right). **External-rule claims** — anything the product states or computes about an outside authority's rule, rate, cap, or formula — are a LOAD-BEARING class: expected values and copy trace to a **quoted source sentence** in `docs/reference/`, inferences are labelled as inferences, and a spec-only story is reported as *conforms to the spec*, never *correct*. Deterministic floor: currency, percentage, or legal citation in added user-facing text; the rule says plainly that prose claims escape the floor. `research-analyst` quotes first and infers on a separate line; `builder` copies the rule and never strengthens it; `go-live` blocks on a user-facing rule claim with no quote behind it.
+
+### Fixed — a proxy passed gates that nobody had verified
+The spec required data "reusable under stated terms" and "no existing tool solves the same task"; the run found no terms and could not open the competitor; the scorecard said "all gates pass; reuse terms flagged"; the proxy ruled DECISION. The instructions were ambiguous — the verifier had "an unavailable check is not a pass", the proxy had no equivalent — and the proxy still exceeded them: "flagged" is not a state a gate has. New proxy rule: **an unverified gate is not a passed gate**; DECISION may never rest on one; BRANCH with the gate named as the card's risk, or PARK. The briefing gains **Built on unverified gates** and **Evidence** (CI / agent-local / claimed counts from the last verifier report, with its timestamp).
+
+### Fixed — a rate gate hid a dangerous error class
+The grouping cross-check passed at "0.39 % merges, gate < 1 %" while its own docstring called a merge "dangerous"; eight dangerous merges shipped as residue; low-confidence matches still became the highlighted recommendation; `Durchstf 10 ml` and `Durchstf 20 ml` both parsed to one container and so to equivalent packs. **Dangerous error classes get zero-with-allowlist, never a rate**, and **a flag is not a safeguard** — an uncertain output is withheld or degraded, not footnoted. Both are engineering rules and verifier gate lines. Rejected: tightening the threshold; a percentage of dangerous errors is still dangerous errors nobody named.
+
+### Added — a portability gate that runs as code, in every project
+Both browser suites imported Playwright from `/opt/node22/lib/node_modules/…`; 71 green UI assertions were tied to one sandbox, and the offered CI file could not run them. `validate_template.py` now fails any code file (tests, CI, scripts, config) that pins a machine-specific absolute path (`/opt/`, `/home/`, `/Users/`, `/root/`, `/mnt/`, `C:\`) — both modes, comment lines skipped, negative-tested in the eval with the exact line the run shipped. The secret-scan gate now covers untracked files (`git ls-files --others --exclude-standard`), which the run's builder had to notice for itself.
+
+### Fixed — nights were issuing verdicts they cannot earn, and proposing bypasses
+"READY FOR CONTROLLED DEPLOYMENT — all LOAD-BEARING gates green" on evidence that was entirely agent-local, with stale totals (UI 67 after the last verifier reported 71; ≈ 1.4 M tokens where the listed figures sum to 1.51 M) and a timeline mixing CEST and UTC on the same events. The report also recorded that a `curl -X POST` the deny baseline blocked for the orchestrator was "verified by the verifier subagent instead" and proposed documenting that route. New night-shift rules: **a night issues no readiness verdict** (vocabulary: built and verified / awaiting your check / not verifiable / conforms to the spec — readiness is `/go-live`'s call, awake); **denials bind subagents** — a blocked check lands under *awaiting your check*, the owner narrows the deny at the next preflight; preflight step 4 says so while the owner is still in the room. The night that creates the first proof command drafts the test-only CI workflow as a BRANCH instead of leaving it in `docs/` — otherwise every line of a night's evidence stays `agent-local`. Reporting rule: totals are recomputed from the last report they summarise and carry its timestamp.
+
+### Fixed — three small things the run measured
+`research-analyst` and `project-advisor` no longer end with a question on a `night/*` branch (seven briefs and one advisor report had to be pre-answered by the orchestrator); `builder` owns only the ports and temp paths its packet names (two builders and a verifier collided on `wrangler` ports and persist dirs); `save-point` adds a `.gitignore` line for a generated directory before staging it (a checkpoint swept `node_modules` into history and the remote rejected the push).
+
+### Rejected from the run's own proposals and the external critique
+- Narrowing the `curl -X POST` deny to non-localhost targets: the permission syntax matches command prefixes, not hosts, and deny beats allow — it cannot be expressed. The honest path is the owner editing the local deny at preflight.
+- A domain-expert agent, a second verification round, or a copy-review checklist: the failure was a shared oracle, not a missing reader. A fourth agent reading the same spec agrees a fourth time.
+- "Annual calculations omit deductible and cap transitions" as a template defect: it is an application simplification the spec declared (AC6), correctly labelled as two regimes — an app limitation, not a template failure; the cap sentence beside it is the defect, and that is covered above.
+- "Selection gates were weakened" as an instruction-ambiguity-only finding: partly — the proxy also exceeded what the instructions allowed.
+
+### Preserved on purpose
+Real-data checks with a negative control, isolated verifier contexts, the budget ledger, deterministic money arithmetic, last-known-good recovery, and the HTML/JSONL audit trail all worked and are untouched. The cross-check's *both-directions control* is exactly what the template asked for; the defect was the shape of its threshold, not its existence.
+
+### Changed
+- **Validator** gains the portability gate (both modes) and template-mode presence checks for the new contract lines (`Oracle:`, the proxy's gate rule, the night's no-verdict and no-bypass rules, the engineering rules); the eval gains two negative controls
+- **Plugin** bumped to 3.2.3
+
+---
+
 ## v3.2.2 — 2026-09-10: Reconciled, not redesigned (the graph-engineering review)
 
 An architecture review against the "graph engineering" pattern — bounded tasks, parallel fan-out, fresh-context verifiers, fan-in accounting, frozen rules. Verdict: the template already runs most of it sequentially; what it lacked was consistency between its own promises. No orchestration engine was added. Four focused changes, one contradiction closed.

@@ -7,7 +7,7 @@
      Per the documentation conventions: completed phases get ONE summary line —
      full detail lives in docs/changelog.md. -->
 
-**Last Updated:** September 10, 2026 (v3.2.2 — graph-engineering review: night-shift governance contradiction closed, handoff contract, frozen anchors, independence disclosed; parallel pilot deferred)
+**Last Updated:** September 12, 2026 (v3.2.3 — first full autonomous night on v3.2.2 reviewed as evidence: conformance vs. correctness, unverified gates, zero-not-rate for dangerous errors, portability gate as code, no readiness verdicts at night, denials bind subagents)
 **Project Start:** April 2026
 
 ---
@@ -47,7 +47,7 @@ One line each — the full story is in `docs/changelog.md`.
 - ✅ Product consolidation: BuildWithClaude deprecated; beginner on-ramp absorbed as `docs/start_here_with_claude.md`
 
 **Next (manual steps for the owner):**
-- Merge the current branch, then tag `v3.2.2` (match the version in `.claude-plugin/plugin.json`)
+- Merge the current branch, then tag `v3.2.3` (match the version in `.claude-plugin/plugin.json`)
 - Archive the BuildWithClaude repository on GitHub (Settings → Archive) after merging its deprecation README
 - Mark this repo as a Template repository (Settings → Template repository)
 - Record a short demo GIF for the README (fresh clone → welcome → /start → team reveal)
