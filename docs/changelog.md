@@ -41,11 +41,14 @@ Both browser suites imported Playwright from `/opt/node22/lib/node_modules/…`;
 ### Preserved on purpose
 Real-data checks with a negative control, isolated verifier contexts, the budget ledger, deterministic money arithmetic, last-known-good recovery, and the HTML/JSONL audit trail all worked and are untouched. The cross-check's *both-directions control* is exactly what the template asked for; the defect was the shape of its threshold, not its existence.
 
+### Added — behavioural evals: the rules are now measurable, not only present
+`evals/` holds three cases for `claude plugin eval` (Claude Code ≥ 2.1.269), one per failure pattern the night produced: a brief-driven `/start` must clear the sentinel and the house-rules marker and write an Engineering Profile; the `build-verifier` must check a legal claim against the quoted source in `docs/reference/` (the fixture's spec, code and tests all agree with each other and all contradict the source, exactly like the real run) and carry the `Oracle:` line; the `owner-proxy` must refuse DECISION on a selection gate the record could not verify. All graders are deterministic — regex over a produced file or the final message, or a tool-used check — so a run costs only the agent's tokens and no judge model wobbles the score. Scaffolds copy the *current* `AGENTS.md`, `CLAUDE.md` and `.claude/rules/` into the workspace, so the suite always tests the rules as they stand. Runs on the owner's machine before a release, not in CI (decided: local, manual, cost-capped); the runbook and the cost line to fill in after the first run are in `evals/README.md`. Honest limit: this suite was written in a sandbox that cannot authenticate, so it has been dry-loaded and its scaffolds and fixture tests executed, but it has not yet produced a score. The validator checks every case is well-formed.
+
 ### Added — a context budget, as code
 Eight releases in ten days each added always-loaded rules and none removed any. The validator now fails template mode when `AGENTS.md`, `CLAUDE.md`, and `.claude/rules/*.md` together exceed 36,000 bytes (negative-tested): from here on, a new always-loaded sentence costs an old one or a deliberate raise. The night-shift briefing headings were rewritten in plain words — the reader having coffee sees "who checked it and against what", not "verifier context" and "oracle".
 
 ### Changed
-- **Validator** gains the portability gate (scoped to test, CI, script and tool paths), the context budget, and template-mode presence checks for the new contract lines (`Oracle:`, the proxy's gate rule, the night's no-verdict and no-bypass rules, the engineering rules); the eval gains two negative controls
+- **Validator** gains the portability gate (scoped to test, CI, script and tool paths), the context budget, the eval-suite shape check, and template-mode presence checks for the new contract lines (`Oracle:`, the proxy's gate rule, the night's no-verdict and no-bypass rules, the engineering rules); the eval gains two negative controls
 - **Plugin** bumped to 3.2.3
 
 ---

@@ -221,6 +221,34 @@ if IS_TEMPLATE:
         errors.append(f"context budget: always-loaded files total {loaded_bytes:,} bytes, ceiling {CONTEXT_BUDGET_BYTES:,} "
                       "— trim a rule or raise the ceiling on purpose (AGENTS.md + CLAUDE.md + .claude/rules/*.md)")
 
+    # Behavioural eval suite (evals/): every case has a prompt (prompt.md or
+    # case.yaml) and at least one grader; a scaffold named in case.yaml exists
+    # and is executable. This proves the suite is well-formed, not that it
+    # passes — running it costs model calls and happens on the owner's machine.
+    evals_dir = ROOT / "evals"
+    if evals_dir.is_dir():
+        cases = [d for d in sorted(evals_dir.iterdir()) if d.is_dir() and d.name != "results"]
+        if not cases:
+            errors.append("evals/: no cases found — the behavioural suite must keep its three cases")
+        for case in cases:
+            if not (case / "prompt.md").is_file() and not (case / "case.yaml").is_file():
+                errors.append(f"{case.relative_to(ROOT)}: eval case needs prompt.md or case.yaml")
+            graders = list((case / "graders").glob("*.md")) if (case / "graders").is_dir() else []
+            if not graders:
+                errors.append(f"{case.relative_to(ROOT)}: eval case needs at least one grader in graders/")
+            for g in graders:
+                if not frontmatter(g).get("type"):
+                    errors.append(f"{g.relative_to(ROOT)}: grader needs a 'type' in frontmatter")
+            case_yaml = case / "case.yaml"
+            if case_yaml.is_file():
+                m = re.search(r"scaffold_script:\s*(\S+)", case_yaml.read_text(encoding="utf-8"))
+                if m:
+                    script = case / m.group(1)
+                    if not script.is_file():
+                        errors.append(f"{case_yaml.relative_to(ROOT)}: scaffold_script '{m.group(1)}' does not exist")
+                    elif not script.stat().st_mode & 0o111:
+                        errors.append(f"{script.relative_to(ROOT)}: scaffold script is not executable (chmod +x)")
+
     # The sentinel in the spec and the string the hook greps for must match.
     if hook.is_file() and SENTINEL not in hook.read_text(encoding="utf-8"):
         errors.append(".claude/hooks/session-start.sh: does not grep for the sentinel present in docs/project_spec.md")

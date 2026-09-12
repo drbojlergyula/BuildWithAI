@@ -208,7 +208,7 @@ BuildWithAI/
 
 Repos grow. When yours starts hosting more than one project, **`/add-project`** converts it into a **portfolio**: every project self-contained in `projects/<name>/` with its own full brain (spec, status, decisions, scorecard), and one shared root layer — your `standards.md` (the taste that travels with you) and a `portfolio_status.md` index. Sessions load the root plus the *active* project only, so context cost never grows with project count. Night shifts stay project-scoped; multi-project nights are an earned rung, like everything else. The conversion is opt-in, owner-present, and honest about the one hard part: moving code can break builds, so the build is proven green before the conversion counts as done.
 
-The plugin is versioned (currently `3.2.3`); when you update this repo and bump the version, everyone who installed it gets the update via `/plugin update`.
+The plugin is versioned (currently `3.2.3`); when you update this repo and bump the version, everyone who installed it gets the update via `/plugin update`. Before a release, run the behavioural evals in `evals/` (`claude plugin eval`, see `evals/README.md`) — they check that the rules change what Claude actually does, on a fixture project, with deterministic graders.
 
 ### Keeping projects up to date
 

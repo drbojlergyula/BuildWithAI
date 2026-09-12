@@ -48,6 +48,8 @@ One line each — the full story is in `docs/changelog.md`.
 
 **Next (manual steps for the owner):**
 - Merge the current branch, then tag `v3.2.3` (match the version in `.claude-plugin/plugin.json`)
+- **Run the behavioural evals once on a logged-in machine** (`evals/README.md`) and record the measured cost per case there — the suite is dry-loaded but has never produced a score
+- **Five real users before the next rule** — the always-loaded files are now capped by the validator; the next release is driven by what real users hit, not by another autonomous run
 - Archive the BuildWithClaude repository on GitHub (Settings → Archive) after merging its deprecation README
 - Mark this repo as a Template repository (Settings → Template repository)
 - Record a short demo GIF for the README (fresh clone → welcome → /start → team reveal)
