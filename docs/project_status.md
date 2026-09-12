@@ -48,7 +48,7 @@ One line each — the full story is in `docs/changelog.md`.
 
 **Next (manual steps for the owner):**
 - Merge the current branch, then tag `v3.2.3` (match the version in `.claude-plugin/plugin.json`)
-- **Run the behavioural evals once on a logged-in machine** (`evals/README.md`) and record the measured cost per case there — the suite is dry-loaded but has never produced a score
+- **Run the behavioural evals at the default three runs on a machine with a Bash sandbox** (`evals/README.md`) — first single runs scored 1.0 on all three cases (USD 0.14 / 0.29 / 1.19); three runs confirm stability and let the verifier actually execute the proof command
 - **Five real users before the next rule** — the always-loaded files are now capped by the validator; the next release is driven by what real users hit, not by another autonomous run
 - Archive the BuildWithClaude repository on GitHub (Settings → Archive) after merging its deprecation README
 - Mark this repo as a Template repository (Settings → Template repository)

@@ -26,7 +26,15 @@ claude plugin eval . --scaffold --allow-tools Bash Write Edit \
 
 Results land in `evals/results/<timestamp>/` (gitignored): `report.html` and `aggregate-result.json`. A case passes when its score meets `--threshold` (default 1.0). A single run is noisy; trust three.
 
-**Cost:** not yet measured — this suite was written in a sandbox that cannot authenticate. Record the first measured `COST` column here after your first run, per case, and the model used. Cases pin `sonnet` so figures stay comparable and the rules are tested on the weaker tier the routine agents actually run on.
+**Cost, measured** (2026-09-12, Claude Code 2.1.269, `--runs 1 --ablation none`, cases pinned to `sonnet` so the rules are tested on the weaker tier the routine agents actually run on):
+
+| Case | Score | List-price cost | Wall clock | Note |
+|---|---|---|---|---|
+| `proxy-unverified-gate` | 1.0 | USD 0.14 – 0.18 | 47 – 87 s | ruled PARK on both runs; the first run scored 0.71 only because the verdict grader expected a line starting with `PARK:` — fixed, verified offline against the captured ruling |
+| `verifier-oracle` | 1.0 | USD 0.29 | 151 s | verdict FAIL, `Oracle:` labelled per criterion (cap note independent, formula spec-only), CHF 420 cited; ran without Bash, so the proof command was listed under *Not verifiable*, correctly |
+| `start-brief` | 1.0 | USD 1.19 | 438 s | one earlier attempt was cut at 10 min by the operator's shell, not by the eval (USD 1.01, docs already complete) |
+
+Three runs each therefore cost roughly USD 5 and take about 12 minutes sequentially — the `--max-cost-usd 15` above is a ceiling, not an estimate. Measured in a sandbox without a Bash sandbox backend: the runs above granted `Write Edit` only. On a machine with the backend, grant `Bash` too so `/start` can commit its save point and the verifier can run the proof command.
 
 ## How to read a failure
 
