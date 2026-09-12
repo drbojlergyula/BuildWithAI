@@ -146,6 +146,16 @@ with tempfile.TemporaryDirectory() as tmp:
     if code == 0 or "unverified gate" not in out:
         failures.append(f"negative control passed — a proxy without the unverified-gate rule must fail template mode:\n{out}")
 
+    # 7. Negative control for the context budget: a rules file padded past the
+    #    ceiling must fail template mode.
+    bloated = Path(tmp) / "bloated-rules"
+    shutil.copytree(ROOT, bloated, symlinks=True, ignore=shutil.ignore_patterns(".git"))
+    with (bloated / ".claude" / "rules" / "engineering.md").open("a", encoding="utf-8") as fh:
+        fh.write("\n" + ("One more rule nobody will read. " * 200) + "\n")
+    code, out = run_validator(bloated)
+    if code == 0 or "context budget" not in out:
+        failures.append(f"negative control passed — always-loaded files past the ceiling must fail template mode:\n{out}")
+
 if failures:
     print(f"Project-mode eval FAILED ({len(failures)} problem(s)):\n")
     for f in failures:
@@ -154,4 +164,4 @@ if failures:
 
 print("Project-mode eval passed: template validates, a finished project validates, real breakage still fails, "
       "a lost handoff contract still fails, a machine-pinned test fails the portability gate, "
-      "a lenient proxy fails.")
+      "a lenient proxy fails, a bloated rule set fails the context budget.")

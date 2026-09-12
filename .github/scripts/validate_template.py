@@ -196,7 +196,7 @@ if IS_TEMPLATE:
         # its source.
         ".claude/agents/owner-proxy.md": ("An unverified gate is not a passed gate",),
         ".claude/skills/night-shift/SKILL.md": ("A night issues no readiness verdict", "Denials bind subagents",
-                                                "**Built on unverified gates:**", "**Evidence:**"),
+                                                "**Built on things I could not check:**", "**Evidence:**"),
         ".claude/rules/engineering.md": ("Conformance is not correctness", "portability scan",
                                          "Dangerous error classes get zero, not a rate"),
     }
@@ -209,6 +209,17 @@ if IS_TEMPLATE:
         for token in tokens:
             if token not in text:
                 errors.append(f"{rel}: missing '{token}' — the handoff contract the orchestrator reconciles against")
+
+    # Context budget: the files every session loads (AGENTS.md, CLAUDE.md, the
+    # rules) may not grow past the ceiling. Eight releases in ten days each
+    # added rules and none removed any; from here on, a new always-loaded
+    # sentence costs an old one, or a deliberate raise of this number.
+    CONTEXT_BUDGET_BYTES = 36_000
+    always_loaded = [ROOT / "AGENTS.md", ROOT / "CLAUDE.md", *sorted((ROOT / ".claude" / "rules").glob("*.md"))]
+    loaded_bytes = sum(p.stat().st_size for p in always_loaded if p.is_file())
+    if loaded_bytes > CONTEXT_BUDGET_BYTES:
+        errors.append(f"context budget: always-loaded files total {loaded_bytes:,} bytes, ceiling {CONTEXT_BUDGET_BYTES:,} "
+                      "— trim a rule or raise the ceiling on purpose (AGENTS.md + CLAUDE.md + .claude/rules/*.md)")
 
     # The sentinel in the spec and the string the hook greps for must match.
     if hook.is_file() and SENTINEL not in hook.read_text(encoding="utf-8"):

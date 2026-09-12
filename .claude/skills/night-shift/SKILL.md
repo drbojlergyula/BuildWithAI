@@ -69,12 +69,12 @@ In an absence window, each night-cycle ends with an **interim briefing** (same f
 
 > **Night shift report — [date(s)]**
 >
-> **Built and verified** (on `night/<date>`): [story — one line each, verifier verdict, context (isolated / same-session role), and oracle (independent / spec-only — "conforms to the spec" is the honest phrase for spec-only)]
-> **Built, awaiting your check:** [stories the verifier could not exercise here — what to click or run to confirm each; none of these counts as verified]
-> **Evidence:** [checks run — CI: n · agent-local: n · claimed: n — figures taken from the last verifier report, with its timestamp]
-> **Built on unverified gates:** [any gate the plan conditioned a decision on that the record could not verify, what was built on top of it, and what to delete if the gate fails — or "none"]
-> **Decided / Assumed on your behalf:** [each with grounds/basis — tagged in `docs/decisions.md`; disagreeing with an assumption is a small, local redo]
-> **Implemented awaiting your merge** — one decision card per BRANCH, in plain words:
+> **Built and verified** (on `night/<date>`): [story — one line each; who checked it (a separate checker in a fresh context, or the same session that built it) and against what (the official source, or only our own spec — then say "matches our spec", never "correct")]
+> **Built, awaiting your check:** [stories nobody could exercise here — what to click or run to confirm each; none of these counts as verified]
+> **Evidence:** [how many checks ran, and how many ran somewhere I could not influence (CI) versus on my own machine — taken from the last checker's report, with its time]
+> **Built on things I could not check:** [any condition the plan required that the record could not confirm (a licence, a competitor's feature), what was built on top of it, and what to delete if it turns out false — or "none"]
+> **Decided / Assumed on your behalf:** [each with the reason — recorded in `docs/decisions.md`; disagreeing with an assumption is a small, local redo]
+> **Implemented, waiting for your yes** — one card per provisional branch, in plain words:
 > - *What I decided and built:* [one sentence] · *Why:* [the reasoning, cited] · *Pros:* [2–3] · *Cons:* [1–2, honestly] · *Risk if you approve:* [what could go wrong later] · *If you say no:* [delete the branch — what is lost, and that nothing else is touched] · *Your call:* merge / delete.
 > **New specialists drafted:** [agent, tier, why — they exist only on the night branch until you merge]
 > **Tools installed:** [each install — what, from which trusted source, smoke-test result, what it verified tonight; merge = the dependency stays]
