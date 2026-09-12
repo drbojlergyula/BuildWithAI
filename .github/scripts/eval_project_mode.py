@@ -56,6 +56,13 @@ def make_project(repo: Path):
 
     (repo / "CLAUDE.md").unlink(missing_ok=True)
 
+    # Deployment config legitimately carries host paths; the portability gate
+    # must leave it alone (a first version failed every project with a compose
+    # volume mount — caught by a probe, not by a run).
+    (repo / "docker-compose.yml").write_text(
+        'services:\n  db:\n    volumes:\n      - "' + "/" + 'mnt/data/pg:/var/lib/postgresql/data"\n',
+        encoding="utf-8")
+
     # A portable browser test: the tool is resolved by package name, and the
     # only absolute path is in a comment — neither may trip the portability gate.
     ui_test = repo / "app" / "test" / "ui" / "run.mjs"

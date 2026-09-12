@@ -113,14 +113,20 @@ for path in ROOT.rglob("*"):
 # run them. A check that only passes on the machine that wrote it has never
 # passed anywhere. Comment lines are skipped; /tmp and /usr are deliberately
 # not flagged (portable across Unix, and used by shebangs and hooks).
+# Scope: only test, CI, script, and tool locations — the places where an
+# absolute path means "runs on one machine". Deployment config legitimately
+# carries host paths (a compose volume "/mnt/data:/data"), so it is out of scope.
 PORTABILITY_RE = re.compile(r"""['"](?:/opt/|/home/|/Users/|/root/|/mnt/|/private/|[A-Za-z]:\\)""")
 CODE_SUFFIXES = {".js", ".mjs", ".cjs", ".ts", ".mts", ".tsx", ".py", ".sh", ".yml", ".yaml", ".toml", ".json"}
 SKIP_DIRS = {".git", "node_modules", "__pycache__", ".wrangler", "dist", "build", ".venv", "venv", "coverage"}
+SCAN_DIRS = {"test", "tests", "__tests__", "spec", "specs", "e2e", "scripts", "tools", "ci", "workflows"}
 COMMENT_RE = re.compile(r"^\s*(#|//|\*|<!--)")
 for path in ROOT.rglob("*"):
     if not path.is_file() or path.suffix not in CODE_SUFFIXES:
         continue
     if any(part in SKIP_DIRS for part in path.parts):
+        continue
+    if not any(part in SCAN_DIRS for part in path.parts[:-1]) and not path.stem.startswith("test"):
         continue
     try:
         lines = path.read_text(encoding="utf-8", errors="ignore").splitlines()
